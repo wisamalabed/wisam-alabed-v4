@@ -239,6 +239,39 @@ body::after {
   color: var(--text); /* ensures visibility above gradient overlay */
 }
 
+
+/* =========================
+   Project Showcase
+========================= */
+
+/* GitHub Link Styling */
+.github-link {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 4px 8px;
+  background: rgba(0, 200, 83, 0.1);
+  color: var(--green);
+  text-decoration: none;
+  border-radius: var(--border-radius-small);
+  font-size: 12px;
+  transition: all 0.2s ease;
+  border: 1px solid rgba(0, 200, 83, 0.2);
+}
+
+.github-link:hover {
+  background: rgba(0, 200, 83, 0.2);
+  border-color: var(--green);
+  color: var(--green-soft);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 200, 83, 0.3);
+}
+
+.github-link::before {
+  content: "⚡ ";
+  margin-right: 2px;
+}
+
+
 /* =========================
    TIMELINE
 ========================= */
