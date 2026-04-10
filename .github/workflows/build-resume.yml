@@ -33,8 +33,6 @@ jobs:
         with open('resume.json', 'r') as f:
             resume = json.load(f)
 
-        with open('index.html', 'w') as f:
-            f.write(html_content)
         
         def format_date(date_str):
             if date_str == 'Present':
@@ -146,6 +144,9 @@ jobs:
         </html>
         """
         
+        with open('index.html', 'w') as f:
+            f.write(html_content)
+            
         EOF
         
         python3 generate-html.py
