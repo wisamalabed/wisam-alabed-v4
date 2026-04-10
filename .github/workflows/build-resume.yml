@@ -1,172 +1,77 @@
-name: Build & Deploy Resume to GitHub Pages
+name: Deploy Static Resume
 
 on:
-  workflow_dispatch:
   push:
     branches: [ main ]
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-    env:
-      GIST_RAW_URL: https://gist.githubusercontent.com/wisamalabed/6c826f000b9d865a34c0ba6a4841cdb1/raw/f08f6a0483c424f9f69afbab44d24a4234b4fb3d/resume.json
-      OUTPUT_DIR: build
-      OUTPUT_FILE: index.html
-
+    
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v6
-
-      - name: Install jq and Python pip
-        run: |
-          sudo apt-get update -y
-          sudo apt-get install -y jq python3-pip
-      - name: Fetch Gist JSON
-        run: curl -fsSL "$GIST_RAW_URL" -o resume.json
-
-      - name: Validate resume JSON exists
-        run: |
-          if [ ! -s resume.json ]; then
-            echo "resume.json missing or empty" >&2
-            exit 1
-          fi
-
-      - name: Create Mustache-compatible partials and template
-        run: |
-          mkdir -p templates
-          cat > templates/work.hbs <<'H'
-          {{#work}}
-          <div style="margin-bottom:12px">
-            <strong>{{name}} — {{position}}</strong>
-            <div class="muted">{{startDate}}{{#endDate}} — {{endDate}}{{/endDate}}{{#location}} • {{location}}{{/location}}</div>
-            <div style="margin-top:6px">{{summary}}</div>
-            {{#highlights}}
-            <ul>
-              {{#highlights}}
-                <li>{{.}}</li>
-              {{/highlights}}
-            </ul>
-            {{/highlights}}
-          </div>
-          {{/work}}
-          H
-          cat > templates/education.hbs <<'H'
-          {{#education}}
-          <div style="margin-bottom:10px">
-            <strong>{{institution}}</strong>
-            <div class="muted">{{studyType}}{{#area}} — {{area}}{{/area}}{{#startDate}} • {{startDate}}{{/startDate}}{{#endDate}} — {{endDate}}{{/endDate}}</div>
-          </div>
-          {{/education}}
-          H
-          cat > templates/skills.hbs <<'H'
-          {{#skills}}
-          <div style="margin-bottom:8px">
-            <strong>{{name}}</strong>
-            <div class="muted">{{keywords_joined}}</div>
-          </div>
-          {{/skills}}
-          H
-          cat > templates/index.hbs <<'H'
-          <!doctype html>
-          <html lang="en">
-          <head>
-            <meta charset="utf-8">
-            <meta name="viewport" content="width=device-width,initial-scale=1" />
-            <title>{{basics.name}} — Resume</title>
-            <link rel="stylesheet" href="styles.css">
-          </head>
-          <body>
-            <header>
-              <h1>{{basics.name}} <small>{{basics.label}}</small></h1>
-              <div class="muted">{{basics.summary}}</div>
-              {{#basics.location}}
-              <div class="muted">{{city}}{{#countryCode}} • {{countryCode}}{{/countryCode}}</div>
-              {{/basics.location}}
-            </header>
-            <main>
-              {{> work}}
-              {{> education}}
-              {{> skills}}
-            </main>
-          </body>
-          </html>
-          H
-
-      - name: Render with Python (pystache) and preprocess
-        run: |
-          python3 -m pip install --user pystache
-          python3 - <<'PY'
-          import json, os, sys, pystache
-          OUT_DIR = os.environ.get('OUTPUT_DIR','build')
-          OUT_FILE = os.environ.get('OUTPUT_FILE','index.html')
-          try:
-            with open('resume.json','r',encoding='utf8') as f:
-              data = json.load(f)
-          except Exception as e:
-            print(f"Failed to read resume.json: {e}", file=sys.stderr); sys.exit(1)
-          # Ensure top-level keys exist and normalize arrays
-          data.setdefault('basics', {})
-          data.setdefault('work', [])
-          data.setdefault('education', [])
-          data.setdefault('skills', [])
-          # Preprocess skills: create keywords_joined for each skill
-          for s in data['skills']:
-            kws = s.get('keywords') or []
-            # make sure keywords is a flat list of strings
-            if isinstance(kws, list):
-              s['keywords_joined'] = ', '.join(str(x) for x in kws)
-            else:
-              s['keywords_joined'] = str(kws)
-          # Preprocess work highlights: ensure highlights is array
-          for w in data['work']:
-            if 'highlights' in w and not isinstance(w['highlights'], list):
-              w['highlights'] = [w['highlights']]
-          # Render using pystache with partials
-          tpl_path = 'templates/index.hbs'
-          partial_names = ['work','education','skills']
-          try:
-            template = open(tpl_path,'r',encoding='utf8').read()
-          except FileNotFoundError:
-            print(f"Template not found: {tpl_path}", file=sys.stderr); sys.exit(1)
-          partials = {}
-          for p in partial_names:
-            path = f'templates/{p}.hbs'
-            try:
-              partials[p] = open(path,'r',encoding='utf8').read()
-            except FileNotFoundError:
-              print(f"Partial not found: {path}", file=sys.stderr); sys.exit(1)
-          renderer = pystache.Renderer(partials=partials)
-          out = renderer.render(template, data)
-          os.makedirs(OUT_DIR, exist_ok=True)
-          with open(os.path.join(OUT_DIR, OUT_FILE), 'w', encoding='utf8') as f:
-            f.write(out)
-          print(f"Wrote {os.path.join(OUT_DIR,OUT_FILE)}")
-          PY
-
-
-      - name: Copy static assets
-        run: |
-          cp -a styles.css "$OUTPUT_DIR/" || true
-
-      - name: List build output
-        run: |
-          ls -la "$OUTPUT_DIR"
-          sed -n '1,120p' "$OUTPUT_DIR/$OUTPUT_FILE" || true
-
-      - name: Configure GitHub Pages
-        uses: actions/configure-pages@v6
-
-      - name: Upload artifact for Pages
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: ./build
-
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v3.0.2-node.24
+    - name: Checkout
+      uses: actions/checkout@v4
+    
+    - name: Fetch Gist Content
+      id: fetch-gist
+      run: |
+        # Get the raw gist content
+        GIST_URL="https://gist.githubusercontent.com/wisamalabed/6c826f000b9d865a34c0ba6a4841cdb1/raw/"
+        echo "Fetching gist from: $GIST_URL"
+        
+        # Create a simple script to fetch and update the HTML
+        cat > update-resume.py << 'EOF'
+        import urllib.request
+        import re
+        
+        gist_url = "https://gist.githubusercontent.com/wisamalabed/6c826f000b9d865a34c0ba6a4841cdb1/raw/"
+        
+        try:
+            with urllib.request.urlopen(gist_url) as response:
+                gist_content = response.read().decode('utf-8')
+            
+            # Extract resume data from gist (customize this based on your gist format)
+            # This is a simple example - adjust based on your actual gist structure
+            print("Gist content retrieved successfully")
+            print(f"Content length: {len(gist_content)} characters")
+            
+            # Create or update resume HTML with gist data
+            # In a real scenario, you'd parse the gist content and insert it into templates
+            
+        except Exception as e:
+            print(f"Error fetching gist: {e}")
+            exit(1)
+        EOF
+        
+        python update-resume.py
+        
+        # Create a simple deployment script
+        cat > deploy.sh << 'EOF'
+        #!/bin/bash
+        echo "Deploying static resume..."
+        
+        # Copy the static HTML file to deployment directory
+        mkdir -p dist
+        cp index.html dist/
+        
+        # Add .nojekyll file for GitHub Pages
+        touch dist/.nojekyll
+        
+        echo "Deployment ready"
+        EOF
+        
+        chmod +x deploy.sh
+        ./deploy.sh
+    
+    - name: Setup Pages
+      uses: actions/configure-pages@v4
+    
+    - name: Upload to GitHub Pages
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: dist/
+    
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
