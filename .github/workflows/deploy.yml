@@ -46,10 +46,15 @@ jobs:
 
       # 5. Upload the artifact for GitHub Pages
       - name: Upload Pages Artifact
+        id: upload
         uses: actions/upload-pages-artifact@v4
         with:
           path: site/
+          
+      # 6. List files after upload
+      - name: List artifact files
+        run: ls -R site
 
-      # 6. Deploy to GitHub Pages
+      # 7. Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v3
