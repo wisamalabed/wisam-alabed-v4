@@ -1,48 +1,59 @@
 :root {
-  --primary-color: #8b5e3c;
-  --primary-dark: #6f472e;
-  --accent-color: #0e9f6e;
-  --bg-color: #fbfaf8;
-  --section-bg: #f4eeea;
-  --text-color: #111827;
-  --text-light: #6b7280;
-  --border-color: #e9e4e1;
+  /* Palestine flag colors (tuned in OKLCH) */
+  --primary-color: oklch(55% 0.22 142); /* green */
+  --primary-bright: oklch(65% 0.26 142); /* lighter green */
+  --primary-dark: oklch(38% 0.18 142); /* dark green */
+
+  --accent-color: oklch(55% 0.26 25); /* red */
+
+  /* neutrals (true neutral axis) */
+  --bg-color: oklch(100% 0 0); /* white */
+  --section-bg: oklch(96% 0 0); /* light gray */
+  --text-color: oklch(12% 0 0); /* near black */
+  --text-light: oklch(55% 0 0); /* gray */
+  --border-color: oklch(90% 0 0); /* subtle border */
+  --header-text: oklch(100% 0 0); /* white */
+
   --skill-bg: var(--primary-color);
-  --header-text: white;
 
   --ui-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono",
     "Helvetica Neue", monospace;
   --base-font-size: 16px;
 
-  /* rgb helpers for alpha in gradients */
-  --primary-rgb: 139, 94, 60; /* #8b5e3c */
-  --accent-rgb: 14, 159, 110; /* #0e9f6e */
+  /* sRGB fallbacks (accurate flag colors) */
+  --primary-hex: #007a3d; /* green */
+  --primary-bright-hex: #1faa59;
+  --primary-dark-hex: #005a2c;
+
+  --accent-hex: #ce1126; /* red */
+
+  --bg-hex: #ffffff;
+  --text-hex: #0b0b0b;
+  --text-light-hex: #6b7280;
+  --border-hex: #e5e7eb;
+
+  --primary-rgb: 0, 122, 61;
+  --accent-rgb: 206, 17, 38;
 }
 
 @media (prefers-color-scheme: dark) {
   :root,
   :root.dark {
-    --primary-color: #cfa88a;
-    --primary-dark: #b07a57;
-    --accent-color: #6dd3b1;
-    --bg-color: #0b0e10;
-    --section-bg: #0f1416;
-    --text-color: #e6eef2;
-    --text-light: #a8b3b8;
-    --border-color: #1a2426;
-    --skill-bg: #cfa88a;
-    --header-text: var(--text-color);
+    /* slightly brighter for contrast in dark mode */
+    --primary-color: oklch(62% 0.22 142);
+    --primary-bright: oklch(70% 0.26 142);
+    --primary-dark: oklch(45% 0.18 142);
 
-    /* dark theme rgb helpers */
-    --primary-rgb: 207, 168, 138; /* #cfa88a */
-    --accent-rgb: 109, 211, 177; /* #6dd3b1 */
+    --accent-color: oklch(60% 0.26 25);
   }
 }
 
+/* global box-sizing */
  {
   box-sizing: border-box;
 }
 
+/* Base page */
 body {
   font-family: var(--ui-mono);
   line-height: 1.6;
@@ -62,6 +73,7 @@ body {
   padding: 20px;
 }
 
+/* Card */
 .card {
   width: 340px;
   margin: auto;
@@ -74,11 +86,10 @@ body {
   transition: 0.3s;
   flex-direction: column;
   border-radius: 10px;
-  box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 0 8px rgba(0, 0, 0, 0.02);
 }
 
-/* --- ACTIVE STATE (driven by radios placed before .card) --- /
-/ hide the real radios visually but keep them accessible */
+/* visually-hidden radios (accessible) */
 .panel-radio {
   position: absolute;
   opacity: 0;
@@ -107,7 +118,7 @@ body {
   animation: fadeIn 0.6s both;
 }
 
-/* card height per tab (you can tune these numbers) */
+/* card height per tab (tweak as needed) */
 #tabAbout:checked ~ .card {
   height: 450px;
 }
@@ -118,8 +129,7 @@ body {
   height: 430px;
 }
 
-/* simulate .is-active styles on the card when tabs are checked */
-
+/* is-active-like transforms when tabs checked */
 #tabExp:checked ~ .card .card-header,
 #tabContact:checked ~ .card .card-header {
   height: 80px;
@@ -161,12 +171,12 @@ body {
   font-size: 10px;
 }
 
-/* highlight the corresponding label inside .card-buttons */
+/* highlight the active tab label */
 #tabAbout:checked ~ .card .card-buttons label[for="tabAbout"],
 #tabExp:checked ~ .card .card-buttons label[for="tabExp"],
 #tabContact:checked ~ .card .card-buttons label[for="tabContact"] {
-  color: #2b2c48;
-  border-bottom: 3px solid #8a84ff;
+  color: var(--text-color);
+  border-bottom: 3px solid var(--accent-color);
   background: linear-gradient(
     to bottom,
     rgba(var(--accent-rgb), 0) 0%,
@@ -175,8 +185,7 @@ body {
   );
 }
 
-/* --- original styles kept below --- */
-
+/* Card header */
 .card-header {
   position: relative;
   display: flex;
@@ -202,8 +211,10 @@ body {
   filter: blur(30px);
   transform: scale(1.2);
   transition: 0.5s;
+  background-color: var(--section-bg);
 }
 
+/* Avatar */
 .card-avatar {
   width: 100px;
   height: 100px;
@@ -215,8 +226,10 @@ body {
   bottom: 0;
   left: 50%;
   transform: translateX(-50%) translateY(-64px);
+  border: 3px solid var(--bg-color);
 }
 
+/* Name & title */
 .card-fullname {
   position: absolute;
   bottom: 0;
@@ -226,6 +239,7 @@ body {
   white-space: nowrap;
   transform: translateY(-10px) translateX(-50%);
   left: 50%;
+  color: var(--text-color);
 }
 
 .card-jobtitle {
@@ -234,41 +248,47 @@ body {
   font-size: 11px;
   white-space: nowrap;
   font-weight: 500;
-  opacity: 0.7;
+  opacity: 0.85;
   text-transform: uppercase;
   letter-spacing: 1.5px;
   margin: 0;
   left: 50%;
   transform: translateX(-50%) translateY(-7px);
+  color: var(--text-light);
 }
 
+/* Main area */
 .card-main {
   position: relative;
   flex: 1;
   display: flex;
   padding-top: 10px;
   flex-direction: column;
+  background-color: transparent;
 }
 
 .card-subtitle {
   font-weight: 700;
   font-size: 13px;
   margin-bottom: 8px;
+  color: var(--text-color);
 }
 
 .card-content {
   padding: 20px;
+  color: var(--text-color);
 }
 
 .card-desc {
   line-height: 1.6;
-  color: #636b6f;
+  color: var(--text-light);
   font-size: 14px;
   margin: 0;
   font-weight: 400;
   font-family: var(--ui-mono);
 }
 
+/* Social icons */
 .card-social {
   display: flex;
   align-items: center;
@@ -276,13 +296,13 @@ body {
   margin-bottom: 30px;
 }
 .card-social svg {
-  fill: rgb(165, 181, 206);
+  fill: var(--text-light);
   width: 16px;
   display: block;
   transition: 0.3s;
 }
 .card-social a {
-  color: #8797a1;
+  color: var(--text-light);
   height: 32px;
   width: 32px;
   border-radius: 50%;
@@ -290,18 +310,17 @@ body {
   align-items: center;
   justify-content: center;
   transition: 0.3s;
-  background-color: rgba(93, 133, 193, 0.05);
-  border-radius: 50%;
+  background-color: color-mix(in srgb, var(--accent-color) 6%, transparent);
   margin-right: 10px;
 }
 .card-social a:hover svg {
-  fill: #637faa;
+  fill: var(--primary-color);
 }
 .card-social a:last-child {
   margin-right: 0;
 }
 
-/* keep any pre-existing .is-active visible at load */
+/* Keep pre-existing .is-active visible */
 .card-section.is-active {
   display: block;
 }
@@ -315,6 +334,8 @@ body {
     opacity: 1;
   }
 }
+
+/* Timeline */
 .card-timeline {
   margin-top: 30px;
   position: relative;
@@ -323,7 +344,8 @@ body {
   background: linear-gradient(
     to top,
     rgba(var(--accent-rgb), 0) 0%,
-    var(--primary-color) 100%
+    var(--primary-hex) 60%,
+    var(--primary-dark-hex) 100%
   );
   content: "";
   left: 42px;
@@ -331,9 +353,9 @@ body {
   top: 0;
   height: 100%;
   position: absolute;
-  content: "";
 }
 
+/* Timeline items */
 .card-item {
   position: relative;
   padding-left: 60px;
@@ -344,31 +366,39 @@ body {
 .card-item:last-child {
   padding-bottom: 5px;
 }
-.card-item:after {
-  content: attr(data-year);
-  width: 10px;
+
+/* dot */
+.card-item::before {
+  content: "";
   position: absolute;
-  top: 0;
+  top: 0; /* align with title text; tweak as needed */
   left: 37px;
-  width: 8px;
-  height: 8px;
-  line-height: 0.6;
-  border: 2px solid #fff;
-  font-size: 11px;
-  text-indent: -35px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
-  color: rgba(134, 134, 134, 0.7);
-  background: linear-gradient(
-    to bottom,
-    color-mix(in srgb, var(--accent-color) 12%, transparent) 0%,
-    var(--primary-color) 100%
-  );
+  border: 2px solid var(--primary-bright);
+  background: var(--primary-dark);
+  box-sizing: border-box;
+  z-index: 2;
+}
+
+/* year text */
+.card-item::after {
+  content: attr(data-year);
+  position: absolute;
+  top: -1px; /* vertically center relative to dot; tweak as needed */
+  left: 3px; /* place to the right of the dot */
+  font-size: 11px;
+  color: var(--text-light);
+  white-space: nowrap;
+  z-index: 1;
 }
 
 .card-item-title {
   font-weight: 500;
   font-size: 14px;
   margin-bottom: 5px;
+  color: var(--text-color);
 }
 
 .card-item-desc {
@@ -378,6 +408,7 @@ body {
   font-family: var(--ui-mono);
 }
 
+/* Contact list */
 .card-contact-wrapper {
   margin-top: 20px;
 }
@@ -402,18 +433,20 @@ body {
   transition: 0.3s;
   padding-right: 12px;
   border-right: 1px solid var(--border-color);
+  fill: var(--text-light);
 }
 
+/* CTA button */
 .contact-me {
   border: 0;
   outline: none;
   background: linear-gradient(
     to right,
-    rgba(var(--accent-rgb), 0.8) 0%,
-    rgba(var(--primary-rgb), 0.8) 96%
+    rgba(var(--accent-rgb), 0.9) 0%,
+    rgba(var(--primary-rgb), 0.9) 96%
   );
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
-  color: #fff;
+  color: var(--header-text);
   padding: 12px 16px;
   width: 100%;
   border-radius: 5px;
@@ -425,9 +458,10 @@ body {
   transition: 0.3s;
 }
 
+/* Bottom tab buttons */
 .card-buttons {
   display: flex;
-  background-color: #fff;
+  background-color: var(--bg-color);
   margin-top: auto;
   position: sticky;
   bottom: 0;
@@ -449,6 +483,12 @@ body {
   text-align: center;
 }
 .card-buttons label:hover {
-  color: #2b2c48;
+  color: var(--text-color);
   border-bottom: 3px solid var(--border-color);
+}
+
+/* Utility: focus outlines using accent */
+:focus {
+  outline: 3px solid color-mix(in srgb, var(--accent-color) 20%, transparent);
+  outline-offset: 2px;
 }
