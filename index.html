@@ -7,274 +7,73 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <header class="header">
-            <img src="https://avatars.githubusercontent.com/u/4520207?s=400&u=f613d22d9121030d44a9a53af8c88c7df401580f&v=4" alt="Profile" class="profile-img">
-            <h1>Wisam Al Abed</h1>
-            <div class="subtitle">I'm a full stack software developer who can build apps from the ground up.</div>
-            <div class="contact-info">
-                <div class="contact-item">
-                    <span>📧</span>
-                    <span>wisam.alabed@tutamail.com.com</span>
-                </div>
-                <div class="contact-item">
-                    <span>📱</span>
-                    <span>(416) 276-4074</span>
-                </div>
-                <div class="contact-item">
-                    <span>📍</span>
-                    <span>Toronto, CA</span>
-                </div>
-            </div>
-        </header>
+<div class="container">
+  <!-- hidden radios placed before the card -->
+  <input type="radio" id="tabAbout" name="tab" class="panel-radio" hidden checked>
+  <input type="radio" id="tabExp" name="tab" class="panel-radio" hidden>
+  <input type="radio" id="tabContact" name="tab" class="panel-radio" hidden>
 
-        <section class="section">
-            <h2 class="section-title">Summary</h2>
-            <div class="item-description">
-                Wisam has over 10 years of experience of building software utilizing an array of programming languages, technologies and software frameworks. Subject matter expert in Web development, and Model Driven Engineering. Focused on software usability, re-usability, scalability and working in an agile manner. Experienced in developing user-centric solutions that deliver maximum value. Adept at leading teams in achieving excellence in client satisfaction, productivity, and profitability.
-            </div>
-        </section>
+  <div class="card" data-state="#about">
+    <div class="card-header">
+      <div class="card-cover" style="background-image: url('https://avatars.githubusercontent.com/u/4520207?s=400')"></div>
+      <img class="card-avatar" src="https://avatars.githubusercontent.com/u/4520207?s=400" alt="avatar" />
+      <h1 class="card-fullname">Wisam Al Abed</h1>
+      <h2 class="card-jobtitle">Senior full stack software developer</h2>
+    </div>
 
-        <div class="card" data-state="#about">
-          <div class="card-header">
-            <div class="card-cover" style="background-image: url('https://images.unsplash.com/photo-1549068106-b024baf5062d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80')"></div>
-            <img class="card-avatar" src="https://avatars.githubusercontent.com/u/4520207?s=400&u=f613d22d9121030d44a9a53af8c88c7df401580f&v=4" alt="avatar" />
-            <h1 class="card-fullname">Wisam Al Abed</h1>
-            <h2 class="card-jobtitle">Senior full stack software developer</h2>
-          </div>
-          <div class="card-main">
-            <div class="card-section is-active" id="about">
-              <div class="card-content">
-                <div class="card-subtitle">ABOUT</div>
-                <p class="card-desc"> 
-                    Wisam has over 10 years of experience of building software utilizing an array of programming languages, technologies and software frameworks. 
-                    Subject matter expert in Web development, and Model Driven Engineering. Focused on software usability, re-usability, scalability and working in an agile manner.
-                    Experienced in developing user-centric solutions that deliver maximum value. 
-                    Adept at leading teams in achieving excellence in client satisfaction, productivity, and profitability.
-                </p>
-              </div>
-              <div class="card-social">
-                <a href="#"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M15.997 3.985h2.191V.169C17.81.117 16.51 0 14.996 0c-3.159 0-5.323 1.987-5.323 5.639V9H6.187v4.266h3.486V24h4.274V13.267h3.345l.531-4.266h-3.877V6.062c.001-1.233.333-2.077 2.051-2.077z" /></svg></a>
-                <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                    <path d="M512 97.248c-19.04 8.352-39.328 13.888-60.48 16.576 21.76-12.992 38.368-33.408 46.176-58.016-20.288 12.096-42.688 20.64-66.56 25.408C411.872 60.704 384.416 48 354.464 48c-58.112 0-104.896 47.168-104.896 104.992 0 8.32.704 16.32 2.432 23.936-87.264-4.256-164.48-46.08-216.352-109.792-9.056 15.712-14.368 33.696-14.368 53.056 0 36.352 18.72 68.576 46.624 87.232-16.864-.32-33.408-5.216-47.424-12.928v1.152c0 51.008 36.384 93.376 84.096 103.136-8.544 2.336-17.856 3.456-27.52 3.456-6.72 0-13.504-.384-19.872-1.792 13.6 41.568 52.192 72.128 98.08 73.12-35.712 27.936-81.056 44.768-130.144 44.768-8.608 0-16.864-.384-25.12-1.44C46.496 446.88 101.6 464 161.024 464c193.152 0 298.752-160 298.752-298.688 0-4.64-.16-9.12-.384-13.568 20.832-14.784 38.336-33.248 52.608-54.496z" /></svg></a>
-                <a href="#"><svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M301 256c0 24.852-20.148 45-45 45s-45-20.148-45-45 20.148-45 45-45 45 20.148 45 45zm0 0" />
-                    <path d="M332 120H180c-33.086 0-60 26.914-60 60v152c0 33.086 26.914 60 60 60h152c33.086 0 60-26.914 60-60V180c0-33.086-26.914-60-60-60zm-76 211c-41.355 0-75-33.645-75-75s33.645-75 75-75 75 33.645 75 75-33.645 75-75 75zm86-146c-8.285 0-15-6.715-15-15s6.715-15 15-15 15 6.715 15 15-6.715 15-15 15zm0 0" />
-                    <path d="M377 0H135C60.562 0 0 60.563 0 135v242c0 74.438 60.563 135 135 135h242c74.438 0 135-60.563 135-135V135C512 60.562 451.437 0 377 0zm45 332c0 49.625-40.375 90-90 90H180c-49.625 0-90-40.375-90-90V180c0-49.625 40.375-90 90-90h152c49.625 0 90 40.375 90 90zm0 0" /></svg></a>
-                <a href="#"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M23.994 24v-.001H24v-8.802c0-4.306-.927-7.623-5.961-7.623-2.42 0-4.044 1.328-4.707 2.587h-.07V7.976H8.489v16.023h4.97v-7.934c0-2.089.396-4.109 2.983-4.109 2.549 0 2.587 2.384 2.587 4.243V24zM.396 7.977h4.976V24H.396zM2.882 0C1.291 0 0 1.291 0 2.882s1.291 2.909 2.882 2.909 2.882-1.318 2.882-2.909A2.884 2.884 0 002.882 0z" /></svg></a>
-              </div>
+    <div class="card-main">
+      <div class="card-section" id="about">
+        <div class="card-content">
+          <div class="card-subtitle">ABOUT</div>
+          <p class="card-desc">
+            Wisam has over 10 years of experience of building software utilizing an array of programming languages...
+          </p>
+        </div>
+        <div class="card-social">
+          <a href="#"><svg viewBox="0 0 24 24">
+              <path d="M15.997 3.985h2.191V.169C17.81.117 16.51 0 14.996 0c-3.159 0-5.323 1.987-5.323 5.639V9H6.187v4.266h3.486V24h4.274V13.267h3.345l.531-4.266h-3.877V6.062c.001-1.233.333-2.077 2.051-2.077z" />
+            </svg></a>
+          <a href="#"><svg viewBox="0 0 512 512">
+              <path d="M512 97.248c-19.04 8.352-39.328 13.888-60.48 16.576 21.76-12.992 38.368-33.408 46.176-58.016-20.288 12.096-42.688 20.64-66.56 25.408C411.872 60.704 384.416 48 354.464 48c-58.112 0-104.896 47.168-104.896 104.992 0 8.32.704 16.32 2.432 23.936-87.264-4.256-164.48-46.08-216.352-109.792-9.056 15.712-14.368 33.696-14.368 53.056 0 36.352 18.72 68.576 46.624 87.232-16.864-.32-33.408-5.216-47.424-12.928v1.152c0 51.008 36.384 93.376 84.096 103.136-8.544 2.336-17.856 3.456-27.52 3.456-6.72 0-13.504-.384-19.872-1.792 13.6 41.568 52.192 72.128 98.08 73.12-35.712 27.936-81.056 44.768-130.144 44.768-8.608 0-16.864-.384-25.12-1.44C46.496 446.88 101.6 464 161.024 464c193.152 0 298.752-160 298.752-298.688 0-4.64-.16-9.12-.384-13.568 20.832-14.784 38.336-33.248 52.608-54.496z" />
+            </svg></a>
+        </div>
+      </div>
+      <div class="card-section" id="experience">
+        <div class="card-content">
+          <div class="card-subtitle">WORK EXPERIENCE</div>
+          <div class="card-timeline">
+            <div class="card-item" data-year="2020">
+              <div class="card-item-title">Intermediate Software Developer at <span>Kotn</span></div>
+              <div class="card-item-desc">Joined Kotn as part of the digital team...</div>
             </div>
-            <div class="card-section" id="experience">
-              <div class="card-content">
-                <div class="card-subtitle">WORK EXPERIENCE</div>
-                <div class="card-timeline">
-
-                  <div class="card-item" data-year="2020">
-                    <div class="card-item-title">Intermediate Software Developer at <span>Kotn</span></div>
-                    <div class="card-item-desc">Joined Kotn as part of the digital team to transform and scale their e-commerce experience.</div>
-                  </div>
-                <div class="card-item" data-year="2022">
-                    <div class="card-item-title">Senior Software Developer at <span>University of Toronto Data Sciences Institute</span></div>
-                    <div class="card-item-desc">Disrupt stumptown retro everyday carry unicorn.</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="card-section" id="contact">
-              <div class="card-content">
-                <div class="card-subtitle">CONTACT</div>
-                <div class="card-contact-wrapper">
-                  <div class="card-contact">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
-                      <circle cx="12" cy="10" r="3" /></svg>
-                   Toronto, Ontario
-                  </div>
-                  <div class="card-contact">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" /></svg>(269) 756-9809</div>
-                  <div class="card-contact">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                      <path d="M22 6l-10 7L2 6" /></svg>
-                    wisam.alabed@tutamail.com
-                  </div>
-                  <button class="contact-me">WORK TOGETHER</button>
-                </div>
-              </div>
-            </div>
-            <div class="card-buttons">
-              <input type="radio" id="tabAbout" name="tab" checked>
-              <label for="tabAbout">ABOUT</label>
-            
-              <input type="radio" id="tabExp" name="tab">
-              <label for="tabExp">EXPERIENCE</label>
-            
-              <input type="radio" id="tabContact" name="tab">
-              <label for="tabContact">CONTACT</label>
+            <div class="card-item" data-year="2022">
+              <div class="card-item-title">Senior Software Developer at <span>University of Toronto</span></div>
+              <div class="card-item-desc">Disrupt stumptown retro everyday carry unicorn.</div>
             </div>
           </div>
         </div>
+      </div>
+      <div class="card-section" id="contact">
+        <div class="card-content">
+          <div class="card-subtitle">CONTACT</div>
+          <div class="card-contact-wrapper">
+            <div class="card-contact">Toronto, Ontario</div>
+            <div class="card-contact">(416) 276-4074</div>
+            <div class="card-contact">wisam.alabed@tutamail.com</div>
+            <button class="contact-me">WORK TOGETHER</button>
+          </div>
+        </div>
+      </div>
 
-        <section class="section">
-            <h2 class="section-title">Experience</h2>
-            
-            <div class="experience-item">
-                <div class="item-header">
-                    <div>
-                        <div class="item-title">Senior Software Developer</div>
-                        <div class="item-company">University of Toronto Data Sciences Institute</div>
-                        <div class="item-location">Toronto</div>
-                    </div>
-                    <div class="item-date">Oct 2022 - Present</div>
-                </div>
-                <div class="item-description">
-                    Joined the Data Sciences Institute(DSI) as part of the initiative to collaborate with researchers to transform ideas into real world solutions.
-                </div>
-            </div>
-
-            <div class="experience-item">
-                <div class="item-header">
-                    <div>
-                        <div class="item-title">Intermediate Software Developer</div>
-                        <div class="item-company">Kotn</div>
-                        <div class="item-location">Toronto</div>
-                    </div>
-                    <div class="item-date">Mar 2020 - Jun 2022</div>
-                </div>
-                <div class="item-description">
-                    Joined Kotn as part of the digital team to transform and scale their e-commerce experience.
-                </div>
-                <ul class="highlights">
-                    <li>Migrated the e-commerce site to a headless site built using NextJS that connects to the shopify backend</li>
-                    <li>Set up sanity.io as the CMS for managing content on the site</li>
-                    <li>Built a redis cache layer as a microservice for fetching product data for the site</li>
-                    <li>Implemented complex features such as bundle product pages, product reviews, size guides</li>
-                </ul>
-            </div>
-
-            <div class="experience-item">
-                <div class="item-header">
-                    <div>
-                        <div class="item-title">Business/Technical Analyst</div>
-                        <div class="item-company">IBM MEA</div>
-                        <div class="item-location">Dubai</div>
-                    </div>
-                    <div class="item-date">Sep 2016 - Sep 2018</div>
-                </div>
-                <div class="item-description">
-                    Joined IBM Dubai as part of Global Business Services for delivering consulting engagements.
-                </div>
-                <ul class="highlights">
-                    <li>SMART Mufti chatbot: Built and designed a chatbot that will be able to answer questions about islamic legal rulings . Analyzed and categorized user submitted legal questions. Created entities and intents for each question based on the categorization (Watson Assistant). Ran K-Fold to analyze the accuracy and precision of the categorization</li>
-                    <li>RTA Chatbot: Built and developed the responsive web front end for the enterprise chat bot application. I took the design provided by the client and built the web front end for the chat bot application. Frontend built using HTML / CSS and javascript that connects to a node JS backend API</li>
-                    <li>VAT: Business and System Analyst to assess the VAT impact and changes needed on the systems used by the various business entities in order to be compliant with the new Government VAT requirements in Jan 2018. Conducted workshops with each business entity to gather the requirements and identify the impact on the business processes and financial systems used. Analyzed and Assessed the requirements producing a business requirements document. This document was used by the respective business entities to modify and change their systems accordingly</li>
-                    <li>Developed and built a demo that runs on Blockchain Hyperledger fabric v0.6 for capturing the life cycle of a vehicle from manufacturing to scrap</li>
-                </ul>
-            </div>
-
-            <div class="experience-item">
-                <div class="item-header">
-                    <div>
-                        <div class="item-title">Full Stack Developer</div>
-                        <div class="item-company">XYpper Technologies</div>
-                        <div class="item-location">Canada</div>
-                    </div>
-                    <div class="item-date">Sep 2015 - Sep 2016</div>
-                </div>
-                <div class="item-description">
-                    Developed a website for connecting shippers to truckers to make transportation of goods more efficient and profitable.
-                </div>
-                <ul class="highlights">
-                    <li>Designed a sophisticated search algorithm to allow shippers to find prospective truckers</li>
-                    <li>Automated the ordering, billing, and invoicing between shippers and truckers</li>
-                    <li>Redesigned the front end to use bootstrap and improved the UI/UX to make it more usable and functional and responsive.</li>
-                    <li>Redesigned the backend to be more lean and robust. Improved performance of the shipper search page. Improved search from taking a minute to taking 5s.</li>
-                    <li>Built the website notification system (full stack) for users receiving messages and order information in real time</li>
-                    <li>Designed and contributed to the invoicing management system to facilitate the invoicing between the shipper and trucker.</li>
-                </ul>
-            </div>
-
-            <div class="experience-item">
-                <div class="item-header">
-                    <div>
-                        <div class="item-title">Software Researcher</div>
-                        <div class="item-company">McGill University</div>
-                        <div class="item-location">Canada</div>
-                    </div>
-                    <div class="item-date">Sep 2008 - Dec 2014</div>
-                </div>
-                <div class="item-description">
-                    Joined the software engineering lab
-                </div>
-                <ul class="highlights">
-                    <li>Focused on software reusability, modularity and model driven engineering</li>
-                    <li>Over 5 publications in prominent conferences and journals</li>
-                    <li>Part of the team that built the TouchCORE tool. My contribution was designing and building the model weaver in java</li>
-                    <li>Teaching assistant for several courses and subjects:</li>
-                    <li>Intro to java programming; Bash, C and python course; Relational databases; Model-Driven Software Development; Software Fault Tolerance</li>
-                </ul>
-            </div>
-        </section>
-
-        <section class="section">
-            <h2 class="section-title">Education</h2>
-            
-            <div class="education-item">
-                <div class="item-header">
-                    <div>
-                        <div class="item-degree">Bachelors in Software Engineering</div>
-                        <div class="item-school">McGill University</div>
-                    </div>
-                    <div class="item-period">Sep 2003 - Jun 2007</div>
-                </div>
-            </div>
-        </section>
-
-        <section class="section">
-            <h2 class="section-title">Skills</h2>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h4>Programming Languages</h4>
-                    <div class="skill-level">Senior</div>
-                    <div class="skill-list">
-                        <span class="skill-tag">HTML/CSS</span>
-                        <span class="skill-tag">Typescript/Javascript</span>
-                        <span class="skill-tag">SQL/NoSQL</span>
-                        <span class="skill-tag">GraphQL</span>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h4>Frameworks</h4>
-                    <div class="skill-level">Senior</div>
-                    <div class="skill-list">
-                        <span class="skill-tag">Node.js/Express</span>
-                        <span class="skill-tag">React.js</span>
-                        <span class="skill-tag">Redis</span>
-                        <span class="skill-tag">Next.js</span>
-                        <span class="skill-tag">Sanity.io</span>
-                        <span class="skill-tag">Shopify</span>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h4>Devops</h4>
-                    <div class="skill-level">Beginner</div>
-                    <div class="skill-list">
-                        <span class="skill-tag">Vercel</span>
-                        <span class="skill-tag">G Cloud</span>
-                        <span class="skill-tag">Kubernetes</span>
-                        <span class="skill-tag">Docker</span>
-                        <span class="skill-tag">Git</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <footer class="footer">
-            <p>Last updated: April 2026 | Built with HTML & CSS from JSON Resume</p>
-        </footer>
+      <!-- visible labels (point directly to the hidden radios above) -->
+      <div class="card-buttons">
+        <label for="tabAbout">ABOUT</label>
+        <label for="tabExp">EXPERIENCE</label>
+        <label for="tabContact">CONTACT</label>
+      </div>
     </div>
+  </div>
+
+</div>
 </body>
 </html>
