@@ -12,13 +12,32 @@
         }
         
         :root {
-            --primary-color: #2563eb;
-            --secondary-color: #1e40af;
-            --text-color: #1f2937;
-            --text-light: #6b7280;
-            --bg-color: #ffffff;
-            --border-color: #e5e7eb;
-            --section-bg: #f9fafb;
+            --primary-color: #8B5E3C;
+            --primary-dark:  #6F472E;
+            --accent-color:  #0E9F6E;
+            --bg-color:      #FBFAF8;
+            --section-bg:    #F4EEEA;
+            --text-color:    #111827;
+            --text-light:    #6B7280;
+            --border-color:  #E9E4E1;
+            --success-color: #10B981;
+            --warning-color: #D97706;
+        }
+
+        @media (prefers-color-scheme: dark) {
+          :root,
+          :root.dark {
+            --primary-color: #CFA88A;
+            --primary-dark:  #B07A57;
+            --accent-color:  #6DD3B1;
+            --bg-color:      #0B0E10;
+            --section-bg:    #0F1416;
+            --text-color:    #E6EEF2;
+            --text-light:    #A8B3B8;
+            --border-color:  #1A2426;
+            --success-color: #34D399;
+            --warning-color: #FBBF24;
+          }
         }
         
         body {
@@ -32,15 +51,15 @@
         }
         
         .container {
-            background: var(--bg-color);
+            background: transparent;
             border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 1px 6px rgba(0,0,0,0.6); 
             overflow: hidden;
         }
         
         .header {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
+            color: var(--text-color);
             text-align: center;
             padding: 40px 20px;
         }
@@ -49,7 +68,7 @@
             width: 120px;
             height: 120px;
             border-radius: 50%;
-            border: 4px solid white;
+            border: 4px solid var(--section-bg);
             margin-bottom: 20px;
             object-fit: cover;
         }
@@ -83,7 +102,8 @@
         
         .section {
             padding: 30px 20px;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color); 
+            background: var(--section-bg);
         }
         
         .section:last-child {
