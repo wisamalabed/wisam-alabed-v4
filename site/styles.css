@@ -2,16 +2,20 @@
    VARIABLES
 ========================= */
 :root {
-  /* Core Palette (Palestine-inspired, terminal-balanced) */
-  --bg: #070b09;          /* deep ink black */
-  --panel: #0e1511;       /* lifted surface */
-  --text: #e7f5ec;        /* soft off-white green tint */
-  --dim: #8fb39a;          /* muted terminal green */
-  --green: #00c853;       /* primary terminal green */
-  --green-soft: #2dfc8f;
-  --red: #e53935;          /* accent red */
-  --sand: #c8b68a;         /* mosaic stone tone */
-  --cyan: #4dfcff;
+  /* Background & Panels */
+  --bg: #070b09;          /* deep black */
+  --panel: #0e1511;       /* dark panel surface */
+
+  /* Text Colors */
+  --text: #e7f5ec;        /* off-white green tint */
+  --dim: #95c6a4;         /* soft green for secondary text */
+  --sand: #d6c58c;        /* sand accent */
+
+  /* Flag Colors */
+  --green: #00c853;       /* primary green (Palestine) */
+  --green-soft: #2dfc8f;  /* secondary green */
+  --red: #e53935;         /* red accent */
+  --cyan: #4dfcff;        /* optional highlight */
 
   /* Typography */
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
@@ -40,19 +44,19 @@ body {
     linear-gradient(to bottom, #050807, var(--bg));
 }
 
-/* Islamic-inspired geometric grid (low opacity) */
+/* Geometric grid overlay */
 body::before {
   content: "";
   position: fixed; inset: 0;
   pointer-events: none;
-  opacity: 0.06;
+  opacity: 0.08;
   background-image:
     linear-gradient(45deg, rgba(255,255,255,0.08) 1px, transparent 1px),
     linear-gradient(-45deg, rgba(255,255,255,0.06) 1px, transparent 1px);
   background-size: 60px 60px;
 }
 
-/* CRT scanlines */
+/* CRT scanlines overlay */
 body::after {
   content: "";
   position: fixed; inset: 0;
@@ -65,10 +69,8 @@ body::after {
     transparent 4px
   );
   mix-blend-mode: overlay;
-  opacity: 0.25;
+  opacity: 0.2;
 }
-
-
 
 /* =========================
    TERMINAL CONTAINER
@@ -239,11 +241,11 @@ body::after {
     --bg: #070b09;
     --panel: #0e1511;
     --text: #e7f5ec;
-    --dim: #8fb39a;
+    --dim: #95c6a4;
     --green: #00c853;
     --green-soft: #2dfc8f;
     --red: #e53935;
-    --sand: #c8b68a;
+    --sand: #d6c58c;
     --cyan: #4dfcff;
   }
 }
@@ -256,11 +258,11 @@ body::after {
     --bg: #f5f5f5;
     --panel: #ffffff;
     --text: #0e1511;
-    --dim: #666f61;
+    --dim: #555a4e;
     --green: #007a29;
     --green-soft: #00b36f;
     --red: #b71c1c;
-    --sand: #c8b68a;
+    --sand: #8c7b5f;
     --cyan: #00bcd4;
   }
 
