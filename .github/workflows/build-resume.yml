@@ -4,9 +4,6 @@ on:
   push:
     branches: [ main ]
   workflow_dispatch:
-  schedule:
-    # Check for updates daily at 2 AM UTC
-    - cron: '0 2 * * *'
 
 jobs:
   build:
