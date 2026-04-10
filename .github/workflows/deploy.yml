@@ -17,7 +17,7 @@ jobs:
     steps:
       # 1. Checkout the repository
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
 
       # 2. Calculate page footprint
       - name: Calculate page footprint
@@ -45,7 +45,7 @@ jobs:
 
       # 5. Upload the artifact for GitHub Pages
       - name: Upload Pages Artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v5
         with:
           path: |
             index.html
@@ -53,4 +53,4 @@ jobs:
 
       # 6. Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v3
