@@ -253,6 +253,24 @@ body::after {
 ========================= */
 .contact p { margin: 4px 0; }
 
+.contact svg {
+  width: 18px;
+  height: 18px;
+  vertical-align: middle;
+  margin-right: 6px;
+  transition: filter 0.3s ease;
+  filter: drop-shadow(0 0 2px var(--green));
+}
+
+.icon-location { fill: var(--green); filter: drop-shadow(0 0 3px var(--green)); }
+.icon-phone { fill: var(--red); filter: drop-shadow(0 0 3px var(--red)); }
+.icon-email { fill: var(--sand); filter: drop-shadow(0 0 3px var(--sand)); }
+
+/* Hover effect for glow intensification */
+.contact p:hover svg {
+  filter: drop-shadow(0 0 5px currentColor);
+}
+
 /* =========================
    CURSOR
 ========================= */
