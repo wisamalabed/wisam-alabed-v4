@@ -50,19 +50,7 @@ jobs:
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>""" + html.escape(resume['basics']['name']) + """ - Resume</title>
-            <style>
-                /* Your CSS styles here */
-                body { font-family: Arial, sans-serif; margin: 40px; max-width: 800px; margin: 0 auto; }
-                .header { background: #2563eb; color: white; padding: 40px 20px; text-align: center; }
-                .section { margin-bottom: 30px; }
-                .section-title { color: #2563eb; border-bottom: 2px solid #2563eb; padding-bottom: 5px; }
-                .experience-item { margin-bottom: 20px; }
-                .company { color: #2563eb; font-weight: bold; }
-                .date { color: #666; font-size: 0.9em; }
-                .highlights { list-style: none; padding-left: 0; }
-                .highlights li::before { content: "▸"; color: #2563eb; font-weight: bold; }
-                @media (max-width: 768px) { body { margin: 20px; } }
-            </style>
+            <link rel="stylesheet" href="styles.css">
         </head>
         <body>
             <div class="header">
