@@ -12,6 +12,9 @@
   --red: #ff4f4f;          /* accent red from Palestine flag */
   --sand: #f0e6b8;         /* sand tone from flag */
   --cyan: #4dfcff;
+  --red-rgb: 229, 57, 53;      
+  --green-rgb: 0, 200, 83;     
+  --sand-rgb: 200, 182, 138;  
 
   /* Typography */
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
@@ -78,52 +81,54 @@ body::after {
 }
 
 /* =========================
-   LOGO
+   LOGO (flat, subtle)
 ========================= */
 .logo {
   display: flex;
   align-items: center;
   gap: 14px;
   margin-bottom: 28px;
-  padding: 14px 16px;
+  padding: 12px 16px; /* compact padding */
   border-radius: var(--border-radius-medium);
-  background: linear-gradient(135deg, var(--red) 0%, var(--sand) 50%, var(--green) 100%);
-  border: 1px solid rgba(255, 79, 79, 0.35);
+
+  /* subtle solid background using sand as base */
+  background: var(--panel); /* keeps it neutral and soft */
+
+  /* optional colored border to hint Palestine colors */
+  border-left: 4px solid var(--red);
+  border-top: 4px solid var(--green);
+  border-bottom: 4px solid var(--sand);
+
   backdrop-filter: blur(6px);
-  box-shadow: 0 0 20px rgba(255, 79, 79, 0.15);
-  position: relative;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1); /* subtle shadow */
 }
 
-/* Dark overlay for contrast */
-.logo::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4); /* semi-transparent black */
-  border-radius: var(--border-radius-medium);
-  pointer-events: none;
+.logo img {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  box-shadow: 0 0 0 1px rgba(var(--green-rgb), 0.3),
+              0 0 12px rgba(var(--green-rgb), 0.2);
+  filter: contrast(1.05) saturate(1.1);
+  animation: flicker var(--flicker-duration) infinite;
 }
 
-/* Text above overlay */
 .logo-text {
-  position: relative; /* ensure above overlay */
   display: flex;
   flex-direction: column;
   line-height: 1.2;
 }
 
 .sys-name {
-  color: var(--text); /* off-white for max contrast */
+  color: var(--green);
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  text-shadow: 0 0 2px rgba(0, 0, 0, 0.5); /* subtle shadow for readability */
 }
 
 .sys-tag {
-  color: var(--sand); /* sand tone for softer contrast */
+  color: var(--dim);
   font-size: 12px;
-  text-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
 }
 
 /* =========================
