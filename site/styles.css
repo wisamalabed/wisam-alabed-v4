@@ -179,23 +179,60 @@ body::after {
 /* =========================
    GRID CARDS
 ========================= */
-.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-top: 10px; }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+}
+
 .card {
-  background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(0,0,0,0.2)), var(--panel);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.03), rgba(0, 0, 0, 0.2)), var(--panel);
   border: 1px solid rgba(0, 200, 83, 0.2);
   padding: 14px;
   border-radius: var(--border-radius-medium);
   transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  position: relative;
 }
+
 .card:hover {
   transform: translateY(-2px);
   border-color: rgba(0, 200, 83, 0.35);
   background: linear-gradient(135deg, var(--red) 10%, var(--sand) 50%, var(--green) 90%);
 }
-.card h3 { background: linear-gradient(90deg, var(--red), var(--sand), var(--green));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin: 0 0 6px; font-size: 13px; text-transform: lowercase; }
+
+/* Dark overlay on hover to improve contrast */
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--border-radius-medium);
+  background: rgba(0, 0, 0, 0.4); /* semi-transparent dark layer */
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.card:hover::after {
+  opacity: 1;
+}
+
+/* Headings */
+.card h3 {
+  position: relative; /* above overlay */
+  margin: 0 0 6px;
+  font-size: 13px;
+  text-transform: lowercase;
+  background: linear-gradient(90deg, var(--red), var(--sand), var(--green));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  z-index: 1;
+}
+
+/* Fallback: solid color for accessibility if gradient fails */
+.card:hover h3 {
+  color: var(--text); /* ensures visibility above gradient overlay */
+}
 
 /* =========================
    TIMELINE
