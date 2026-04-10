@@ -248,6 +248,23 @@ body::after {
 .meta { color: var(--dim); font-size: 13px; margin: 2px 0; }
 .desc { margin: 0; color: var(--text); }
 
+.highlights {
+  margin: 6px 0 0 18px;
+  padding: 0;
+  list-style: none;
+  color: var(--dim);
+  font-size: 12px;
+}
+
+.highlights li::before {
+  content: "→ ";
+  color: var(--green-soft);
+}
+
+.highlights li {
+  margin-bottom: 3px;
+}
+
 /* =========================
    CONTACT
 ========================= */
