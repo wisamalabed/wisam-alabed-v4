@@ -5,34 +5,36 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+  
 jobs:
-  build-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Generate build metadata
+      - name: Generate metadata
         run: |
-          echo "Creating build.json"
-
           VERSION="v1.0.$GITHUB_RUN_NUMBER"
           DATE=$(date -u +"%Y-%m-%d %H:%M UTC")
           COMMIT=$(git rev-parse --short HEAD)
 
-          cat <<EOF > build.json
-          {
-            "version": "$VERSION",
-            "lastDeploy": "$DATE",
-            "commit": "$COMMIT"
-          }
-          EOF
+          sed -i "s/{{VERSION}}/$VERSION/g" index.html
+          sed -i "s/{{LAST_DEPLOY}}/$DATE/g" index.html
+          sed -i "s/{{COMMIT}}/$COMMIT/g" index.html
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: .
 
-      - name: Deploy to GitHub Pages
+      - name: Deploy
         uses: actions/deploy-pages@v4
