@@ -47,9 +47,7 @@ jobs:
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: |
-            index.html
-            styles.css
+          path: .
 
       # 6. Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
