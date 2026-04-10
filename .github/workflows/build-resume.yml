@@ -32,6 +32,18 @@ jobs:
         # Load the JSON resume
         with open('resume.json', 'r') as f:
             resume = json.load(f)
+
+        with open('index.html', 'w') as f:
+            f.write(html_content)
+        
+        def format_date(date_str):
+            if date_str == 'Present':
+                return date_str
+            try:
+                date = datetime.strptime(date_str, '%Y-%m-%d')
+                return date.strftime('%b %Y')
+            except:
+                return date_str
         
         # Generate HTML
         html_content = """
@@ -133,18 +145,6 @@ jobs:
         </body>
         </html>
         """
-        
-        with open('index.html', 'w') as f:
-            f.write(html_content)
-        
-        def format_date(date_str):
-            if date_str == 'Present':
-                return date_str
-            try:
-                date = datetime.strptime(date_str, '%Y-%m-%d')
-                return date.strftime('%b %Y')
-            except:
-                return date_str
         
         EOF
         
