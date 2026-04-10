@@ -293,6 +293,52 @@ body::after {
   50% { opacity: 0; }
 }
 
+/* =========================
+   TERMINAL COPYLEFT FOOTER
+========================= */
+
+.terminal-footer {
+  margin-top: 60px;
+  padding: 24px 16px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+
+  display: flex;
+  justify-content: center;
+
+  background: transparent;
+}
+
+/* ASCII banner block */
+.copyleft-banner {
+  font-family: ui-monospace, Menlo, Monaco, "Courier New", monospace;
+  font-size: 11px;
+  line-height: 1.4;
+
+  color: rgba(0, 0, 0, 0.65);
+
+  white-space: pre;
+  text-align: left;
+
+  max-width: 100%;
+  overflow-x: auto;
+
+  padding: 12px 14px;
+
+  border-left: 2px solid rgba(0, 122, 61, 0.35);
+  background: rgba(0, 0, 0, 0.02);
+
+  border-radius: 6px;
+
+  opacity: 0.85;
+}
+
+/* subtle hover "terminal activation" */
+.copyleft-banner:hover {
+  opacity: 1;
+  border-left-color: rgba(0, 122, 61, 0.7);
+  background: rgba(0, 122, 61, 0.04);
+}
+
 /* MOBILE */
 @media (max-width: 600px) {
   .terminal {
