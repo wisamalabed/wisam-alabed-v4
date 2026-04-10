@@ -9,24 +9,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      GIST_RAW_URL: https://gist.github.com/wisamalabed/6c826f000b9d865a34c0ba6a4841cdb1/raw/resume.json
-      OUTPUT_FILE: index.html
+      GIST_RAW_URL: https://gist.githubusercontent.com/wisamalabed/6c826f000b9d865a34c0ba6a4841cdb1/raw/f08f6a0483c424f9f69afbab44d24a4234b4fb3d/resume.json
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: Install deps
-        run: |
-          sudo apt-get update -y
-          sudo apt-get install -y jq gettext-base
+        run: sudo apt-get update -y && sudo apt-get install -y jq gettext-base
 
       - name: Fetch Gist JSON
-        run: |
-          curl -fsSL "$GIST_RAW_URL" -o resume.json
+        run: curl -fsSL "$GIST_RAW_URL" -o resume.json
 
-      - name: Extract values to env file
+      - name: Export simple fields to env file
         run: |
-          # Basic extraction; adjust keys if your JSON shape differs
           jq -r '
             .basics.name // "" as $name |
             .basics.label // "" as $label |
@@ -39,12 +34,12 @@ jobs:
             .meta.theme // "" as $theme |
             {name:$name,label:$label,image:$image,email:$email,phone:$phone,summary:$summary,city:$city,country:$country,theme:$theme} |
             to_entries[] | "\(.key)=\(.value|@sh)"' resume.json > resume.env
-          # Unquote sh-escaped values for envsubst usage
+          # remove surrounding single quotes jq added
           sed -E "s/^([^=]+=)'(.*)'$/\1\2/" resume.env > resume.env.tmp && mv resume.env.tmp resume.env
 
-      - name: Build work, education, skills partials (HTML)
+      - name: Render lists to HTML partials
         run: |
-          # Work
+          # Work items
           jq -r '
             .work[]? |
             "<div style=\"margin-bottom:12px\"><strong>\(.name|@html) — \(.position|@html)</strong><div class=\"muted\">\(.startDate // "")\(.endDate? | select(.) | " — " + .) • \(.location // "")</div><div style=\"margin-top:6px\">\(.summary|@html)</div>" +
@@ -60,86 +55,41 @@ jobs:
             .skills[]? |
             "<div style=\"margin-bottom:8px\"><strong>\(.name|@html)</strong><div class=\"muted\">\((.keywords // []) | join(", "))</div></div>"' resume.json > skills.html || true
 
-      - name: Create index.html from template
+      - name: Prepare template (convert {{var}} -> ${var})
         run: |
-          cat > template.html <<'TEMPLATE'
-          <!doctype html>
-          <html lang="en">
-          <head>
-            <meta charset="utf-8" />
-            <meta name="viewport" content="width=device-width,initial-scale=1" />
-            <title>${name} — Resume</title>
-            <style>
-              body{font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;margin:24px;color:#111}
-              header{display:flex;gap:16px;align-items:center}
-              img{width:96px;height:96px;border-radius:8px;object-fit:cover}
-              h1{margin:0;font-size:1.4rem}
-              h2{margin:18px 0 6px;font-size:1rem}
-              .muted{color:#555;font-size:0.95rem}
-              .section{margin-top:14px}
-              ul{margin:6px 0 0 18px;padding:0}
-              .grid{display:grid;grid-template-columns:1fr 320px;gap:24px}
-              @media (max-width:700px){.grid{grid-template-columns:1fr}}
-            </style>
-          </head>
-          <body>
-            <main class="grid">
-              <section>
-                <header>
-                  <img src="${image}" alt="${name}">
-                  <div>
-                    <h1>${name}</h1>
-                    <div class="muted">${label}</div>
-                    <div class="muted" style="margin-top:6px">${city}, ${country} • ${phone} • <a href="mailto:${email}">${email}</a></div>
-                  </div>
-                </header>
-          
-                <div class="section">
-                  <h2>Summary</h2>
-                  <p class="muted">${summary}</p>
-                </div>
-          
-                <div class="section">
-                  <h2>Work</h2>
-                  <!-- WORK_PLACEHOLDER -->
-                  __WORK_HTML__
-                </div>
-          
-                <div class="section">
-                  <h2>Education</h2>
-                  <!-- EDUCATION_PLACEHOLDER -->
-                  __EDU_HTML__
-                </div>
-              </section>
-          
-              <aside>
-                <div class="section">
-                  <h2>Skills</h2>
-                  <!-- SKILLS_PLACEHOLDER -->
-                  __SKILLS_HTML__
-                </div>
-          
-                <div class="section">
-                  <h2>Meta</h2>
-                  <div id="meta" class="muted">Theme: ${theme}</div>
-                </div>
-              </aside>
-            </main>
-          </body>
-          </html>
-          TEMPLATE
-          
-          # Load env
+          # create working copy
+          cp index.html index.template.html
+          # convert double-mustache to envsubst style ${var}
+          sed -E 's/\{\{\s*basics\.name\s*\}\}/${name}/g;
+                  s/\{\{\s*basics\.label\s*\}\}/${label}/g;
+                  s/\{\{\s*basics\.image\s*\}\}/${image}/g;
+                  s/\{\{\s*basics\.email\s*\}\}/${email}/g;
+                  s/\{\{\s*basics\.phone\s*\}\}/${phone}/g;
+                  s/\{\{\s*basics\.summary\s*\}\}/${summary}/g;
+                  s/\{\{\s*basics\.location\.city\s*\}\}/${city}/g;
+                  s/\{\{\s*basics\.location\.countryCode\s*\}\}/${country}/g;
+                  s/\{\{\s*meta\.theme\s*\}\}/${theme}/g' index.template.html > index.template2.html
+
+      - name: Inject partial placeholders
+        run: |
+          # replace your hand-written blocks (e.g., the {{#work}}...{{/work}} area) with unique markers
+          sed -E '/\{\{\#work\}\}/,/\{\{\/work\}\}/c\__WORK_HTML__' index.template2.html > index.template3.html
+          sed -E '/\{\{\#education\}\}/,/\{\{\/education\}\}/c\__EDU_HTML__' index.template3.html > index.template4.html
+          sed -E '/\{\{\#skills\}\}/,/\{\{\/skills\}\}/c\__SKILLS_HTML__' index.template4.html > index.template.final.html
+
+      - name: Render final index.html with envsubst
+        env:
+          INPUT_TEMPLATE: index.template.final.html
+        run: |
           set -o allexport
           . resume.env
           set +o allexport
-
-          # Inject generated partials into template and produce final index.html
           WORK_HTML="$(cat work.html 2>/dev/null || true)"
           EDU_HTML="$(cat education.html 2>/dev/null || true)"
           SKILLS_HTML="$(cat skills.html 2>/dev/null || true)"
-
-          sed "s|__WORK_HTML__|${WORK_HTML}|g; s|__EDU_HTML__|${EDU_HTML}|g; s|__SKILLS_HTML__|${SKILLS_HTML}|g" template.html > "$OUTPUT_FILE"
+          # use awk to safely replace markers with partials and run envsubst
+          awk -v w="$WORK_HTML" -v e="$EDU_HTML" -v s="$SKILLS_HTML" '{gsub(/__WORK_HTML__/,w); gsub(/__EDU_HTML__/,e); gsub(/__SKILLS_HTML__/,s); print}' "$INPUT_TEMPLATE" > _temp_index.html
+          envsubst < _temp_index.html > index.html
 
       - name: Show generated file snippet
         run: sed -n '1,200p' index.html
@@ -149,6 +99,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add "$OUTPUT_FILE"
+          git add index.html
           git commit -m "chore: build resume from gist" || echo "no changes to commit"
           git push origin HEAD:main || echo "push failed"
