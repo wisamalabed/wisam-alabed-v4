@@ -6,47 +6,50 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # calculate page footprint
       - name: Calculate page footprint
         run: |
           HTML_SIZE=$(du -k index.html | cut -f1)
           CSS_SIZE=$(du -k styles.css | cut -f1)
-          TOTAL_SIZE=$((HTML_SIZE+CSS_SIZE))
+          TOTAL_SIZE=$((HTML_SIZE + CSS_SIZE))
           echo "HTML_SIZE=$HTML_SIZE" >> $GITHUB_ENV
           echo "CSS_SIZE=$CSS_SIZE" >> $GITHUB_ENV
           echo "TOTAL_SIZE=$TOTAL_SIZE" >> $GITHUB_ENV
-          echo "Page footprint calculated: $TOTAL_SIZE KB"
 
-      - name: Set deploy timestamp and version
+      # set version and deploy timestamp
+      - name: Set deploy metadata
         run: |
-          VERSION="v1.0.$(git rev-list --count HEAD)"
           DEPLOY_TIME=$(date -u '+%Y-%m-%d %H:%M:%S UTC')
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          VERSION="v1.0.$(git rev-list --count HEAD)"
           echo "DEPLOY_TIME=$DEPLOY_TIME" >> $GITHUB_ENV
-          echo "Version: $VERSION | Deploy time: $DEPLOY_TIME"
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
 
-      - name: Inject build metadata into index.html
+      # inject version/deploy/footprint into index.html
+      - name: Inject build metadata
         run: |
           cp index.html index.tmp.html
           sed -i "s/\[ OK \] version: loading.../[ OK ] version: $VERSION/" index.tmp.html
           sed -i "s/\[ OK \] last deploy: loading.../[ OK ] last deploy: $DEPLOY_TIME | footprint: ${TOTAL_SIZE}KB/" index.tmp.html
           mv index.tmp.html index.html
 
-      - name: Deploy to gh-pages branch
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git checkout --orphan gh-pages
-          git reset --hard
-          git add index.html styles.css
-          git commit -m "Deploy: $VERSION at $DEPLOY_TIME | footprint: ${TOTAL_SIZE}KB"
-          git push -f origin gh-pages
+      # upload pages artifact
+      - name: Upload site for GitHub Pages
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: .
+
+      # deploy
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
