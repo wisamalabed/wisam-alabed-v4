@@ -304,6 +304,13 @@ h1 { font-size: 2.5em; margin-bottom: 10px; font-weight: 700; }
   margin-right: 0;
 }
 
+/* Show content when its radio button is checked */
+#tabAbout:checked ~ #about,
+#tabExp:checked ~ #experience,
+#tabContact:checked ~ #contact {
+  display: block;
+}
+
 .card-buttons {
   display: flex;
   background-color: #fff;
@@ -312,7 +319,11 @@ h1 { font-size: 2.5em; margin-bottom: 10px; font-weight: 700; }
   bottom: 0;
   left: 0;
 }
-.card-buttons button {
+
+.card-buttons input[type="radio"] {
+  display: none;
+}
+.card-buttons label {
   flex: 1 1 auto;
   user-select: none;
   background: 0;
@@ -322,12 +333,12 @@ h1 { font-size: 2.5em; margin-bottom: 10px; font-weight: 700; }
   cursor: pointer;
   color: #5c5c6d;
   transition: 0.3s;
-  font-family: "Jost", sans-serif;
+  font-family: var(--ui-mono);
   font-weight: 500;
   outline: 0;
   border-bottom: 3px solid transparent;
 }
-.card-buttons button.is-active, .card-buttons button:hover {
+.card-buttons label.is-active, .card-buttons label:hover {
   color: #2b2c48;
   border-bottom: 3px solid #8a84ff;
   background: linear-gradient(to bottom, rgba(127, 199, 231, 0) 0%, rgba(207, 204, 255, 0.2) 44%, rgba(211, 226, 255, 0.4) 100%);
