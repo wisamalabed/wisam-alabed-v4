@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wisam Alabed - Resume</title>
+    <title>Wisam Al Abed - Resume</title>
     <style>
         * {
             margin: 0;
@@ -109,21 +109,21 @@
         }
         
         .experience-item, .education-item, .skill-item {
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
         
         .item-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
             flex-wrap: wrap;
             gap: 10px;
         }
         
         .item-title {
             font-weight: 600;
-            font-size: 1.1em;
+            font-size: 1.2em;
         }
         
         .item-company {
@@ -136,46 +136,97 @@
             font-size: 0.9em;
         }
         
+        .item-location {
+            color: var(--text-light);
+            font-size: 0.9em;
+            font-style: italic;
+        }
+        
         .item-description {
             color: var(--text-color);
-            line-height: 1.5;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .highlights {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .highlights li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 8px;
+            color: var(--text-color);
+        }
+        
+        .highlights li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-weight: bold;
         }
         
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
         }
         
         .skill-category {
             background: var(--section-bg);
-            padding: 15px;
-            border-radius: 6px;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
         }
         
         .skill-category h4 {
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             color: var(--primary-color);
-            font-size: 1em;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+        
+        .skill-level {
+            font-size: 0.85em;
+            color: var(--text-light);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
         .skill-list {
             list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
         }
         
-        .skill-list li {
-            padding: 4px 0;
-            color: var(--text-color);
+        .skill-tag {
+            background: var(--primary-color);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 500;
         }
         
         .education-item .item-degree {
             font-weight: 600;
             font-size: 1.1em;
+            color: var(--primary-color);
         }
         
         .education-item .item-school {
-            color: var(--primary-color);
             font-weight: 500;
+            font-size: 1em;
+            margin-bottom: 5px;
+        }
+        
+        .education-item .item-period {
+            color: var(--text-light);
+            font-size: 0.9em;
         }
         
         .footer {
@@ -216,6 +267,11 @@
                 flex-direction: column;
                 align-items: flex-start;
             }
+            
+            .profile-img {
+                width: 100px;
+                height: 100px;
+            }
         }
         
         @media (max-width: 480px) {
@@ -231,40 +287,72 @@
             .section-title {
                 font-size: 1.2em;
             }
+            
+            .contact-info {
+                gap: 8px;
+            }
+            
+            .contact-item {
+                font-size: 0.8em;
+            }
+        }
+        
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                border: 1px solid #ccc;
+            }
+            
+            .header {
+                background: #2563eb !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            .section {
+                page-break-inside: avoid;
+            }
+            
+            .experience-item {
+                page-break-inside: avoid;
+                margin-bottom: 20px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header class="header">
-            <img src="https://via.placeholder.com/120x120/2563eb/ffffff?text=WA" alt="Profile" class="profile-img">
-            <h1>Wisam Alabed</h1>
-            <div class="subtitle">Software Developer & Engineer</div>
+            <img src="https://avatars.githubusercontent.com/u/4520207?s=400&u=f613d22d9121030d44a9a53af8c88c7df401580f&v=4" alt="Profile" class="profile-img">
+            <h1>Wisam Al Abed</h1>
+            <div class="subtitle">I'm a full stack software engineer who can build apps from the ground up.</div>
             <div class="contact-info">
                 <div class="contact-item">
                     <span>📧</span>
-                    <span>wisamalabed@example.com</span>
+                    <span>wisam.alabed@tutamail.com</span>
                 </div>
                 <div class="contact-item">
                     <span>📱</span>
-                    <span>+1 (555) 123-4567</span>
-                </div>
-                <div class="contact-item">
-                    <span>🔗</span>
-                    <span>github.com/wisamalabed</span>
+                    <span>(416) 276-4074</span>
                 </div>
                 <div class="contact-item">
                     <span>📍</span>
-                    <span>San Francisco, CA</span>
+                    <span>Toronto, CA</span>
                 </div>
             </div>
         </header>
 
         <section class="section">
-            <h2 class="section-title">About</h2>
-            <p class="item-description">
-                Experienced software developer with expertise in full-stack development, system architecture, and building scalable applications. Passionate about clean code, user experience, and continuous learning. 10+ years of experience in the tech industry with a focus on web technologies and cloud platforms.
-            </p>
+            <h2 class="section-title">Summary</h2>
+            <div class="item-description">
+                Wisam has over 10 years of experience of building software utilizing an array of programming languages, technologies and software frameworks. Subject matter expert in Web development, and Model Driven Engineering. Focused on software usability, re-usability, scalability and working in an agile manner. Experienced in developing user-centric solutions that deliver maximum value. Adept at leading teams in achieving excellence in client satisfaction, productivity, and profitability.
+            </div>
         </section>
 
         <section class="section">
@@ -272,50 +360,99 @@
             
             <div class="experience-item">
                 <div class="item-header">
-                    <div>
-                        <div class="item-title">Senior Software Engineer</div>
-                        <div class="item-company">TechCorp Inc.</div>
+                    div>
+                        <div class="item-title">Senior Software Developer</div>
+                        <div class="item-company">University of Toronto Data Sciences Institute</div>
+                        <div class="item-location">Toronto</div>
                     </div>
-                    <div class="item-date">2020 - Present</div>
+                    <div class="item-date">Oct 2022 - Present</div>
                 </div>
                 <div class="item-description">
-                    - Led development of microservices architecture serving 1M+ users<br>
-                    - Implemented CI/CD pipelines reducing deployment time by 60%<br>
-                    - Mentored junior developers and conducted code reviews<br>
-                    - Optimized database queries improving performance by 40%
+                    Joined the Data Sciences Institute(DSI) as part of the initiative to collaborate with researchers to transform ideas into real world solutions.
                 </div>
+            </div>
+
+            <div class="experience-item">
+                <div class="item-header">
+                    div>
+                        <div class="item-title">Intermediate Software Developer</div>
+                        <div class="item-company">Kotn</div>
+                        <div class="item-location">Toronto</div>
+                    </div>
+                    <div class="item-date">Mar 2020 - Jun 2022</div>
+                </div>
+                <div class="item-description">
+                    Joined Kotn as part of the digital team to transform and scale their e-commerce experience.
+                </div>
+                <ul class="highlights">
+                    <li>Migrated the e-commerce site to a headless site built using NextJS that connects to the shopify backend</li>
+                    <li>Set up sanity.io as the CMS for managing content on the site</li>
+                    <li>Built a redis cache layer as a microservice for fetching product data for the site</li>
+                    <li>Implemented complex features such as bundle product pages, product reviews, size guides</li>
+                </ul>
+            </div>
+
+            <div class="experience-item">
+                <div class="item-header">
+                    <div>
+                        <div class="item-title">Business/Technical Analyst</div>
+                        <div class="item-company">IBM MEA</div>
+                        <div class="item-location">Dubai</div>
+                    </div>
+                    <div class="item-date">Sep 2016 - Sep 2018</div>
+                </div>
+                <div class="item-description">
+                    Joined IBM Dubai as part of Global Business Services for delivering consulting engagements.
+                </div>
+                <ul class="highlights">
+                    <li>SMART Mufti chatbot: Built and designed a chatbot that will be able to answer questions about islamic legal rulings . Analyzed and categorized user submitted legal questions. Created entities and intents for each question based on the categorization (Watson Assistant). Ran K-Fold to analyze the accuracy and precision of the categorization</li>
+                    <li>RTA Chatbot: Built and developed the responsive web front end for the enterprise chat bot application. I took the design provided by the client and built the web front end for the chat bot application. Frontend built using HTML / CSS and javascript that connects to a node JS backend API</li>
+                    <li>VAT: Business and System Analyst to assess the VAT impact and changes needed on the systems used by the various business entities in order to be compliant with the new Government VAT requirements in Jan 2018. Conducted workshops with each business entity to gather the requirements and identify the impact on the business processes and financial systems used. Analyzed and Assessed the requirements producing a business requirements document. This document was used by the respective business entities to modify and change their systems accordingly</li>
+                    <li>Developed and built a demo that runs on Blockchain Hyperledger fabric v0.6 for capturing the life cycle of a vehicle from manufacturing to scrap</li>
+                </ul>
             </div>
 
             <div class="experience-item">
                 <div class="item-header">
                     <div>
                         <div class="item-title">Full Stack Developer</div>
-                        <div class="item-company">StartupXYZ</div>
+                        <div class="item-company">XYpper Technologies</div>
+                        <div class="item-location">Canada</div>
                     </div>
-                    <div class="item-date">2017 - 2020</div>
+                    <div class="item-date">Sep 2015 - Sep 2016</div>
                 </div>
                 <div class="item-description">
-                    - Built React applications with Node.js backend<br>
-                    - Designed and implemented RESTful APIs<br>
-                    - Collaborated with UX team on responsive design<br>
-                    - Deployed and maintained production applications
+                    Developed a website for connecting shippers to truckers to make transportation of goods more efficient and profitable.
                 </div>
+                <ul class="highlights">
+                    <li>Designed a sophisticated search algorithm to allow shippers to find prospective truckers</li>
+                    <li>Automated the ordering, billing, and invoicing between shippers and truckers</li>
+                    <li>Redesigned the front end to use bootstrap and improved the UI/UX to make it more usable and functional and responsive.</li>
+                    <li>Redesigned the backend to be more lean and robust. Improved performance of the shipper search page. Improved search from taking a minute to taking 5s.</li>
+                    <li>Built the website notification system (full stack) for users receiving messages and order information in real time</li>
+                    <li>Designed and contributed to the invoicing management system to facilitate the invoicing between the shipper and trucker.</li>
+                </ul>
             </div>
 
             <div class="experience-item">
                 <div class="item-header">
                     <div>
-                        <div class="item-title">Junior Developer</div>
-                        <div class="item-company">WebSolutions Ltd.</div>
+                        <div class="item-title">Software Researcher</div>
+                        <div class="item-company">McGill University</div>
+                        <div class="item-location">Canada</div>
                     </div>
-                    <div class="item-date">2015 - 2017</div>
+                    <div class="item-date">Sep 2008 - Dec 2014</div>
                 </div>
                 <div class="item-description">
-                    - Developed client-facing web applications<br>
-                    - Worked with PHP, JavaScript, and MySQL<br>
-                    - Participated in agile development processes<br>
-                    - Fixed bugs and implemented new features
+                    Joined the software engineering lab
                 </div>
+                <ul class="highlights">
+                    <li>Focused on software reusability, modularity and model driven engineering</li>
+                    <li>Over 5 publications in prominent conferences and journals</li>
+                    <li>Part of the team that built the TouchCORE tool. My contribution was designing and building the model weaver in java</li>
+                    <li>Teaching assistant for several courses and subjects:</li>
+                    <li>Intro to java programming; Bash, C and python course; Relational databases; Model-Driven Software Development; Software Fault Tolerance</li>
+                </ul>
             </div>
         </section>
 
@@ -325,14 +462,10 @@
             <div class="education-item">
                 <div class="item-header">
                     <div>
-                        <div class="item-degree">Bachelor of Science in Computer Science</div>
-                        <div class="item-school">University of Technology</div>
+                        <div class="item-degree">Bachelors in Software Engineering</div>
+                        <div class="item-school">McGill University</div>
                     </div>
-                    <div class="item-date">2011 - 2015</div>
-                </div>
-                <div class="item-description">
-                    GPA: 3.8/4.0<br>
-                    Relevant coursework: Data Structures, Algorithms, Software Engineering, Database Systems
+                    <div class="item-period">Sep 2003 - Jun 2007</div>
                 </div>
             </div>
         </section>
@@ -342,49 +475,42 @@
             <div class="skills-grid">
                 <div class="skill-category">
                     <h4>Programming Languages</h4>
-                    <ul class="skill-list">
-                        <li>JavaScript / TypeScript</li>
-                        <li>Python</li>
-                        <li>Java</li>
-                        <li>PHP</li>
-                        <li>HTML / CSS</li>
-                    </ul>
+                    <div class="skill-level">Senior</div>
+                    <div class="skill-list">
+                        <span class="skill-tag">HTML/CSS</span>
+                        <span class="skill-tag">Typescript/Javascript</span>
+                        <span class="skill-tag">SQL/NoSQL</span>
+                        <span class="skill-tag">GraphQL</span>
+                    </div>
                 </div>
                 <div class="skill-category">
-                    <h4>Frameworks & Libraries</h4>
-                    <ul class="skill-list">
-                        <li>React / Redux</li>
-                        <li>Node.js / Express</li>
-                        <li>Vue.js</li>
-                        <li>Django</li>
-                        <li>Bootstrap / Tailwind</li>
-                    </ul>
+                    <h4>Frameworks</h4>
+                    <div class="skill-level">Senior</div>
+                    <div class="skill-list">
+                        <span class="skill-tag">Node.js/Express</span>
+                        <span class="skill-tag">React.js</span>
+                        <span class="skill-tag">Redis</span>
+                        <span class="skill-tag">Next.js</span>
+                        <span class="skill-tag">Sanity.io</span>
+                        <span class="skill-tag">Shopify</span>
+                    </div>
                 </div>
                 <div class="skill-category">
-                    <h4>Databases & Tools</h4>
-                    <ul class="skill-list">
-                        <li>MySQL / PostgreSQL</li>
-                        <li>MongoDB</li>
-                        <li>Redis</li>
-                        <li>Docker / Kubernetes</li>
-                        <li>AWS / Azure</li>
-                    </ul>
-                </div>
-                <div class="skill-category">
-                    <h4>Development Tools</h4>
-                    <ul class="skill-list">
-                        <li>Git / GitHub</li>
-                        <li>CI/CD (GitHub Actions, Jenkins)</li>
-                        <li>Agile / Scrum</li>
-                        <li>Testing (Jest, Cypress)</li>
-                        <li>VS Code / IDE</li>
-                    </ul>
+                    <h4>Devops</h4>
+                    <div class="skill-level">Beginner</div>
+                    <div class="skill-list">
+                        <span class="skill-tag">Vercel</span>
+                        <span class="skill-tag">G Cloud</span>
+                        <span class="skill-tag">Kubernetes</span>
+                        <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">Git</span>
+                    </div>
                 </div>
             </div>
         </section>
 
         <footer class="footer">
-            <p>Last updated: April 2026 | Built with HTML & CSS</p>
+            <p>Last updated: April 2026 | Built with HTML & CSS from JSON Resume</p>
         </footer>
     </div>
 </body>
