@@ -1,134 +1,75 @@
-:root{
-  --primary-color: #8B5E3C;
-  --primary-dark:  #6F472E;
-  --accent-color:  #0E9F6E;
-  --bg-color:      #FBFAF8;
-  --section-bg:    #F4EEEA;
-  --text-color:    #111827;
-  --text-light:    #6B7280;
-  --border-color:  #E9E4E1;
-  --skill-bg:      var(--primary-color);
-  --header-text:   white;
+:root {
+  --primary-color: #8b5e3c;
+  --primary-dark: #6f472e;
+  --accent-color: #0e9f6e;
+  --bg-color: #fbfaf8;
+  --section-bg: #f4eeea;
+  --text-color: #111827;
+  --text-light: #6b7280;
+  --border-color: #e9e4e1;
+  --skill-bg: var(--primary-color);
+  --header-text: white;
 
-  /* Typography: monospaced UI stack */
-  --ui-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Helvetica Neue", monospace;
+  --ui-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono",
+    "Helvetica Neue", monospace;
   --base-font-size: 16px;
+
+  /* rgb helpers for alpha in gradients */
+  --primary-rgb: 139, 94, 60; /* #8b5e3c */
+  --accent-rgb: 14, 159, 110; /* #0e9f6e */
 }
 
-@media (prefers-color-scheme: dark){
+@media (prefers-color-scheme: dark) {
   :root,
-  :root.dark{
-    --primary-color: #CFA88A;
-    --primary-dark:  #B07A57;
-    --accent-color:  #6DD3B1;
-    --bg-color:      #0B0E10;
-    --section-bg:    #0F1416;
-    --text-color:    #E6EEF2;
-    --text-light:    #A8B3B8;
-    --border-color:  #1A2426;
-    --skill-bg:      #CFA88A;
-    --header-text:   var(--text-color);
+  :root.dark {
+    --primary-color: #cfa88a;
+    --primary-dark: #b07a57;
+    --accent-color: #6dd3b1;
+    --bg-color: #0b0e10;
+    --section-bg: #0f1416;
+    --text-color: #e6eef2;
+    --text-light: #a8b3b8;
+    --border-color: #1a2426;
+    --skill-bg: #cfa88a;
+    --header-text: var(--text-color);
+
+    /* dark theme rgb helpers */
+    --primary-rgb: 207, 168, 138; /* #cfa88a */
+    --accent-rgb: 109, 211, 177; /* #6dd3b1 */
   }
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; } 
-
-
-body { font-family: var(--ui-mono); line-height: 1.6; color: var(--text-color); background-color: var(--bg-color); max-width: 800px; margin: 0 auto; padding: 20px; } 
-
-.container { background: var(--bg-color); border-radius: 8px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); overflow: hidden; } 
-
-.header { background: linear-gradient(135deg, var(--primary-color), var(--accent-color)); color: var(--header-text); text-align: center; padding: 40px 20px; } 
-
-.profile-img { width: 120px; height: 120px; border-radius: 50%; border: 4px solid white; margin-bottom: 20px; object-fit: cover; } 
-
-h1 { font-size: 2.5em; margin-bottom: 10px; font-weight: 700; } 
-
-.subtitle { font-size: 1.2em; opacity: 0.9; margin-bottom: 20px; } 
-
-.contact-info { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin-bottom: 20px; } 
-
-.contact-item { display: flex; align-items: center; gap: 8px; font-size: 0.9em; } 
-
-.section { padding: 30px 20px; border-bottom: 1px solid var(--border-color); } 
-
-.section:last-child { border-bottom: none; } 
-
-.section-title { font-size: 1.5em; font-weight: 600; margin-bottom: 20px; color: var(--primary-color); display: flex; align-items: center; gap: 10px; } 
-
-.section-title::before { content: ''; width: 4px; height: 24px; background: var(--primary-color); border-radius: 2px; } 
-
-.experience-item, .education-item, .skill-item { margin-bottom: 30px; } 
-
-.item-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap; gap: 10px; } 
-
-.item-title { font-weight: 600; font-size: 1.2em; } .item-company { color: var(--primary-color); font-weight: 500; } 
-
-.item-date { color: var(--text-light); font-size: 0.9em; } 
-
-.item-location { color: var(--text-light); font-size: 0.9em; font-style: italic; } 
-
-.item-description { color: var(--text-color); line-height: 1.6; margin-bottom: 15px; } 
-
-.highlights { list-style: none; padding-left: 0; } 
-
-.highlights li { position: relative; padding-left: 20px; margin-bottom: 8px; color: var(--text-color); } 
-
-.highlights li::before { content: '▸'; position: absolute; left: 0; color: var(--primary-color); font-weight: bold; } 
-
-.skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; } 
-
-.skill-category { background: var(--section-bg); padding: 20px; border-radius: 8px; border-left: 4px solid var(--primary-color); } 
-
-.skill-category h4 { margin-bottom: 15px; color: var(--primary-color); font-size: 1.1em; font-weight: 600; } 
-
-.skill-level { font-size: 0.85em; color: var(--text-light); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; } 
-
-.skill-list { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; } .skill-tag { background: var(--primary-color); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.85em; font-weight: 500; } 
-
-.education-item .item-degree { font-weight: 600; font-size: 1.1em; color: var(--primary-color); } 
-
-.education-item .item-school { font-weight: 500; font-size: 1em; margin-bottom: 5px; } 
-
-.education-item .item-period { color: var(--text-light); font-size: 0.9em; } 
-
-.footer { text-align: center; padding: 20px; color: var(--text-light); font-size: 0.9em; } 
-
-@media (max-width: 768px) { 
-  body { padding: 10px; } 
-  h1 { font-size: 2em; } 
-  .subtitle { font-size: 1em; } 
-  .contact-info { flex-direction: column; align-items: center; gap: 10px; } 
-  .section { padding: 20px 15px; } .skills-grid { grid-template-columns: 1fr; } 
-  .item-header { flex-direction: column; align-items: flex-start; } 
-  .profile-img { width: 100px; height: 100px; } 
-} 
-
-@media (max-width: 480px) { 
-  .profile-img { width: 80px; height: 80px; } 
-  h1 { font-size: 1.5em; } 
-  .section-title { font-size: 1.2em; } 
-  .contact-info { gap: 8px; } 
-  .contact-item { font-size: 0.8em; } 
-} 
-/* Print styles */
-@media print {
-  body { background: white; padding: 0; } 
-  .container { box-shadow: none; border: 1px solid #ccc; } 
-  .header { background: #2563eb !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; } 
-  .section { page-break-inside: avoid; } 
-  .experience-item { page-break-inside: avoid; margin-bottom: 20px; } 
+ {
+  box-sizing: border-box;
 }
 
+body {
+  font-family: var(--ui-mono);
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.container {
+  color: var(--text-color);
+  font-family: var(--ui-mono);
+  min-height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+}
 
 .card {
-  max-width: 340px;
+  width: 340px;
   margin: auto;
-  overflow-y: auto;
+  overflow-y: hidden;
   position: relative;
   z-index: 1;
   overflow-x: hidden;
-  background-color: rgb(255, 255, 255);
+  background-color: var(--bg-color);
   display: flex;
   transition: 0.3s;
   flex-direction: column;
@@ -136,49 +77,105 @@ h1 { font-size: 2.5em; margin-bottom: 10px; font-weight: 700; }
   box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.2);
 }
 
-.card[data-state="#about"] {
-  height: 450px;
-}
-.card[data-state="#about"] .card-main {
-  padding-top: 0;
+/* --- ACTIVE STATE (driven by radios placed before .card) --- /
+/ hide the real radios visually but keep them accessible */
+.panel-radio {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  overflow: hidden;
 }
 
-.card[data-state="#contact"] {
+/* sections default hidden */
+.card .card-section {
+  display: none;
+}
+
+/* show the matching section and animate */
+#tabAbout:checked ~ .card .card-section#about,
+#tabExp:checked ~ .card .card-section#experience,
+#tabContact:checked ~ .card .card-section#contact {
+  display: block;
+  animation: fadeIn 0.6s both;
+}
+
+/* card height per tab (you can tune these numbers) */
+#tabAbout:checked ~ .card {
+  height: 450px;
+}
+#tabExp:checked ~ .card {
+  height: 550px;
+}
+#tabContact:checked ~ .card {
   height: 430px;
 }
 
-.card[data-state="#experience"] {
-  height: 550px;
-}
+/* simulate .is-active styles on the card when tabs are checked */
 
-.card.is-active .card-header {
+#tabExp:checked ~ .card .card-header,
+#tabContact:checked ~ .card .card-header {
   height: 80px;
 }
-.card.is-active .card-cover {
+
+#tabExp:checked ~ .card .card-cover,
+#tabContact:checked ~ .card .card-cover {
   height: 100px;
   top: -50px;
 }
-.card.is-active .card-avatar {
+
+#tabExp:checked ~ .card .card-avatar,
+#tabContact:checked ~ .card .card-avatar {
   transform: none;
   left: 20px;
   width: 50px;
   height: 50px;
   bottom: 10px;
 }
-.card.is-active .card-fullname,
-.card.is-active .card-jobtitle {
+
+#tabExp:checked ~ .card .card-fullname,
+#tabExp:checked ~ .card .card-jobtitle,
+#tabContact:checked ~ .card .card-fullname,
+#tabContact:checked ~ .card .card-jobtitle {
   left: 86px;
   transform: none;
 }
-.card.is-active .card-fullname {
+
+#tabExp:checked ~ .card .card-fullname,
+#tabContact:checked ~ .card .card-fullname {
   bottom: 18px;
   font-size: 19px;
 }
-.card.is-active .card-jobtitle {
+
+#tabExp:checked ~ .card .card-jobtitle,
+#tabContact:checked ~ .card .card-jobtitle {
   bottom: 16px;
   letter-spacing: 1px;
   font-size: 10px;
 }
+
+/* highlight the corresponding label inside .card-buttons */
+#tabAbout:checked ~ .card .card-buttons label[for="tabAbout"],
+#tabExp:checked ~ .card .card-buttons label[for="tabExp"],
+#tabContact:checked ~ .card .card-buttons label[for="tabContact"] {
+  color: #2b2c48;
+  border-bottom: 3px solid #8a84ff;
+  background: linear-gradient(
+    to bottom,
+    rgba(var(--accent-rgb), 0) 0%,
+    rgba(var(--primary-rgb), 0.12) 44%,
+    rgba(var(--primary-rgb), 0.22) 100%
+  );
+}
+
+/* --- original styles kept below --- */
 
 .card-header {
   position: relative;
@@ -269,7 +266,7 @@ h1 { font-size: 2.5em; margin-bottom: 10px; font-weight: 700; }
   font-size: 14px;
   margin: 0;
   font-weight: 400;
-  font-family: "DM Sans", sans-serif;
+  font-family: var(--ui-mono);
 }
 
 .card-social {
@@ -304,52 +301,9 @@ h1 { font-size: 2.5em; margin-bottom: 10px; font-weight: 700; }
   margin-right: 0;
 }
 
-/* Show content when its radio button is checked */
-#tabAbout:checked ~ #about,
-#tabExp:checked ~ #experience,
-#tabContact:checked ~ #contact {
-  display: block;
-}
-
-.card-buttons {
-  display: flex;
-  background-color: #fff;
-  margin-top: auto;
-  position: sticky;
-  bottom: 0;
-  left: 0;
-}
-
-.card-buttons input[type="radio"] {
-  display: none;
-}
-.card-buttons label {
-  flex: 1 1 auto;
-  user-select: none;
-  background: 0;
-  font-size: 13px;
-  border: 0;
-  padding: 15px 5px;
-  cursor: pointer;
-  color: #5c5c6d;
-  transition: 0.3s;
-  font-family: var(--ui-mono);
-  font-weight: 500;
-  outline: 0;
-  border-bottom: 3px solid transparent;
-}
-.card-buttons label.is-active, .card-buttons label:hover {
-  color: #2b2c48;
-  border-bottom: 3px solid #8a84ff;
-  background: linear-gradient(to bottom, rgba(127, 199, 231, 0) 0%, rgba(207, 204, 255, 0.2) 44%, rgba(211, 226, 255, 0.4) 100%);
-}
-
-.card-section {
-  display: none;
-}
+/* keep any pre-existing .is-active visible at load */
 .card-section.is-active {
   display: block;
-  animation: fadeIn 0.6s both;
 }
 
 @keyframes fadeIn {
@@ -366,7 +320,11 @@ h1 { font-size: 2.5em; margin-bottom: 10px; font-weight: 700; }
   position: relative;
 }
 .card-timeline:after {
-  background: linear-gradient(to top, rgba(134, 214, 243, 0) 0%, rgb(81, 106, 204) 100%);
+  background: linear-gradient(
+    to top,
+    rgba(var(--accent-rgb), 0) 0%,
+    var(--primary-color) 100%
+  );
   content: "";
   left: 42px;
   width: 2px;
@@ -400,7 +358,11 @@ h1 { font-size: 2.5em; margin-bottom: 10px; font-weight: 700; }
   text-indent: -35px;
   border-radius: 50%;
   color: rgba(134, 134, 134, 0.7);
-  background: linear-gradient(to bottom, #a0aee3 0%, #516acc 100%);
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--accent-color) 12%, transparent) 0%,
+    var(--primary-color) 100%
+  );
 }
 
 .card-item-title {
@@ -411,9 +373,9 @@ h1 { font-size: 2.5em; margin-bottom: 10px; font-weight: 700; }
 
 .card-item-desc {
   font-size: 13px;
-  color: #6f6f7b;
+  color: var(--text-light);
   line-height: 1.5;
-  font-family: "DM Sans", sans-serif;
+  font-family: var(--ui-mono);
 }
 
 .card-contact-wrapper {
@@ -424,8 +386,8 @@ h1 { font-size: 2.5em; margin-bottom: 10px; font-weight: 700; }
   display: flex;
   align-items: center;
   font-size: 13px;
-  color: #6f6f7b;
-  font-family: "DM Sans", sans-serif;
+  color: var(--text-light);
+  font-family: var(--ui-mono);
   line-height: 1.6;
   cursor: pointer;
 }
@@ -439,13 +401,17 @@ h1 { font-size: 2.5em; margin-bottom: 10px; font-weight: 700; }
   margin-right: 12px;
   transition: 0.3s;
   padding-right: 12px;
-  border-right: 1px solid #dfe2ec;
+  border-right: 1px solid var(--border-color);
 }
 
 .contact-me {
   border: 0;
   outline: none;
-  background: linear-gradient(to right, rgba(83, 200, 239, 0.8) 0%, rgba(81, 106, 204, 0.8) 96%);
+  background: linear-gradient(
+    to right,
+    rgba(var(--accent-rgb), 0.8) 0%,
+    rgba(var(--primary-rgb), 0.8) 96%
+  );
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
   color: #fff;
   padding: 12px 16px;
@@ -455,6 +421,34 @@ h1 { font-size: 2.5em; margin-bottom: 10px; font-weight: 700; }
   cursor: pointer;
   font-size: 14px;
   font-weight: 500;
-  font-family: "Jost", sans-serif;
+  font-family: var(--ui-mono);
   transition: 0.3s;
+}
+
+.card-buttons {
+  display: flex;
+  background-color: #fff;
+  margin-top: auto;
+  position: sticky;
+  bottom: 0;
+  left: 0;
+}
+.card-buttons label {
+  flex: 1 1 auto;
+  user-select: none;
+  background: 0;
+  font-size: 13px;
+  border: 0;
+  padding: 15px 5px;
+  cursor: pointer;
+  color: var(--text-color);
+  transition: 0.3s;
+  font-family: var(--ui-mono);
+  font-weight: 500;
+  border-bottom: 3px solid transparent;
+  text-align: center;
+}
+.card-buttons label:hover {
+  color: #2b2c48;
+  border-bottom: 3px solid var(--border-color);
 }
