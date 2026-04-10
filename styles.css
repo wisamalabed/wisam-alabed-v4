@@ -300,7 +300,7 @@ body::after {
 .terminal-footer {
   margin-top: 60px;
   padding: 24px 16px;
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  border-top: 1px solid rgba(0, 200, 83, 0.2);
 
   display: flex;
   justify-content: center;
@@ -308,13 +308,13 @@ body::after {
   background: transparent;
 }
 
-/* ASCII banner block */
 .copyleft-banner {
   font-family: ui-monospace, Menlo, Monaco, "Courier New", monospace;
   font-size: 11px;
   line-height: 1.4;
 
-  color: rgba(0, 0, 0, 0.65);
+  /* FIX: readable terminal colors */
+  color: var(--dim);
 
   white-space: pre;
   text-align: left;
@@ -324,19 +324,20 @@ body::after {
 
   padding: 12px 14px;
 
-  border-left: 2px solid rgba(0, 122, 61, 0.35);
-  background: rgba(0, 0, 0, 0.02);
+  border-left: 2px solid rgba(0, 200, 83, 0.35);
+  background: rgba(0, 0, 0, 0.25);
 
   border-radius: 6px;
 
-  opacity: 0.85;
+  opacity: 0.9;
+
+  box-shadow: 0 0 18px rgba(0, 200, 83, 0.05);
 }
 
-/* subtle hover "terminal activation" */
 .copyleft-banner:hover {
   opacity: 1;
-  border-left-color: rgba(0, 122, 61, 0.7);
-  background: rgba(0, 122, 61, 0.04);
+  border-left-color: var(--green);
+  background: rgba(0, 200, 83, 0.06);
 }
 
 /* MOBILE */
