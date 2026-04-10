@@ -69,6 +69,57 @@ body::after {
 }
 
 /* =========================
+   THEME TOGGLE
+========================= */
+.theme-switch {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 1000;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--dim);
+  cursor: pointer;
+  user-select: none;
+  background: rgba(0,0,0,0.25);
+  padding: 6px 10px;
+  border-radius: var(--border-radius-small);
+}
+
+.theme-switch input {
+  display: none;
+}
+
+/* DARK MODE OVERRIDE WHEN CHECKED */
+#theme-toggle:checked ~ .terminal {
+  --bg: #070b09;
+  --panel: #0e1511;
+  --text: #e7f5ec;
+  --dim: #8fb39a;
+  --green: #00c853;
+  --green-soft: #2dfc8f;
+  --red: #e53935;
+  --sand: #c8b68a;
+  --cyan: #4dfcff;
+}
+
+/* LIGHT MODE OVERRIDE WHEN UNCHECKED */
+#theme-toggle:not(:checked) ~ .terminal {
+  --bg: #f5f5f5;
+  --panel: #ffffff;
+  --text: #0e1511;
+  --dim: #666f61;
+  --green: #007a29;
+  --green-soft: #00b36f;
+  --red: #b71c1c;
+  --sand: #c8b68a;
+  --cyan: #00bcd4;
+
+  body::before,
+  body::after { opacity: 0.05; }
+}
+
+/* =========================
    TERMINAL CONTAINER
 ========================= */
 .terminal {
