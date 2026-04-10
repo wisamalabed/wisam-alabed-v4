@@ -6,13 +6,10 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
-  
+  contents: write
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -27,25 +24,29 @@ jobs:
           echo "HTML_SIZE=$HTML_SIZE" >> $GITHUB_ENV
           echo "CSS_SIZE=$CSS_SIZE" >> $GITHUB_ENV
           echo "TOTAL_SIZE=$TOTAL_SIZE" >> $GITHUB_ENV
+          echo "Page footprint calculated: $TOTAL_SIZE KB"
 
       - name: Set deploy timestamp and version
         run: |
-          echo "DEPLOY_TIME=$(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_ENV
-          # You can increment version manually, or use commit count
           VERSION="v1.0.$(git rev-list --count HEAD)"
+          DEPLOY_TIME=$(date -u '+%Y-%m-%d %H:%M:%S UTC')
           echo "VERSION=$VERSION" >> $GITHUB_ENV
-          
+          echo "DEPLOY_TIME=$DEPLOY_TIME" >> $GITHUB_ENV
+          echo "Version: $VERSION | Deploy time: $DEPLOY_TIME"
+
       - name: Inject build metadata into index.html
         run: |
           cp index.html index.tmp.html
           sed -i "s/\[ OK \] version: loading.../[ OK ] version: $VERSION/" index.tmp.html
           sed -i "s/\[ OK \] last deploy: loading.../[ OK ] last deploy: $DEPLOY_TIME | footprint: ${TOTAL_SIZE}KB/" index.tmp.html
           mv index.tmp.html index.html
-      
-      - name: Prepare GitHub Pages artifact
-        uses: actions/upload-pages-artifact@v2
-        with:
-          path: .
-      
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4
+
+      - name: Deploy to gh-pages branch
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan gh-pages
+          git reset --hard
+          git add index.html styles.css
+          git commit -m "Deploy: $VERSION at $DEPLOY_TIME | footprint: ${TOTAL_SIZE}KB"
+          git push -f origin gh-pages
