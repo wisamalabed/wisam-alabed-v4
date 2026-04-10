@@ -10,31 +10,39 @@ permissions:
   pages: write
   id-token: write
   
+
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - name: Generate metadata
+      - name: Calculate page footprint
         run: |
-          VERSION="v1.0.$GITHUB_RUN_NUMBER"
-          DATE=$(date -u +"%Y-%m-%d %H:%M UTC")
-          COMMIT=$(git rev-parse --short HEAD)
+          HTML_SIZE=$(du -k index.html | cut -f1)
+          CSS_SIZE=$(du -k styles.css | cut -f1)
+          TOTAL_SIZE=$((HTML_SIZE+CSS_SIZE))
+          echo "HTML_SIZE=$HTML_SIZE" >> $GITHUB_ENV
+          echo "CSS_SIZE=$CSS_SIZE" >> $GITHUB_ENV
+          echo "TOTAL_SIZE=$TOTAL_SIZE" >> $GITHUB_ENV
 
-          sed -i "s/{{VERSION}}/$VERSION/g" index.html
-          sed -i "s/{{LAST_DEPLOY}}/$DATE/g" index.html
-          sed -i "s/{{COMMIT}}/$COMMIT/g" index.html
+      - name: Set deploy timestamp and version
+        run: |
+          echo "DEPLOY_TIME=$(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_ENV
+          # You can increment version manually, or use commit count
+          VERSION="v1.0.$(git rev-list --count HEAD)"
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
+      - name: Inject build metadata into index.html
+        run: |
+          cp index.html index.tmp.html
+          sed -i "s/\[ OK \] version: loading.../[ OK ] version: $VERSION/" index.tmp.html
+          sed -i "s/\[ OK \] last deploy: loading.../[ OK ] last deploy: $DEPLOY_TIME | footprint: ${TOTAL_SIZE}KB/" index.tmp.html
+          mv index.tmp.html index.html
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: .
-
-      - name: Deploy
+      - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
