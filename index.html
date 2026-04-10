@@ -1,79 +1,216 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wisam Alabed - Resume</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wisam Al Abed - Portfolio</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
-<div class="container">
-  <!-- hidden radios placed before the card -->
-  <input type="radio" id="tabAbout" name="tab" class="panel-radio" hidden checked>
-  <input type="radio" id="tabExp" name="tab" class="panel-radio" hidden>
-  <input type="radio" id="tabContact" name="tab" class="panel-radio" hidden>
 
-  <div class="card" data-state="#about">
-    <div class="card-header">
-      <div class="card-cover" style="background-image: url('https://avatars.githubusercontent.com/u/4520207?s=400')"></div>
-      <img class="card-avatar" src="https://avatars.githubusercontent.com/u/4520207?s=400" alt="avatar" />
-      <h1 class="card-fullname">Wisam Al Abed</h1>
-      <h2 class="card-jobtitle">Senior full stack software developer</h2>
-    </div>
+  <div class="layout">
 
-    <div class="card-main">
-      <div class="card-section" id="about">
-        <div class="card-content">
-          <div class="card-subtitle">ABOUT</div>
-          <p class="card-desc">
-            Wisam has over 10 years of experience of building software utilizing an array of programming languages...
-          </p>
-        </div>
-        <div class="card-social">
-          <a href="#"><svg viewBox="0 0 24 24">
-              <path d="M15.997 3.985h2.191V.169C17.81.117 16.51 0 14.996 0c-3.159 0-5.323 1.987-5.323 5.639V9H6.187v4.266h3.486V24h4.274V13.267h3.345l.531-4.266h-3.877V6.062c.001-1.233.333-2.077 2.051-2.077z" />
-            </svg></a>
-          <a href="#"><svg viewBox="0 0 512 512">
-              <path d="M512 97.248c-19.04 8.352-39.328 13.888-60.48 16.576 21.76-12.992 38.368-33.408 46.176-58.016-20.288 12.096-42.688 20.64-66.56 25.408C411.872 60.704 384.416 48 354.464 48c-58.112 0-104.896 47.168-104.896 104.992 0 8.32.704 16.32 2.432 23.936-87.264-4.256-164.48-46.08-216.352-109.792-9.056 15.712-14.368 33.696-14.368 53.056 0 36.352 18.72 68.576 46.624 87.232-16.864-.32-33.408-5.216-47.424-12.928v1.152c0 51.008 36.384 93.376 84.096 103.136-8.544 2.336-17.856 3.456-27.52 3.456-6.72 0-13.504-.384-19.872-1.792 13.6 41.568 52.192 72.128 98.08 73.12-35.712 27.936-81.056 44.768-130.144 44.768-8.608 0-16.864-.384-25.12-1.44C46.496 446.88 101.6 464 161.024 464c193.152 0 298.752-160 298.752-298.688 0-4.64-.16-9.12-.384-13.568 20.832-14.784 38.336-33.248 52.608-54.496z" />
-            </svg></a>
-        </div>
-      </div>
-      <div class="card-section" id="experience">
-        <div class="card-content">
-          <div class="card-subtitle">WORK EXPERIENCE</div>
-          <div class="card-timeline">
-            <div class="card-item" data-year="2020">
-              <div class="card-item-title">Intermediate Software Developer at <span>Kotn</span></div>
-              <div class="card-item-desc">Joined Kotn as part of the digital team...</div>
+    <!-- LEFT SIDEBAR CARD -->
+    <aside class="sidebar">
+
+      <div class="container">
+
+        <input type="radio" id="tabAbout" name="tab" class="panel-radio" checked>
+        <input type="radio" id="tabExp" name="tab" class="panel-radio">
+        <input type="radio" id="tabContact" name="tab" class="panel-radio">
+
+        <div class="card">
+
+          <!-- HEADER -->
+          <div class="card-header">
+            <div class="card-cover" style="background-image:url('https://avatars.githubusercontent.com/u/4520207?s=400')">
             </div>
-            <div class="card-item" data-year="2022">
-              <div class="card-item-title">Senior Software Developer at <span>University of Toronto</span></div>
-              <div class="card-item-desc">Disrupt stumptown retro everyday carry unicorn.</div>
+
+            <img class="card-avatar" src="https://avatars.githubusercontent.com/u/4520207?s=400" />
+
+            <h1 class="card-fullname">Wisam Al Abed</h1>
+            <h2 class="card-jobtitle">
+              Senior Software Developer
+            </h2>
+          </div>
+
+          <div class="card-main">
+
+            <!-- ABOUT -->
+            <div class="card-section" id="about">
+              <div class="card-content">
+                <div class="card-subtitle">ABOUT</div>
+
+                <p class="card-desc">
+                  10+ years building scalable software, APIs, and modern web apps.
+                </p>
+
+                <div class="card-social">
+                </div>
+              </div>
             </div>
+
+            <!-- EXPERIENCE -->
+            <div class="card-section" id="experience">
+              <div class="card-content">
+
+                <div class="card-subtitle">WORK EXPERIENCE</div>
+
+                <div class="card-timeline">
+
+                  <div class="card-item" data-year="2022">
+                    <div class="card-item-title">
+                      Senior Software Developer at <span>University of Toronto DSI</span>
+                    </div>
+                    <div class="card-item-desc">
+                      Collaborating with researchers to transform ideas into real-world systems.
+                    </div>
+                  </div>
+
+                  <div class="card-item" data-year="2020">
+                    <div class="card-item-title">
+                      Intermediate Developer at <span>Kotn</span>
+                    </div>
+                    <div class="card-item-desc">
+                      Built headless commerce system using Next.js, Shopify, and Sanity CMS.
+                    </div>
+                  </div>
+
+                  <div class="card-item" data-year="2016">
+                    <div class="card-item-title">
+                      Business/Technical Analyst at <span>IBM MEA</span>
+                    </div>
+                    <div class="card-item-desc">
+                      Built enterprise chatbots, blockchain demos, and VAT compliance systems.
+                    </div>
+                  </div>
+
+                  <div class="card-item" data-year="2015">
+                    <div class="card-item-title">
+                      Full Stack Developer at <span>XYpper Technologies</span>
+                    </div>
+                    <div class="card-item-desc">
+                      Built logistics platform improving search performance from 1min → 5s.
+                    </div>
+                  </div>
+
+                  <div class="card-item" data-year="2008">
+                    <div class="card-item-title">
+                      Software Researcher at <span>McGill University</span>
+                    </div>
+                    <div class="card-item-desc">
+                      Published research in model-driven engineering and software reuse.
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <!-- CONTACT -->
+            <div class="card-section" id="contact">
+              <div class="card-content">
+
+                <div class="card-subtitle">CONTACT</div>
+
+                <div class="card-contact-wrapper">
+
+                  <div class="card-contact">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+                      <circle cx="12" cy="10" r="3" />
+                    </svg>
+                    Toronto, Canada
+                  </div>
+
+                  <div class="card-contact">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" />
+                    </svg>
+                    (416) 276-4074
+                  </div>
+
+                  <div class="card-contact">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                      <path d="M22 6l-10 7L2 6" />
+                    </svg>
+                    ✉ wisam.alabed@tutamail.com
+                  </div>
+
+                </div>
+
+                <button class="contact-me">WORK TOGETHER</button>
+
+              </div>
+            </div>
+
+            <!-- TABS -->
+            <div class="card-buttons">
+              <label for="tabAbout">ABOUT</label>
+              <label for="tabExp">EXPERIENCE</label>
+              <label for="tabContact">CONTACT</label>
+            </div>
+
           </div>
         </div>
       </div>
-      <div class="card-section" id="contact">
-        <div class="card-content">
-          <div class="card-subtitle">CONTACT</div>
-          <div class="card-contact-wrapper">
-            <div class="card-contact">Toronto, Ontario</div>
-            <div class="card-contact">(416) 276-4074</div>
-            <div class="card-contact">wisam.alabed@tutamail.com</div>
-            <button class="contact-me">WORK TOGETHER</button>
-          </div>
-        </div>
-      </div>
+    </aside>
 
-      <!-- visible labels (point directly to the hidden radios above) -->
-      <div class="card-buttons">
-        <label for="tabAbout">ABOUT</label>
-        <label for="tabExp">EXPERIENCE</label>
-        <label for="tabContact">CONTACT</label>
-      </div>
-    </div>
+    <!-- MAIN CONTENT -->
+    <main class="main">
+
+      <!-- HERO -->
+      <section class="hero">
+        <h1>Building scalable software systems</h1>
+        <p>Full stack engineer focused on distributed systems, performance, and UX.</p>
+      </section>
+
+      <!-- SKILLS -->
+      <section>
+        <h2>Skills</h2>
+
+        <div class="project-grid">
+
+          <div class="project-card">
+            <h3>Languages</h3>
+            <p>TypeScript, Python, SQL, GraphQL</p>
+          </div>
+
+          <div class="project-card">
+            <h3>Frameworks</h3>
+            <p>React, Next.js, Node.js, FastAPI</p>
+          </div>
+
+          <div class="project-card">
+            <h3>DevOps</h3>
+            <p>Docker, Vercel, GitHub, Traefik</p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- EDUCATION -->
+      <section>
+        <h2>Education</h2>
+
+        <div class="project-card">
+          <h3>McGill University</h3>
+          <p>BSc Software Engineering (2003–2007)</p>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <footer class="footer">
+        © 2026 Wisam Al Abed
+      </footer>
+
+    </main>
+
   </div>
 
-</div>
 </body>
+
 </html>
