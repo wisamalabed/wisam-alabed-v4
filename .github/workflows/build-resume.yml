@@ -28,7 +28,6 @@ jobs:
         run: |
           sudo apt-get update -y
           sudo apt-get install -y jq python3-pip
-
       - name: Fetch Gist JSON
         run: curl -fsSL "$GIST_RAW_URL" -o resume.json
 
@@ -42,46 +41,38 @@ jobs:
       - name: Create Mustache-compatible partials and template
         run: |
           mkdir -p templates
-
           cat > templates/work.hbs <<'H'
           {{#work}}
-            <div style="margin-bottom:12px">
-              <strong>{{name}} — {{position}}</strong>
-              <div class="muted">{{startDate}}{{#endDate}} — {{endDate}}{{/endDate}}{{#location}} • {{location}}{{/location}}</div>
-              <div style="margin-top:6px">{{summary}}</div>
+          <div style="margin-bottom:12px">
+            <strong>{{name}} — {{position}}</strong>
+            <div class="muted">{{startDate}}{{#endDate}} — {{endDate}}{{/endDate}}{{#location}} • {{location}}{{/location}}</div>
+            <div style="margin-top:6px">{{summary}}</div>
+            {{#highlights}}
+            <ul>
               {{#highlights}}
-                <ul>
-                  {{#highlights}}
-                    <li>{{.}}</li>
-                  {{/highlights}}
-                </ul>
+                <li>{{.}}</li>
               {{/highlights}}
-            </div>
+            </ul>
+            {{/highlights}}
+          </div>
           {{/work}}
           H
-
           cat > templates/education.hbs <<'H'
           {{#education}}
-            <div style="margin-bottom:10px">
-              <strong>{{institution}}</strong>
-              <div class="muted">{{studyType}}{{#area}} — {{area}}{{/area}}{{#startDate}} • {{startDate}}{{/startDate}}{{#endDate}} — {{endDate}}{{/endDate}}</div>
-            </div>
+          <div style="margin-bottom:10px">
+            <strong>{{institution}}</strong>
+            <div class="muted">{{studyType}}{{#area}} — {{area}}{{/area}}{{#startDate}} • {{startDate}}{{/startDate}}{{#endDate}} — {{endDate}}{{/endDate}}</div>
+          </div>
           {{/education}}
           H
-
           cat > templates/skills.hbs <<'H'
           {{#skills}}
-            <div style="margin-bottom:8px">
-              <strong>{{name}}</strong>
-              <div class="muted">
-                {{#keywords}}
-                  {{.}}{{#@last}}{{/@last}}{{^@last}}, {{/@last}}
-                {{/keywords}}
-              </div>
-            </div>
+          <div style="margin-bottom:8px">
+            <strong>{{name}}</strong>
+            <div class="muted">{{keywords_joined}}</div>
+          </div>
           {{/skills}}
           H
-
           cat > templates/index.hbs <<'H'
           <!doctype html>
           <html lang="en">
@@ -96,10 +87,9 @@ jobs:
               <h1>{{basics.name}} <small>{{basics.label}}</small></h1>
               <div class="muted">{{basics.summary}}</div>
               {{#basics.location}}
-                <div class="muted">{{city}}{{#countryCode}} • {{countryCode}}{{/countryCode}}</div>
+              <div class="muted">{{city}}{{#countryCode}} • {{countryCode}}{{/countryCode}}</div>
               {{/basics.location}}
             </header>
-
             <main>
               {{> work}}
               {{> education}}
@@ -109,7 +99,7 @@ jobs:
           </html>
           H
 
-      - name: Render with Python (pystache)
+      - name: Render with Python (pystache) and preprocess
         run: |
           python3 -m pip install --user pystache
           python3 - <<'PY'
@@ -121,6 +111,24 @@ jobs:
               data = json.load(f)
           except Exception as e:
             print(f"Failed to read resume.json: {e}", file=sys.stderr); sys.exit(1)
+          # Ensure top-level keys exist and normalize arrays
+          data.setdefault('basics', {})
+          data.setdefault('work', [])
+          data.setdefault('education', [])
+          data.setdefault('skills', [])
+          # Preprocess skills: create keywords_joined for each skill
+          for s in data['skills']:
+            kws = s.get('keywords') or []
+            # make sure keywords is a flat list of strings
+            if isinstance(kws, list):
+              s['keywords_joined'] = ', '.join(str(x) for x in kws)
+            else:
+              s['keywords_joined'] = str(kws)
+          # Preprocess work highlights: ensure highlights is array
+          for w in data['work']:
+            if 'highlights' in w and not isinstance(w['highlights'], list):
+              w['highlights'] = [w['highlights']]
+          # Render using pystache with partials
           tpl_path = 'templates/index.hbs'
           partial_names = ['work','education','skills']
           try:
@@ -139,7 +147,9 @@ jobs:
           os.makedirs(OUT_DIR, exist_ok=True)
           with open(os.path.join(OUT_DIR, OUT_FILE), 'w', encoding='utf8') as f:
             f.write(out)
+          print(f"Wrote {os.path.join(OUT_DIR,OUT_FILE)}")
           PY
+
 
       - name: Copy static assets
         run: |
