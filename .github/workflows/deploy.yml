@@ -43,7 +43,7 @@ jobs:
           mv index.tmp.html index.html
       
       - name: Prepare GitHub Pages artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v2
         with:
           path: .
       
