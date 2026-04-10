@@ -1,15 +1,22 @@
-name: Build Resume (from Gist)
+name: Build & Deploy Resume to GitHub Pages
 
 on:
   workflow_dispatch:
   push:
     branches: [ main ]
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     env:
       GIST_RAW_URL: https://gist.githubusercontent.com/wisamalabed/6c826f000b9d865a34c0ba6a4841cdb1/raw/f08f6a0483c424f9f69afbab44d24a4234b4fb3d/resume.json
+      OUTPUT_DIR: build
+      OUTPUT_FILE: index.html
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -20,7 +27,7 @@ jobs:
       - name: Fetch Gist JSON
         run: curl -fsSL "$GIST_RAW_URL" -o resume.json
 
-      - name: Export simple fields to env file
+      - name: Export simple fields to env file (safe quoting)
         run: |
           jq -r '
             {
@@ -40,27 +47,23 @@ jobs:
 
       - name: Render lists to HTML partials
         run: |
-          # Work items
           jq -r '
             .work[]? |
             "<div style=\"margin-bottom:12px\"><strong>\(.name|@html) — \(.position|@html)</strong><div class=\"muted\">\(.startDate // "")\(.endDate? | select(.) | " — " + .) • \(.location // "")</div><div style=\"margin-top:6px\">\(.summary|@html)</div>" +
             (if (.highlights | length) > 0 then ("<ul>" + (.highlights[] | "<li>"+@html+ "</li>") + "</ul>") else "" end) + "</div>"' resume.json > work.html || true
 
-          # Education
           jq -r '
             .education[]? |
             "<div style=\"margin-bottom:10px\"><strong>\(.institution|@html)</strong><div class=\"muted\">\(.studyType // "") — \(.area // "") • \(.startDate // "")\(.endDate? | select(.) | " — " + .)</div></div>"' resume.json > education.html || true
 
-          # Skills
           jq -r '
             .skills[]? |
             "<div style=\"margin-bottom:8px\"><strong>\(.name|@html)</strong><div class=\"muted\">\((.keywords // []) | join(", "))</div></div>"' resume.json > skills.html || true
 
-      - name: Prepare template (convert {{var}} -> ${var})
+      - name: Prepare template copy and convert placeholders
         run: |
-          # create working copy
-          cp index.html index.template.html
-          # convert double-mustache to envsubst style ${var}
+          mkdir -p "$OUTPUT_DIR"
+          cp index.html "$OUTPUT_DIR/index.template.html"
           sed -E 's/\{\{\s*basics\.name\s*\}\}/${name}/g;
                   s/\{\{\s*basics\.label\s*\}\}/${label}/g;
                   s/\{\{\s*basics\.image\s*\}\}/${image}/g;
@@ -68,19 +71,16 @@ jobs:
                   s/\{\{\s*basics\.phone\s*\}\}/${phone}/g;
                   s/\{\{\s*basics\.summary\s*\}\}/${summary}/g;
                   s/\{\{\s*basics\.location\.city\s*\}\}/${city}/g;
-                  s/\{\{\s*basics\.location\.countryCode\s*\}\}/${country}/g;
-                  s/\{\{\s*meta\.theme\s*\}\}/${theme}/g' index.template.html > index.template2.html
+                  s/\{\{\s*basics\.location.countryCode\s*\}\}/${country}/g;
+                  s/\{\{\s*meta\.theme\s*\}\}/${theme}/g' "$OUTPUT_DIR/index.template.html" > "$OUTPUT_DIR/index.template2.html"
 
-      - name: Inject partial placeholders
+      - name: Replace list blocks with markers
         run: |
-          # replace your hand-written blocks (e.g., the {{#work}}...{{/work}} area) with unique markers
-          sed -E '/\{\{\#work\}\}/,/\{\{\/work\}\}/c\__WORK_HTML__' index.template2.html > index.template3.html
-          sed -E '/\{\{\#education\}\}/,/\{\{\/education\}\}/c\__EDU_HTML__' index.template3.html > index.template4.html
-          sed -E '/\{\{\#skills\}\}/,/\{\{\/skills\}\}/c\__SKILLS_HTML__' index.template4.html > index.template.final.html
+          sed -E '/\{\{\#work\}\}/,/\{\{\/work\}\}/c\__WORK_HTML__' "$OUTPUT_DIR/index.template2.html" > "$OUTPUT_DIR/index.template3.html"
+          sed -E '/\{\{\#education\}\}/,/\{\{\/education\}\}/c\__EDU_HTML__' "$OUTPUT_DIR/index.template3.html" > "$OUTPUT_DIR/index.template4.html"
+          sed -E '/\{\{\#skills\}\}/,/\{\{\/skills\}\}/c\__SKILLS_HTML__' "$OUTPUT_DIR/index.template4.html" > "$OUTPUT_DIR/index.template.final.html"
 
-      - name: Render final index.html with envsubst
-        env:
-          INPUT_TEMPLATE: index.template.final.html
+      - name: Produce final filled HTML (build/index.html)
         run: |
           set -o allexport
           . resume.env
@@ -88,18 +88,20 @@ jobs:
           WORK_HTML="$(cat work.html 2>/dev/null || true)"
           EDU_HTML="$(cat education.html 2>/dev/null || true)"
           SKILLS_HTML="$(cat skills.html 2>/dev/null || true)"
-          # use awk to safely replace markers with partials and run envsubst
-          awk -v w="$WORK_HTML" -v e="$EDU_HTML" -v s="$SKILLS_HTML" '{gsub(/__WORK_HTML__/,w); gsub(/__EDU_HTML__/,e); gsub(/__SKILLS_HTML__/,s); print}' "$INPUT_TEMPLATE" > _temp_index.html
-          envsubst < _temp_index.html > index.html
+          awk -v w="$WORK_HTML" -v e="$EDU_HTML" -v s="$SKILLS_HTML" '{gsub(/__WORK_HTML__/,w); gsub(/__EDU_HTML__/,e); gsub(/__SKILLS_HTML__/,s); print}' "$OUTPUT_DIR/index.template.final.html" > "$OUTPUT_DIR/_temp_index.html"
+          envsubst < "$OUTPUT_DIR/_temp_index.html" > "$OUTPUT_DIR/$OUTPUT_FILE"
 
-      - name: Show generated file snippet
-        run: sed -n '1,200p' index.html
-
-      - name: Commit and push (optional)
-        if: github.ref == 'refs/heads/main'
+      - name: Copy static assets (styles.css, images, etc.)
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add index.html
-          git commit -m "chore: build resume from gist" || echo "no changes to commit"
-          git push origin HEAD:main || echo "push failed"
+          cp -a styles.css "$OUTPUT_DIR/" || true
+
+      - name: List build output
+        run: |
+          ls -la "$OUTPUT_DIR"
+          sed -n '1,120p' "$OUTPUT_DIR/$OUTPUT_FILE"
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build
