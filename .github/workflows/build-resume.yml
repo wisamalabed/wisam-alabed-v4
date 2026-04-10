@@ -23,19 +23,20 @@ jobs:
       - name: Export simple fields to env file
         run: |
           jq -r '
-            .basics.name // "" as $name |
-            .basics.label // "" as $label |
-            .basics.image // "" as $image |
-            .basics.email // "" as $email |
-            .basics.phone // "" as $phone |
-            .basics.summary // "" as $summary |
-            .basics.location.city // "" as $city |
-            .basics.location.countryCode // "" as $country |
-            .meta.theme // "" as $theme |
-            {name:$name,label:$label,image:$image,email:$email,phone:$phone,summary:$summary,city:$city,country:$country,theme:$theme} |
-            to_entries[] | "\(.key)=\(.value|@sh)"' resume.json > resume.env
-          # remove surrounding single quotes jq added
-          sed -E "s/^([^=]+=)'(.*)'$/\1\2/" resume.env > resume.env.tmp && mv resume.env.tmp resume.env
+            {
+              name: (.basics.name // ""),
+              label: (.basics.label // ""),
+              image: (.basics.image // ""),
+              email: (.basics.email // ""),
+              phone: (.basics.phone // ""),
+              summary: (.basics.summary // ""),
+              city: (.basics.location.city // ""),
+              country: (.basics.location.countryCode // ""),
+              theme: (.meta.theme // "")
+            }
+            | to_entries[]
+            | "\(.key)=\(.value|@json)"
+          ' resume.json > resume.env
 
       - name: Render lists to HTML partials
         run: |
