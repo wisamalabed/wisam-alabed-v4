@@ -29,37 +29,37 @@
       <div class="section">
         <h2>Work</h2>
 
-        {{#each work}}
+        {{#work}}
         <div style="margin-bottom:12px">
-          <strong>{{this.name}} — {{this.position}}</strong>
+          <strong>{{name}} — {{position}}</strong>
           <div class="muted">
-            {{this.startDate}}{{#if this.endDate}} — {{this.endDate}}{{/if}} • {{this.location}}
+            {{startDate}}{{#endDate}} — {{endDate}}{{/endDate}} • {{location}}
           </div>
-          <div style="margin-top:6px">{{this.summary}}</div>
+          <div style="margin-top:6px">{{summary}}</div>
 
-          {{#if this.highlights}}
+          {{#highlights}}
           <ul>
-            {{#each this.highlights}}
-              <li>{{this}}</li>
-            {{/each}}
+            {{#.}}
+              <li>{{.}}</li>
+            {{/.}}
           </ul>
-          {{/if}}
+          {{/highlights}}
         </div>
-        {{/each}}
+        {{/work}}
 
       </div>
 
       <div class="section">
         <h2>Education</h2>
 
-        {{#each education}}
+        {{#education}}
         <div style="margin-bottom:10px">
-          <strong>{{this.institution}}</strong>
+          <strong>{{institution}}</strong>
           <div class="muted">
-            {{this.studyType}} — {{this.area}} • {{this.startDate}}{{#if this.endDate}} — {{this.endDate}}{{/if}}
+            {{studyType}} — {{area}} • {{startDate}}{{#endDate}} — {{endDate}}{{/endDate}}
           </div>
         </div>
-        {{/each}}
+        {{/education}}
 
       </div>
     </section>
@@ -68,21 +68,18 @@
       <div class="section">
         <h2>Skills</h2>
         
-        {{#if skills}}
-          {{#each skills}}
+        {{#skills}}
           <div style="margin-bottom:8px">
             <strong>{{name}}</strong>
             <div class="muted">
-              {{#if keywords}}
-                {{keywords.[0]}}{{#each keywords}}
-                  {{#unless @first}}, {{/unless}}{{this}}
-                {{/each}}
-              {{/if}}
+              {{#keywords}}
+                {{#.}}
+                  {{.}}{{^last}}, {{/last}}
+                {{/.}}
+              {{/keywords}}
             </div>
           </div>
-          {{/each}}
-        {{/if}}
-
+        {{/skills}}
 
       </div>
 
