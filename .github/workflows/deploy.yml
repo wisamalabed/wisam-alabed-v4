@@ -22,8 +22,8 @@ jobs:
       # 2. Calculate page footprint
       - name: Calculate page footprint
         run: |
-          HTML_SIZE=$(du -k index.html | cut -f1)
-          CSS_SIZE=$(du -k styles.css | cut -f1)
+          HTML_SIZE=$(du -k site/index.html | cut -f1)
+          CSS_SIZE=$(du -k site/styles.css | cut -f1)
           TOTAL_SIZE=$((HTML_SIZE + CSS_SIZE))
           echo "HTML_SIZE=$HTML_SIZE" >> $GITHUB_ENV
           echo "CSS_SIZE=$CSS_SIZE" >> $GITHUB_ENV
@@ -40,8 +40,9 @@ jobs:
       # 4. Inject metadata into index.html
       - name: Inject build metadata
         run: |
-          sed -i "s/\[ OK \] version: loading.../[ OK ] version: $VERSION/" index.html
-          sed -i "s/\[ OK \] last deploy: loading.../[ OK ] last deploy: $DEPLOY_TIME | footprint: ${TOTAL_SIZE}KB/" index.html
+          ls -l site
+          sed -i "s/\[ OK \] version: loading.../[ OK ] version: $VERSION/" site/index.html
+          sed -i "s/\[ OK \] last deploy: loading.../[ OK ] last deploy: $DEPLOY_TIME | footprint: ${TOTAL_SIZE}KB/" site/index.html
 
       # 5. Upload the artifact for GitHub Pages
       - name: Upload Pages Artifact
