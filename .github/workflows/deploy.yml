@@ -45,7 +45,7 @@ jobs:
 
       # 5. Upload the artifact for GitHub Pages
       - name: Upload Pages Artifact
-        uses: actions/upload-pages-artifact@v5
+        uses: actions/upload-pages-artifact@v4
         with:
           path: |
             index.html
