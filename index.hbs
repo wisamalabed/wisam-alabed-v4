@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{{basics.name}} — Resume</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="grid">
+    <section>
+      <header>
+        <img src="{{basics.image}}" alt="{{basics.name}}">
+        <div>
+          <h1>{{basics.name}}</h1>
+          <div class="muted">{{basics.label}}</div>
+          <div class="muted" style="margin-top:6px">
+            {{basics.location.city}}, {{basics.location.countryCode}} • {{basics.phone}} •
+            <a href="mailto:{{basics.email}}">{{basics.email}}</a>
+          </div>
+        </div>
+      </header>
+
+      <div class="section">
+        <h2>Summary</h2>
+        <p class="muted">{{basics.summary}}</p>
+      </div>
+
+      <div class="section">
+        <h2>Work</h2>
+
+        {{#each work}}
+        <div style="margin-bottom:12px">
+          <strong>{{this.name}} — {{this.position}}</strong>
+          <div class="muted">
+            {{this.startDate}}{{#if this.endDate}} — {{this.endDate}}{{/if}} • {{this.location}}
+          </div>
+          <div style="margin-top:6px">{{this.summary}}</div>
+
+          {{#if this.highlights}}
+          <ul>
+            {{#each this.highlights}}
+              <li>{{this}}</li>
+            {{/each}}
+          </ul>
+          {{/if}}
+        </div>
+        {{/each}}
+
+      </div>
+
+      <div class="section">
+        <h2>Education</h2>
+
+        {{#each education}}
+        <div style="margin-bottom:10px">
+          <strong>{{this.institution}}</strong>
+          <div class="muted">
+            {{this.studyType}} — {{this.area}} • {{this.startDate}}{{#if this.endDate}} — {{this.endDate}}{{/if}}
+          </div>
+        </div>
+        {{/each}}
+
+      </div>
+    </section>
+
+    <aside>
+      <div class="section">
+        <h2>Skills</h2>
+
+        {{#each skills}}
+        <div style="margin-bottom:8px">
+          <strong>{{this.name}}</strong>
+          <div class="muted">
+            {{#each this.keywords}}
+              {{this}}{{#unless @last}}, {{/unless}}
+            {{/each}}
+          </div>
+        </div>
+        {{/each}}
+
+      </div>
+
+      <div class="section">
+        <h2>Meta</h2>
+        <div id="meta" class="muted">Theme: {{meta.theme}}</div>
+      </div>
+    </aside>
+  </main>
+</body>
+</html>
