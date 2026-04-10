@@ -1,272 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Wisam Al Abed - Portfolio</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>wisam@terminal:~$</title>
+  <link rel="stylesheet" href="styles.css"/>
 </head>
 
 <body>
-
-  <div class="layout">
-
-    <!-- LEFT SIDEBAR CARD -->
-    <aside class="sidebar">
-
-      <div class="container">
-
-        <input type="radio" id="tabAbout" name="tab" class="panel-radio" checked>
-        <input type="radio" id="tabExp" name="tab" class="panel-radio">
-        <input type="radio" id="tabContact" name="tab" class="panel-radio">
-
-        <div class="card">
-
-          <!-- HEADER -->
-          <div class="card-header">
-            <div class="card-cover" style="background-image:url('https://avatars.githubusercontent.com/u/4520207?s=400')">
-            </div>
-
-            <img class="card-avatar" src="https://avatars.githubusercontent.com/u/4520207?s=400" />
-
-            <h1 class="card-fullname">Wisam Al Abed</h1>
-            <h2 class="card-jobtitle">
-              Senior Software Developer
-            </h2>
-          </div>
-
-          <div class="card-main">
-
-            <!-- ABOUT -->
-            <div class="card-section" id="about">
-              <div class="card-content">
-                <div class="card-subtitle">ABOUT</div>
-
-                <p class="card-desc">
-                  10+ years building scalable software, APIs, and modern web apps.
-                </p>
-
-                <div class="card-social">
-                </div>
-              </div>
-            </div>
-
-            <!-- EXPERIENCE -->
-            <div class="card-section" id="experience">
-              <div class="card-content">
-
-                <div class="card-subtitle">WORK EXPERIENCE</div>
-
-                <div class="card-timeline">
-
-                  <div class="card-item" data-year="2022">
-                    <div class="card-item-title">
-                      Senior Software Developer at <span>University of Toronto DSI</span>
-                    </div>
-                    <div class="card-item-desc">
-                      Collaborating with researchers to transform ideas into real-world systems.
-                    </div>
-                  </div>
-
-                  <div class="card-item" data-year="2020">
-                    <div class="card-item-title">
-                      Intermediate Developer at <span>Kotn</span>
-                    </div>
-                    <div class="card-item-desc">
-                      Built headless commerce system using Next.js, Shopify, and Sanity CMS.
-                    </div>
-                  </div>
-
-                  <div class="card-item" data-year="2016">
-                    <div class="card-item-title">
-                      Business/Technical Analyst at <span>IBM MEA</span>
-                    </div>
-                    <div class="card-item-desc">
-                      Built enterprise chatbots, blockchain demos, and VAT compliance systems.
-                    </div>
-                  </div>
-
-                  <div class="card-item" data-year="2015">
-                    <div class="card-item-title">
-                      Full Stack Developer at <span>XYpper Technologies</span>
-                    </div>
-                    <div class="card-item-desc">
-                      Built logistics platform improving search performance from 1min → 5s.
-                    </div>
-                  </div>
-
-                  <div class="card-item" data-year="2008">
-                    <div class="card-item-title">
-                      Software Researcher at <span>McGill University</span>
-                    </div>
-                    <div class="card-item-desc">
-                      Published research in model-driven engineering and software reuse.
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-
-            <!-- CONTACT -->
-            <div class="card-section" id="contact">
-              <div class="card-content">
-
-                <div class="card-subtitle">CONTACT</div>
-
-                <div class="card-contact-wrapper">
-
-                  <div class="card-contact">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
-                      <circle cx="12" cy="10" r="3" />
-                    </svg>
-                    Toronto, Canada
-                  </div>
-
-                  <div class="card-contact">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" />
-                    </svg>
-                    (416) 276-4074
-                  </div>
-
-                  <div class="card-contact">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                      <path d="M22 6l-10 7L2 6" />
-                    </svg>
-                    ✉ wisam.alabed@tutamail.com
-                  </div>
-
-                </div>
-
-                <button class="contact-me">WORK TOGETHER</button>
-
-              </div>
-            </div>
-
-            <!-- TABS -->
-            <div class="card-buttons">
-              <label for="tabAbout">ABOUT</label>
-              <label for="tabExp">EXPERIENCE</label>
-              <label for="tabContact">CONTACT</label>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </aside>
-
-    <!-- MAIN CONTENT -->
-    <main class="main">
-
-      <!-- HERO -->
-      <section class="hero">
-        <h1>Full Stack Software Developer</h1>
-        <p>
-          I build scalable web systems, performant APIs, and developer-focused platforms.
-          Focused on reliability, UX, and long-term maintainability.
-        </p>
-      </section>
-
-      <section>
-        <h2>Featured Work</h2>
-
-        <div class="showcase-grid">
-
-          <article class="showcase-card">
-            <h3>E-commerce Headless Platform</h3>
-            <p>
-              Migrated monolithic Shopify setup to Next.js + Sanity + Redis caching layer.
-            </p>
-            <div class="meta">
-              Next.js · Shopify · Redis · Sanity
-            </div>
-          </article>
-
-          <article class="showcase-card">
-            <h3>Research Data Platform</h3>
-            <p>
-              Built internal tooling for researchers to transform experimental datasets into structured outputs.
-            </p>
-            <div class="meta">
-              FastAPI · Python · PostgreSQL
-            </div>
-          </article>
-
-          <article class="showcase-card">
-            <h3>Enterprise Chatbot System</h3>
-            <p>
-              Designed Watson-based NLP chatbot for legal and transport systems in enterprise environments.
-            </p>
-            <div class="meta">
-              IBM Watson · Node.js · NLP
-            </div>
-          </article>
-
-        </div>
-      </section>
-
-      <!-- SKILLS -->
-      <section>
-        <h2>Core Skills</h2>
-
-        <div class="skill-blocks">
-
-          <div class="skill-group">
-            <h3>Languages</h3>
-            <div class="skill-tags">
-              <span>TypeScript</span>
-              <span>Python</span>
-              <span>SQL</span>
-              <span>GraphQL</span>
-            </div>
-          </div>
-
-          <div class="skill-group">
-            <h3>Frameworks</h3>
-            <div class="skill-tags">
-              <span>React</span>
-              <span>Next.js</span>
-              <span>Node.js</span>
-              <span>FastAPI</span>
-            </div>
-          </div>
-
-          <div class="skill-group">
-            <h3>Infrastructure</h3>
-            <div class="skill-tags">
-              <span>Docker</span>
-              <span>Vercel</span>
-              <span>GitHub Actions</span>
-              <span>Traefik</span>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- EDUCATION -->
-      <section>
-        <h2>Education</h2>
-
-        <div class="education-card">
-          <strong>McGill University</strong>
-          <p>BSc Software Engineering · 2003–2007</p>
-        </div>
-      </section>
-
-      <!-- FOOTER -->
-      <footer class="footer">
-        © 2026 Wisam Al Abed
-      </footer>
-
-    </main>
-
+<main class="terminal" role="main" aria-label="Elite Terminal Resume">
+  
+  <header class="logo" aria-label="System Identity">
+  <img
+    src="https://avatars.githubusercontent.com/u/4520207?s=400"
+    alt="Wisam Al Abed avatar"
+  />
+  <div class="logo-text">
+    <span class="sys-name">WISAM OS</span>
+    <span class="sys-tag">terminal session v1.0</span>
   </div>
+</header>
 
+  <!-- BOOT SEQUENCE -->
+  <section class="boot">
+    <p><span class="sys">[system]</span> booting resume kernel...</p>
+    <p><span class="ok">[ OK ]</span> loading identity module</p>
+    <p><span class="ok">[ OK ]</span> mounting experience volume</p>
+    <p><span class="ok">[ OK ]</span> indexing skills database</p>
+    <p><span class="ok">[ OK ]</span> initializing UI shell</p>
+    <p class="cursor-line">ready.</p>
+  </section>
+
+  <!-- WHOAMI -->
+  <section class="block">
+    <p class="prompt-line">
+      <span class="user">wisam@terminal</span>:<span class="path">~</span>$ whoami
+    </p>
+    <p class="out big">
+      Wisam Al Abed
+    </p>
+    <p class="out dim">
+      Full Stack Software Engineer · 10+ years · Systems · APIs · Modern Web Apps
+    </p>
+  </section>
+
+  <!-- MAN PAGE -->
+  <section class="block">
+    <p class="prompt-line">
+      <span class="user">wisam@terminal</span>:<span class="path">~</span>$ man wisam
+    </p>
+
+    <article class="man">
+      <h1>WISAM(1)</h1>
+      <p class="dim">Software Engineer Manual Page</p>
+
+      <h2>NAME</h2>
+      <p>Wisam Al Abed — software engineer, system builder, UI craftsman</p>
+
+      <h2>SYNOPSIS</h2>
+      <p>wisam [--build systems] [--scale products] [--optimize performance]</p>
+
+      <h2>DESCRIPTION</h2>
+      <p>
+        Designs and builds distributed systems, modern web applications,
+        and developer experiences with a focus on clarity, performance,
+        and maintainability.
+      </p>
+    </article>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="block">
+    <p class="prompt-line">
+      <span class="user">wisam@terminal</span>:<span class="path">~</span>$ ls skills/
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <h3>languages</h3>
+        <p>TypeScript · Python · SQL · GraphQL</p>
+      </div>
+
+      <div class="card">
+        <h3>frameworks</h3>
+        <p>React · Next.js · Node.js · FastAPI</p>
+      </div>
+
+      <div class="card">
+        <h3>devops</h3>
+        <p>Docker · GitHub Actions · Vercel</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section class="block">
+    <p class="prompt-line">
+      <span class="user">wisam@terminal</span>:<span class="path">~</span>$ cat work.log
+    </p>
+
+    <div class="timeline">
+
+      <article class="job">
+        <p class="title">University of Toronto DSI</p>
+        <p class="meta">2022 → Present · Senior Software Developer</p>
+        <p class="desc">Research systems + applied ML engineering.</p>
+      </article>
+
+      <article class="job">
+        <p class="title">Kotn</p>
+        <p class="meta">2020 → 2022 · Intermediate Developer</p>
+        <p class="desc">Headless commerce platform (Next.js + Shopify + CMS).</p>
+      </article>
+
+      <article class="job">
+        <p class="title">IBM MEA</p>
+        <p class="meta">2016 → 2018 · Analyst</p>
+        <p class="desc">Chatbots, blockchain prototypes, enterprise systems.</p>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="block">
+    <p class="prompt-line">
+      <span class="user">wisam@terminal</span>:<span class="path">~</span>$ cat contact.info
+    </p>
+
+    <address class="contact">
+      <p>📍 Toronto, Canada</p>
+      <p>📞 (416) 276-4074</p>
+      <p>✉ wisam.alabed@tutamail.com</p>
+    </address>
+  </section>
+
+  <!-- CURSOR -->
+  <section class="cursor">
+    <span class="user">wisam@terminal</span>:<span class="path">~</span>$ <span class="blink">█</span>
+  </section>
+
+</main>
 </body>
-
 </html>
