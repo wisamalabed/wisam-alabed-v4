@@ -24,16 +24,10 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v6
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Install Handlebars CLI (for convenience) and jq
+      - name: Install jq and Python pip
         run: |
-          npm install -g handlebars-cli@^1.7.0
           sudo apt-get update -y
-          sudo apt-get install -y jq
+          sudo apt-get install -y jq python3-pip
 
       - name: Fetch Gist JSON
         run: curl -fsSL "$GIST_RAW_URL" -o resume.json
@@ -45,66 +39,67 @@ jobs:
             exit 1
           fi
 
-      - name: Create Handlebars partials and template
+      - name: Create Mustache-compatible partials and template
         run: |
           mkdir -p templates
 
           cat > templates/work.hbs <<'H'
-          {{#if work}}
-            {{#each work}}
+          {{#work}}
             <div style="margin-bottom:12px">
               <strong>{{name}} — {{position}}</strong>
-              <div class="muted">{{startDate}}{{#if endDate}} — {{endDate}}{{/if}}{{#if location}} • {{location}}{{/if}}</div>
+              <div class="muted">{{startDate}}{{#endDate}} — {{endDate}}{{/endDate}}{{#location}} • {{location}}{{/location}}</div>
               <div style="margin-top:6px">{{summary}}</div>
-              {{#if highlights}}
+              {{#highlights}}
                 <ul>
-                  {{#each highlights}}
-                    <li>{{this}}</li>
-                  {{/each}}
+                  {{#highlights}}
+                    <li>{{.}}</li>
+                  {{/highlights}}
                 </ul>
-              {{/if}}
+              {{/highlights}}
             </div>
-            {{/each}}
-          {{/if}}
+          {{/work}}
           H
 
           cat > templates/education.hbs <<'H'
-          {{#if education}}
-            {{#each education}}
+          {{#education}}
             <div style="margin-bottom:10px">
               <strong>{{institution}}</strong>
-              <div class="muted">{{studyType}}{{#if area}} — {{area}}{{/if}}{{#if startDate}} • {{startDate}}{{/if}}{{#if endDate}} — {{endDate}}{{/if}}</div>
+              <div class="muted">{{studyType}}{{#area}} — {{area}}{{/area}}{{#startDate}} • {{startDate}}{{/startDate}}{{#endDate}} — {{endDate}}{{/endDate}}</div>
             </div>
-            {{/each}}
-          {{/if}}
+          {{/education}}
           H
 
           cat > templates/skills.hbs <<'H'
-          {{#if skills}}
-            {{#each skills}}
+          {{#skills}}
             <div style="margin-bottom:8px">
               <strong>{{name}}</strong>
-              <div class="muted">{{#if keywords}}{{keywords.[0]}}{{#each keywords.[1..]}}{{", "}}{{this}}{{/each}}{{/if}}</div>
+              <div class="muted">
+                {{#keywords}}
+                  {{.}}{{#@last}}{{/@last}}{{^@last}}, {{/@last}}
+                {{/keywords}}
+              </div>
             </div>
-            {{/each}}
-          {{/if}}
+          {{/skills}}
           H
 
           cat > templates/index.hbs <<'H'
           <!doctype html>
-          <html>
+          <html lang="en">
           <head>
             <meta charset="utf-8">
-            <title>{{basics.name}}</title>
+            <meta name="viewport" content="width=device-width,initial-scale=1" />
+            <title>{{basics.name}} — Resume</title>
             <link rel="stylesheet" href="styles.css">
           </head>
           <body>
             <header>
               <h1>{{basics.name}} <small>{{basics.label}}</small></h1>
-              <div>{{basics.summary}}</div>
-              <div class="muted">{{basics.location.city}}{{#if basics.location.countryCode}} • {{basics.location.countryCode}}{{/if}}</div>
+              <div class="muted">{{basics.summary}}</div>
+              {{#basics.location}}
+                <div class="muted">{{city}}{{#countryCode}} • {{countryCode}}{{/countryCode}}</div>
+              {{/basics.location}}
             </header>
-          
+
             <main>
               {{> work}}
               {{> education}}
@@ -114,32 +109,37 @@ jobs:
           </html>
           H
 
-      - name: Render with Handlebars (Node)
+      - name: Render with Python (pystache)
         run: |
-          cat > render.js <<'JS'
-          const fs = require('fs');
-          const Handlebars = require('handlebars');
-          
-          // register partials
-          const partials = ['work','education','skills'];
-          partials.forEach(p => {
-            Handlebars.registerPartial(p, fs.readFileSync(`templates/${p}.hbs`, 'utf8'));
-          });
-          
-          // register helpers if needed (Handlebars escapes by default)
-          Handlebars.registerHelper('join', function(arr, sep=', ') {
-            if (!Array.isArray(arr)) return '';
-            return arr.join(sep);
-          });
-          
-          const resume = JSON.parse(fs.readFileSync('resume.json','utf8'));
-          const templateSrc = fs.readFileSync('templates/index.hbs','utf8');
-          const template = Handlebars.compile(templateSrc, {noEscape: false});
-          const out = template(resume);
-          fs.mkdirSync(process.env.OUTPUT_DIR || 'build', {recursive:true});
-          fs.writeFileSync(`${process.env.OUTPUT_DIR || 'build'}/${process.env.OUTPUT_FILE || 'index.html'}`, out, 'utf8');
-          JS
-          node render.js
+          python3 -m pip install --user pystache
+          python3 - <<'PY'
+          import json, os, sys, pystache
+          OUT_DIR = os.environ.get('OUTPUT_DIR','build')
+          OUT_FILE = os.environ.get('OUTPUT_FILE','index.html')
+          try:
+            with open('resume.json','r',encoding='utf8') as f:
+              data = json.load(f)
+          except Exception as e:
+            print(f"Failed to read resume.json: {e}", file=sys.stderr); sys.exit(1)
+          tpl_path = 'templates/index.hbs'
+          partial_names = ['work','education','skills']
+          try:
+            template = open(tpl_path,'r',encoding='utf8').read()
+          except FileNotFoundError:
+            print(f"Template not found: {tpl_path}", file=sys.stderr); sys.exit(1)
+          partials = {}
+          for p in partial_names:
+            path = f'templates/{p}.hbs'
+            try:
+              partials[p] = open(path,'r',encoding='utf8').read()
+            except FileNotFoundError:
+              print(f"Partial not found: {path}", file=sys.stderr); sys.exit(1)
+          renderer = pystache.Renderer(partials=partials)
+          out = renderer.render(template, data)
+          os.makedirs(OUT_DIR, exist_ok=True)
+          with open(os.path.join(OUT_DIR, OUT_FILE), 'w', encoding='utf8') as f:
+            f.write(out)
+          PY
 
       - name: Copy static assets
         run: |
