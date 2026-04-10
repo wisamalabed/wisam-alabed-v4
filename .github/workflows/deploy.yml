@@ -33,7 +33,7 @@ jobs:
       - name: Set deploy metadata
         run: |
           DEPLOY_TIME=$(date -u '+%Y-%m-%d %H:%M:%S UTC')
-          VERSION="v1.0.$(git rev-list --count HEAD)"
+          VERSION="v1.0.$GITHUB_RUN_NUMBER"
           echo "DEPLOY_TIME=$DEPLOY_TIME" >> $GITHUB_ENV
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
