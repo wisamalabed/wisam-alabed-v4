@@ -1,173 +1,154 @@
-name: Build Resume from JSON
+name: Build Resume (from Gist)
 
 on:
+  workflow_dispatch:
   push:
     branches: [ main ]
-  workflow_dispatch:
-  
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-  
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+    env:
+      GIST_RAW_URL: https://gist.github.com/wisamalabed/6c826f000b9d865a34c0ba6a4841cdb1/raw/resume.json
+      OUTPUT_FILE: index.html
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-    
-    - name: Fetch JSON Resume
-      id: fetch-json
-      run: |
-        # Get the raw JSON from your gist
-        JSON_URL="https://gist.githubusercontent.com/wisamalabed/6c826f000b9d865a34c0ba6a4841cdb1/raw/"
-        echo "Fetching JSON from: $JSON_URL"
-        
-        # Download the JSON
-        curl -s "$JSON_URL" > resume.json
-        
-        # Create a simple HTML generator
-        cat > generate-html.py << 'EOF'
-        import json
-        import html
-        from datetime import datetime
-        
-        # Load the JSON resume
-        with open('resume.json', 'r') as f:
-            resume = json.load(f)
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-        
-        def format_date(date_str):
-            if date_str == 'Present':
-                return date_str
-            try:
-                date = datetime.strptime(date_str, '%Y-%m-%d')
-                return date.strftime('%b %Y')
-            except:
-                return date_str
-        
-        # Generate HTML
-        html_content = """
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>""" + html.escape(resume['basics']['name']) + """ - Resume</title>
+      - name: Install deps
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y jq gettext-base
+
+      - name: Fetch Gist JSON
+        run: |
+          curl -fsSL "$GIST_RAW_URL" -o resume.json
+
+      - name: Extract values to env file
+        run: |
+          # Basic extraction; adjust keys if your JSON shape differs
+          jq -r '
+            .basics.name // "" as $name |
+            .basics.label // "" as $label |
+            .basics.image // "" as $image |
+            .basics.email // "" as $email |
+            .basics.phone // "" as $phone |
+            .basics.summary // "" as $summary |
+            .basics.location.city // "" as $city |
+            .basics.location.countryCode // "" as $country |
+            .meta.theme // "" as $theme |
+            {name:$name,label:$label,image:$image,email:$email,phone:$phone,summary:$summary,city:$city,country:$country,theme:$theme} |
+            to_entries[] | "\(.key)=\(.value|@sh)"' resume.json > resume.env
+          # Unquote sh-escaped values for envsubst usage
+          sed -E "s/^([^=]+=)'(.*)'$/\1\2/" resume.env > resume.env.tmp && mv resume.env.tmp resume.env
+
+      - name: Build work, education, skills partials (HTML)
+        run: |
+          # Work
+          jq -r '
+            .work[]? |
+            "<div style=\"margin-bottom:12px\"><strong>\(.name|@html) — \(.position|@html)</strong><div class=\"muted\">\(.startDate // "")\(.endDate? | select(.) | " — " + .) • \(.location // "")</div><div style=\"margin-top:6px\">\(.summary|@html)</div>" +
+            (if (.highlights | length) > 0 then ("<ul>" + (.highlights[] | "<li>"+@html+ "</li>") + "</ul>") else "" end) + "</div>"' resume.json > work.html || true
+
+          # Education
+          jq -r '
+            .education[]? |
+            "<div style=\"margin-bottom:10px\"><strong>\(.institution|@html)</strong><div class=\"muted\">\(.studyType // "") — \(.area // "") • \(.startDate // "")\(.endDate? | select(.) | " — " + .)</div></div>"' resume.json > education.html || true
+
+          # Skills
+          jq -r '
+            .skills[]? |
+            "<div style=\"margin-bottom:8px\"><strong>\(.name|@html)</strong><div class=\"muted\">\((.keywords // []) | join(", "))</div></div>"' resume.json > skills.html || true
+
+      - name: Create index.html from template
+        run: |
+          cat > template.html <<'TEMPLATE'
+          <!doctype html>
+          <html lang="en">
+          <head>
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width,initial-scale=1" />
+            <title>${name} — Resume</title>
             <style>
-                /* Your CSS styles here */
-                body { font-family: Courier New, Courier, Lucida Sans Typewriter, Lucida Typewriter, monospace; margin: 40px; max-width: 800px; margin: 0 auto; }
-                .header { padding: 40px 20px; text-align: center; }
-                .section { margin-bottom: 30px; }
-                .section-title { color: #dc3f0f; border-bottom: 2px solid #dc3f0f; padding-bottom: 5px; }
-                .experience-item { margin-bottom: 20px; }
-                .company { color: #dc3f0f; font-weight: bold; }
-                .date { color: #666; font-size: 0.9em; }
-                .highlights { list-style: none; padding-left: 0; }
-                .highlights li::before { content: "▸"; color: #dc3f0f; font-weight: bold; }
-                @media (max-width: 768px) { body { margin: 20px; } }
+              body{font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;margin:24px;color:#111}
+              header{display:flex;gap:16px;align-items:center}
+              img{width:96px;height:96px;border-radius:8px;object-fit:cover}
+              h1{margin:0;font-size:1.4rem}
+              h2{margin:18px 0 6px;font-size:1rem}
+              .muted{color:#555;font-size:0.95rem}
+              .section{margin-top:14px}
+              ul{margin:6px 0 0 18px;padding:0}
+              .grid{display:grid;grid-template-columns:1fr 320px;gap:24px}
+              @media (max-width:700px){.grid{grid-template-columns:1fr}}
             </style>
-        </head>
-        <body>
-            <div class="header">
-                <h1>""" + html.escape(resume['basics']['name']) + """</h1>
-                <p>""" + html.escape(resume['basics']['label']) + """</p>
-            </div>
-            
-            <div class="section">
-                <h2 class="section-title">Contact</h2>
-                <p>strong>Email:</<strong> """ + html.escape(resume['basics']['email']) + """</p>
-                <p><strong>Phone:</strong> """ + html.escape(resume['basics']['phone']) + """</p>
-                <p><strong>Location:</strong> """ + html.escape(resume['basics']['location']['city']) + """, """ + html.escape(resume['basics']['location']['countryCode']) + """</p>
-            </div>
-            
-            <div class="section">
-                <h2 class="section-title">Summary</h2>
-                <p>""" + html.escape(resume['basics']['summary']) + """</p>
-            </div>
-            
-            <div class="section">
-                <h2 class="section-title">Experience</h2>
-        """
-        
-        # Add work experience
-        for job in resume['work']:
-            html_content += f"""
-                <div class="experience-item">
-                    <h3>{html.escape(job['position'])}</h3>
-                    <p class="company">{html.escape(job['name'])}</p>
-                    <p class="date">{format_date(job['startDate'])} - {format_date(job.get('endDate', 'Present'))}</p>
-                    <p>{html.escape(job.get('summary', ''))}</p>
-            """
-            
-            if 'highlights' in job and job['highlights']:
-                html_content += "<ul class='highlights'>"
-                for highlight in job['highlights']:
-                    html_content += f"<li>{html.escape(highlight)}</li>"
-                html_content += "</ul>"
-            
-            html_content += "</div>"
-        
-        html_content += """
-            </div>
-            
-            <div class="section">
-                <h2 class="section-title">Education</h2>
-        """
-        
-        # Add education
-        for edu in resume['education']:
-            html_content += f"""
-                <div class="experience-item">
-                    <h3>{html.escape(edu['area'])} - {html.escape(edu['studyType'])}</h3>
-                    <p class="company">{html.escape(edu['institution'])}</p>
-                    <p class="date">{format_date(edu['startDate'])} - {format_date(edu['endDate'])}</p>
+          </head>
+          <body>
+            <main class="grid">
+              <section>
+                <header>
+                  <img src="${image}" alt="${name}">
+                  <div>
+                    <h1>${name}</h1>
+                    <div class="muted">${label}</div>
+                    <div class="muted" style="margin-top:6px">${city}, ${country} • ${phone} • <a href="mailto:${email}">${email}</a></div>
+                  </div>
+                </header>
+          
+                <div class="section">
+                  <h2>Summary</h2>
+                  <p class="muted">${summary}</p>
                 </div>
-            """
-        
-        html_content += """
-            </div>
-            
-            <div class="section">
-                <h2 class="section-title">Skills</h2>
-        """
-        
-        # Add skills
-        for skill in resume['skills']:
-            html_content += f"""
-                <div class="experience-item">
-                    <h3>{html.escape(skill['name'])} ({html.escape(skill['level'])})</h3>
-                    <p>{', '.join(html.escape(kw) for kw in skill['keywords'])}</p>
+          
+                <div class="section">
+                  <h2>Work</h2>
+                  <!-- WORK_PLACEHOLDER -->
+                  __WORK_HTML__
                 </div>
-            """
-        
-        html_content += """
-            </div>
-        </body>
-        </html>
-        """
-        
-        with open('index.html', 'w') as f:
-            f.write(html_content)
-            
-        EOF
-        
-        python3 generate-html.py
-    
-    - name: Setup Pages
-      uses: actions/configure-pages@v4
-    
-    - name: Upload to GitHub Pages
-      uses: actions/upload-pages-artifact@v3
-      with:
-        path: .
-    
-    - name: Deploy to GitHub Pages
-      id: deployment
-      uses: actions/deploy-pages@v4
+          
+                <div class="section">
+                  <h2>Education</h2>
+                  <!-- EDUCATION_PLACEHOLDER -->
+                  __EDU_HTML__
+                </div>
+              </section>
+          
+              <aside>
+                <div class="section">
+                  <h2>Skills</h2>
+                  <!-- SKILLS_PLACEHOLDER -->
+                  __SKILLS_HTML__
+                </div>
+          
+                <div class="section">
+                  <h2>Meta</h2>
+                  <div id="meta" class="muted">Theme: ${theme}</div>
+                </div>
+              </aside>
+            </main>
+          </body>
+          </html>
+          TEMPLATE
+          
+          # Load env
+          set -o allexport
+          . resume.env
+          set +o allexport
+
+          # Inject generated partials into template and produce final index.html
+          WORK_HTML="$(cat work.html 2>/dev/null || true)"
+          EDU_HTML="$(cat education.html 2>/dev/null || true)"
+          SKILLS_HTML="$(cat skills.html 2>/dev/null || true)"
+
+          sed "s|__WORK_HTML__|${WORK_HTML}|g; s|__EDU_HTML__|${EDU_HTML}|g; s|__SKILLS_HTML__|${SKILLS_HTML}|g" template.html > "$OUTPUT_FILE"
+
+      - name: Show generated file snippet
+        run: sed -n '1,200p' index.html
+
+      - name: Commit and push (optional)
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add "$OUTPUT_FILE"
+          git commit -m "chore: build resume from gist" || echo "no changes to commit"
+          git push origin HEAD:main || echo "push failed"
