@@ -71,7 +71,7 @@ body::after {
 /* =========================
    THEME TOGGLE
 ========================= */
-/* Theme Switch Container */
+/* Container */
 .theme-switch {
   position: fixed;
   top: 16px;
@@ -81,14 +81,15 @@ body::after {
   height: 26px;
   cursor: pointer;
   user-select: none;
+  position: relative; /* important */
 }
 
-/* Hide the checkbox itself */
+/* Hide checkbox */
 .theme-switch input {
   display: none;
 }
 
-/* The slider */
+/* Slider track */
 .theme-switch .slider {
   position: absolute;
   inset: 0;
@@ -97,6 +98,7 @@ body::after {
   transition: background 0.3s ease;
 }
 
+/* Slider knob */
 .theme-switch .slider::before {
   content: "";
   position: absolute;
@@ -109,18 +111,18 @@ body::after {
   transition: transform 0.3s ease, background 0.3s ease;
 }
 
-/* When checked, move the circle to the right and optionally change color */
+/* Knob moves when checked */
 #theme-toggle:checked + .slider::before {
   transform: translateX(24px);
   background: var(--cyan);
 }
 
-/* Optional: dark/light background for slider track */
+/* Slider track changes when checked */
 #theme-toggle:checked + .slider {
   background: rgba(0, 0, 0, 0.35);
 }
 
-/* DARK MODE OVERRIDE WHEN CHECKED */
+/* Terminal theme override */
 #theme-toggle:checked ~ .terminal {
   --bg: #070b09;
   --panel: #0e1511;
@@ -133,7 +135,6 @@ body::after {
   --cyan: #4dfcff;
 }
 
-/* LIGHT MODE OVERRIDE WHEN UNCHECKED */
 #theme-toggle:not(:checked) ~ .terminal {
   --bg: #f5f5f5;
   --panel: #ffffff;
@@ -145,6 +146,7 @@ body::after {
   --sand: #c8b68a;
   --cyan: #00bcd4;
 
+  /* reduce background pattern opacity in light mode */
   body::before,
   body::after { opacity: 0.05; }
 }
