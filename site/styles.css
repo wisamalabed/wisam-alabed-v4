@@ -134,40 +134,53 @@ body::after {
 /* =========================
    BOOT SEQUENCE
 ========================= */
-.boot { color: var(--dim); margin-bottom: 30px; }
+.boot {
+  color: var(--dim);
+  margin-bottom: 30px;
+}
+
+/* Generic fade-in for all lines */
 .boot p {
   opacity: 0;
   animation: bootIn 0.4s forwards;
-  /* Set the animation delay based on a custom property --i */
-  animation-delay: calc(0.2s + 0.3s * var(--i));
+  animation-delay: calc(0.2s + 0.3s * var(--i)); /* staggered automatically */
 }
 
-/* Assign --i dynamically using nth-child */
-.boot p:nth-child(1) { --i: 0; }
-.boot p:nth-child(2) { --i: 1; }
-.boot p:nth-child(3) { --i: 2; }
-.boot p:nth-child(4) { --i: 3; }
-.boot p:nth-child(5) { --i: 4; }
-.boot p:nth-child(6) { --i: 5; }
-.boot p:nth-child(7) { --i: 6; }
-.boot p:nth-child(8) { --i: 7; }
-.boot p:nth-child(9) { --i: 8; }
-
-@keyframes bootIn { to { opacity: 1; } }
-
-.sys { color: var(--cyan); }
-.ok { color: var(--green); }
-.cursor-line { color: var(--sand); }
-
-/* Metadata highlight */
+/* Metadata flicker */
 #version-line, #deploy-line {
   color: var(--green-soft);
   font-weight: 700;
-  text-shadow: 0 0 2px rgba(0, 255, 150, 0.5), 0 0 4px rgba(0, 255, 150, 0.4), 0 0 6px rgba(0, 255, 150, 0.3);
-  animation: metadata-flicker var(--metadata-flicker-duration) infinite;
+  text-shadow: 0 0 2px rgba(0, 255, 150, 0.5),
+               0 0 4px rgba(0, 255, 150, 0.4),
+               0 0 6px rgba(0, 255, 150, 0.3);
+  /* combine fade-in + flicker */
+  animation: bootIn 0.4s forwards, metadata-flicker var(--metadata-flicker-duration) infinite;
+  animation-delay: calc(0.2s + 0.3s * var(--i)), calc(0.2s + 0.3s * var(--i));
 }
 
-@keyframes metadata-flicker { 0%,100%{opacity:1;} 92%{opacity:1;} 93%{opacity:0.85;} 94%{opacity:1;} 97%{opacity:0.9;} }
+/* Automatic index assignment using CSS counters */
+.boot {
+  counter-reset: boot-line;
+}
+
+.boot p {
+  counter-increment: boot-line;
+  --i: calc(counter(boot-line) - 1); /* dynamic index for stagger */
+}
+
+/* Fade-in animation */
+@keyframes bootIn {
+  to { opacity: 1; }
+}
+
+/* Flicker animation for metadata lines */
+@keyframes metadata-flicker {
+  0%, 100% { opacity: 1; }
+  92% { opacity: 1; }
+  93% { opacity: 0.85; }
+  94% { opacity: 1; }
+  97% { opacity: 0.9; }
+}
 @keyframes flicker {0%,100%{opacity:1;} 92%{opacity:1;} 93%{opacity:0.85;} 94%{opacity:1;} 97%{opacity:0.9;}}
 
 /* =========================
