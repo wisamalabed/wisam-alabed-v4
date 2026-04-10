@@ -13,92 +13,142 @@ permissions:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
     env:
       GIST_RAW_URL: https://gist.githubusercontent.com/wisamalabed/6c826f000b9d865a34c0ba6a4841cdb1/raw/f08f6a0483c424f9f69afbab44d24a4234b4fb3d/resume.json
       OUTPUT_DIR: build
       OUTPUT_FILE: index.html
+
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@v6
 
-      - name: Install deps
-        run: sudo apt-get update -y && sudo apt-get install -y jq gettext-base
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Handlebars CLI (for convenience) and jq
+        run: |
+          npm install -g handlebars-cli@^1.7.0
+          sudo apt-get update -y
+          sudo apt-get install -y jq
 
       - name: Fetch Gist JSON
         run: curl -fsSL "$GIST_RAW_URL" -o resume.json
 
-      - name: Export simple fields to env file (safe quoting)
+      - name: Validate resume JSON exists
         run: |
-          jq -r '
-            {
-              name: (.basics.name // ""),
-              label: (.basics.label // ""),
-              image: (.basics.image // ""),
-              email: (.basics.email // ""),
-              phone: (.basics.phone // ""),
-              summary: (.basics.summary // ""),
-              city: (.basics.location.city // ""),
-              country: (.basics.location.countryCode // ""),
-              theme: (.meta.theme // "")
-            }
-            | to_entries[]
-            | "\(.key)=\(.value|@json)"
-          ' resume.json > resume.env
+          if [ ! -s resume.json ]; then
+            echo "resume.json missing or empty" >&2
+            exit 1
+          fi
 
-      - name: Render lists to HTML partials
+      - name: Create Handlebars partials and template
         run: |
-          jq -r '
-            .work[]? |
-            "<div style=\"margin-bottom:12px\"><strong>\(.name|@html) — \(.position|@html)</strong><div class=\"muted\">\(.startDate // "")\(.endDate? | select(.) | " — " + .) • \(.location // "")</div><div style=\"margin-top:6px\">\(.summary|@html)</div>" +
-            (if (.highlights | length) > 0 then ("<ul>" + (.highlights[] | "<li>"+@html+ "</li>") + "</ul>") else "" end) + "</div>"' resume.json > work.html || true
+          mkdir -p templates
 
-          jq -r '
-            .education[]? |
-            "<div style=\"margin-bottom:10px\"><strong>\(.institution|@html)</strong><div class=\"muted\">\(.studyType // "") — \(.area // "") • \(.startDate // "")\(.endDate? | select(.) | " — " + .)</div></div>"' resume.json > education.html || true
+          cat > templates/work.hbs <<'H'
+          {{#if work}}
+            {{#each work}}
+            <div style="margin-bottom:12px">
+              <strong>{{name}} — {{position}}</strong>
+              <div class="muted">{{startDate}}{{#if endDate}} — {{endDate}}{{/if}}{{#if location}} • {{location}}{{/if}}</div>
+              <div style="margin-top:6px">{{summary}}</div>
+              {{#if highlights}}
+                <ul>
+                  {{#each highlights}}
+                    <li>{{this}}</li>
+                  {{/each}}
+                </ul>
+              {{/if}}
+            </div>
+            {{/each}}
+          {{/if}}
+          H
 
-          jq -r '
-            .skills[]? |
-            "<div style=\"margin-bottom:8px\"><strong>\(.name|@html)</strong><div class=\"muted\">\((.keywords // []) | join(", "))</div></div>"' resume.json > skills.html || true
+          cat > templates/education.hbs <<'H'
+          {{#if education}}
+            {{#each education}}
+            <div style="margin-bottom:10px">
+              <strong>{{institution}}</strong>
+              <div class="muted">{{studyType}}{{#if area}} — {{area}}{{/if}}{{#if startDate}} • {{startDate}}{{/if}}{{#if endDate}} — {{endDate}}{{/if}}</div>
+            </div>
+            {{/each}}
+          {{/if}}
+          H
 
-      - name: Prepare template copy and convert placeholders
+          cat > templates/skills.hbs <<'H'
+          {{#if skills}}
+            {{#each skills}}
+            <div style="margin-bottom:8px">
+              <strong>{{name}}</strong>
+              <div class="muted">{{#if keywords}}{{keywords.[0]}}{{#each keywords.[1..]}}{{", "}}{{this}}{{/each}}{{/if}}</div>
+            </div>
+            {{/each}}
+          {{/if}}
+          H
+
+          cat > templates/index.hbs <<'H'
+          <!doctype html>
+          <html>
+          <head>
+            <meta charset="utf-8">
+            <title>{{basics.name}}</title>
+            <link rel="stylesheet" href="styles.css">
+          </head>
+          <body>
+            <header>
+              <h1>{{basics.name}} <small>{{basics.label}}</small></h1>
+              <div>{{basics.summary}}</div>
+              <div class="muted">{{basics.location.city}}{{#if basics.location.countryCode}} • {{basics.location.countryCode}}{{/if}}</div>
+            </header>
+          
+            <main>
+              {{> work}}
+              {{> education}}
+              {{> skills}}
+            </main>
+          </body>
+          </html>
+          H
+
+      - name: Render with Handlebars (Node)
         run: |
-          mkdir -p "$OUTPUT_DIR"
-          cp index.html "$OUTPUT_DIR/index.template.html"
-          sed -E 's/\{\{\s*basics\.name\s*\}\}/${name}/g;
-                  s/\{\{\s*basics\.label\s*\}\}/${label}/g;
-                  s/\{\{\s*basics\.image\s*\}\}/${image}/g;
-                  s/\{\{\s*basics\.email\s*\}\}/${email}/g;
-                  s/\{\{\s*basics\.phone\s*\}\}/${phone}/g;
-                  s/\{\{\s*basics\.summary\s*\}\}/${summary}/g;
-                  s/\{\{\s*basics\.location\.city\s*\}\}/${city}/g;
-                  s/\{\{\s*basics\.location.countryCode\s*\}\}/${country}/g;
-                  s/\{\{\s*meta\.theme\s*\}\}/${theme}/g' "$OUTPUT_DIR/index.template.html" > "$OUTPUT_DIR/index.template2.html"
+          cat > render.js <<'JS'
+          const fs = require('fs');
+          const Handlebars = require('handlebars');
+          
+          // register partials
+          const partials = ['work','education','skills'];
+          partials.forEach(p => {
+            Handlebars.registerPartial(p, fs.readFileSync(`templates/${p}.hbs`, 'utf8'));
+          });
+          
+          // register helpers if needed (Handlebars escapes by default)
+          Handlebars.registerHelper('join', function(arr, sep=', ') {
+            if (!Array.isArray(arr)) return '';
+            return arr.join(sep);
+          });
+          
+          const resume = JSON.parse(fs.readFileSync('resume.json','utf8'));
+          const templateSrc = fs.readFileSync('templates/index.hbs','utf8');
+          const template = Handlebars.compile(templateSrc, {noEscape: false});
+          const out = template(resume);
+          fs.mkdirSync(process.env.OUTPUT_DIR || 'build', {recursive:true});
+          fs.writeFileSync(`${process.env.OUTPUT_DIR || 'build'}/${process.env.OUTPUT_FILE || 'index.html'}`, out, 'utf8');
+          JS
+          node render.js
 
-      - name: Replace list blocks with markers
-        run: |
-          sed -E '/\{\{\#work\}\}/,/\{\{\/work\}\}/c\__WORK_HTML__' "$OUTPUT_DIR/index.template2.html" > "$OUTPUT_DIR/index.template3.html"
-          sed -E '/\{\{\#education\}\}/,/\{\{\/education\}\}/c\__EDU_HTML__' "$OUTPUT_DIR/index.template3.html" > "$OUTPUT_DIR/index.template4.html"
-          sed -E '/\{\{\#skills\}\}/,/\{\{\/skills\}\}/c\__SKILLS_HTML__' "$OUTPUT_DIR/index.template4.html" > "$OUTPUT_DIR/index.template.final.html"
-
-      - name: Produce final filled HTML (build/index.html)
-        run: |
-          set -o allexport
-          . resume.env
-          set +o allexport
-          WORK_HTML="$(cat work.html 2>/dev/null || true)"
-          EDU_HTML="$(cat education.html 2>/dev/null || true)"
-          SKILLS_HTML="$(cat skills.html 2>/dev/null || true)"
-          awk -v w="$WORK_HTML" -v e="$EDU_HTML" -v s="$SKILLS_HTML" '{gsub(/__WORK_HTML__/,w); gsub(/__EDU_HTML__/,e); gsub(/__SKILLS_HTML__/,s); print}' "$OUTPUT_DIR/index.template.final.html" > "$OUTPUT_DIR/_temp_index.html"
-          envsubst < "$OUTPUT_DIR/_temp_index.html" > "$OUTPUT_DIR/$OUTPUT_FILE"
-
-      - name: Copy static assets (styles.css, images, etc.)
+      - name: Copy static assets
         run: |
           cp -a styles.css "$OUTPUT_DIR/" || true
 
       - name: List build output
         run: |
           ls -la "$OUTPUT_DIR"
-          sed -n '1,120p' "$OUTPUT_DIR/$OUTPUT_FILE"
+          sed -n '1,120p' "$OUTPUT_DIR/$OUTPUT_FILE" || true
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v6
