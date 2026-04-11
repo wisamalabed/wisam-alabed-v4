@@ -3,18 +3,25 @@
 ========================= */
 :root {
   /* Core Palette (Palestine-inspired) */
-  --bg: #070b09;          /* deep ink black */
-  --panel: #0e1511;       /* lifted surface */
-  --text: #e7f5ec;        /* soft off-white green tint */
-  --dim: #8fb39a;          /* muted terminal green */
-  --green: #00c853;        /* terminal green */
+  --bg: #070b09;
+  /* deep ink black */
+  --panel: #0e1511;
+  /* lifted surface */
+  --text: #e7f5ec;
+  /* soft off-white green tint */
+  --dim: #8fb39a;
+  /* muted terminal green */
+  --green: #00c853;
+  /* terminal green */
   --green-soft: #2dfc8f;
-  --red: #ff4f4f;          /* accent red from Palestine flag */
-  --sand: #f0e6b8;         /* sand tone from flag */
+  --red: #ff4f4f;
+  /* accent red from Palestine flag */
+  --sand: #f0e6b8;
+  /* sand tone from flag */
   --cyan: #4dfcff;
-  --red-rgb: 229, 57, 53;      
-  --green-rgb: 0, 200, 83;     
-  --sand-rgb: 200, 182, 138;  
+  --red-rgb: 229, 57, 53;
+  --green-rgb: 0, 200, 83;
+  --sand-rgb: 200, 182, 138;
 
   /* Typography */
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
@@ -33,40 +40,45 @@
 /* =========================
    RESET
 ========================= */
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   font-family: var(--font-mono);
   color: var(--text);
   background:
     radial-gradient(circle at 20% 10%, rgba(0, 200, 83, 0.08), transparent 40%),
-    radial-gradient(circle at 80% 30%, rgba(255,79,79,0.06), transparent 45%),
+    radial-gradient(circle at 80% 30%, rgba(255, 79, 79, 0.06), transparent 45%),
     linear-gradient(to bottom, #050807, var(--bg));
 }
 
 /* Geometric grid for texture */
 body::before {
   content: "";
-  position: fixed; inset: 0;
+  position: fixed;
+  inset: 0;
   pointer-events: none;
   opacity: 0.06;
   background-image:
-    linear-gradient(45deg, rgba(255,255,255,0.08) 1px, transparent 1px),
-    linear-gradient(-45deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+    linear-gradient(45deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(-45deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
   background-size: 60px 60px;
 }
 
 /* CRT scanlines */
 body::after {
   content: "";
-  position: fixed; inset: 0;
+  position: fixed;
+  inset: 0;
   pointer-events: none;
-  background: repeating-linear-gradient(
-    to bottom,
-    rgba(255,255,255,0.02),
-    rgba(255,255,255,0.02) 1px,
-    transparent 2px,
-    transparent 4px
-  );
+  background: repeating-linear-gradient(to bottom,
+      rgba(255, 255, 255, 0.02),
+      rgba(255, 255, 255, 0.02) 1px,
+      transparent 2px,
+      transparent 4px);
   mix-blend-mode: overlay;
   opacity: 0.25;
 }
@@ -88,11 +100,13 @@ body::after {
   align-items: center;
   gap: 14px;
   margin-bottom: 28px;
-  padding: 12px 16px; /* compact padding */
+  padding: 12px 16px;
+  /* compact padding */
   border-radius: var(--border-radius-medium);
 
   /* subtle solid background using sand as base */
-  background: var(--panel); /* keeps it neutral and soft */
+  background: var(--panel);
+  /* keeps it neutral and soft */
 
   /* optional colored border to hint Palestine colors */
   border-left: 4px solid var(--red);
@@ -100,7 +114,8 @@ body::after {
   border-bottom: 4px solid var(--sand);
 
   backdrop-filter: blur(6px);
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1); /* subtle shadow */
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+  /* subtle shadow */
 }
 
 .logo img {
@@ -108,7 +123,7 @@ body::after {
   height: 48px;
   border-radius: 10px;
   box-shadow: 0 0 0 1px rgba(var(--green-rgb), 0.3),
-              0 0 12px rgba(var(--green-rgb), 0.2);
+    0 0 12px rgba(var(--green-rgb), 0.2);
   filter: contrast(1.05) saturate(1.1);
   animation: flicker var(--flicker-duration) infinite;
 }
@@ -143,54 +158,140 @@ body::after {
 .boot p {
   opacity: 0;
   animation: bootIn 0.4s forwards;
-  animation-delay: calc(0.2s + 0.3s * var(--i)); /* staggered automatically */
+  animation-delay: calc(0.2s + 0.3s * var(--i));
+  /* staggered automatically */
 }
 
 /* Assign --i dynamically using nth-child */
-.boot p:nth-child(1) { --i: 0; }
-.boot p:nth-child(2) { --i: 1; }
-.boot p:nth-child(3) { --i: 2; }
-.boot p:nth-child(4) { --i: 3; }
-.boot p:nth-child(5) { --i: 4; }
-.boot p:nth-child(6) { --i: 5; }
-.boot p:nth-child(7) { --i: 6; }
-.boot p:nth-child(8) { --i: 7; }
-.boot p:nth-child(9) { --i: 8; }
+.boot p:nth-child(1) {
+  --i: 0;
+}
+
+.boot p:nth-child(2) {
+  --i: 1;
+}
+
+.boot p:nth-child(3) {
+  --i: 2;
+}
+
+.boot p:nth-child(4) {
+  --i: 3;
+}
+
+.boot p:nth-child(5) {
+  --i: 4;
+}
+
+.boot p:nth-child(6) {
+  --i: 5;
+}
+
+.boot p:nth-child(7) {
+  --i: 6;
+}
+
+.boot p:nth-child(8) {
+  --i: 7;
+}
+
+.boot p:nth-child(9) {
+  --i: 8;
+}
 
 /* Metadata flicker */
-#version-line, #deploy-line {
+#version-line,
+#deploy-line {
   color: var(--green-soft);
   font-weight: 700;
   text-shadow: 0 0 2px rgba(0, 255, 150, 0.5),
-               0 0 4px rgba(0, 255, 150, 0.4),
-               0 0 6px rgba(0, 255, 150, 0.3);
+    0 0 4px rgba(0, 255, 150, 0.4),
+    0 0 6px rgba(0, 255, 150, 0.3);
 }
 
 
 /* Fade-in animation */
 @keyframes bootIn {
-  to { opacity: 1; }
+  to {
+    opacity: 1;
+  }
 }
 
 /* Flicker animation for metadata lines */
 @keyframes metadata-flicker {
-  0%, 100% { opacity: 1; }
-  92% { opacity: 1; }
-  93% { opacity: 0.85; }
-  94% { opacity: 1; }
-  97% { opacity: 0.9; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  92% {
+    opacity: 1;
+  }
+
+  93% {
+    opacity: 0.85;
+  }
+
+  94% {
+    opacity: 1;
+  }
+
+  97% {
+    opacity: 0.9;
+  }
 }
-@keyframes flicker {0%,100%{opacity:1;} 92%{opacity:1;} 93%{opacity:0.85;} 94%{opacity:1;} 97%{opacity:0.9;}}
+
+@keyframes flicker {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  92% {
+    opacity: 1;
+  }
+
+  93% {
+    opacity: 0.85;
+  }
+
+  94% {
+    opacity: 1;
+  }
+
+  97% {
+    opacity: 0.9;
+  }
+}
 
 /* =========================
    PROMPT & BLOCK
 ========================= */
-.prompt-line { margin: 0; color: var(--dim); }
-.user { color: var(--green-soft); text-shadow: 0 0 6px rgba(0, 200, 83, 0.3); }
-.path { color: var(--sand); }
+.prompt-line {
+  margin: 0;
+  color: var(--dim);
+}
 
-.block { margin-bottom: 28px; }
-.out { margin-top: 10px; padding-left: 14px; border-left: 2px solid rgba(0, 200, 83, 0.25); }
+.user {
+  color: var(--green-soft);
+  text-shadow: 0 0 6px rgba(0, 200, 83, 0.3);
+}
+
+.path {
+  color: var(--sand);
+}
+
+.block {
+  margin-bottom: 28px;
+}
+
+.out {
+  margin-top: 10px;
+  padding-left: 14px;
+  border-left: 2px solid rgba(0, 200, 83, 0.25);
+}
 
 /* =========================
    DOWNLOAD BLOCK
@@ -198,19 +299,34 @@ body::after {
 #resume-line {
   opacity: 0;
   animation: bootIn 0.4s forwards;
-  animation-delay: 0.3s; /* adjust timing if needed */
+  animation-delay: 0.3s;
+  /* adjust timing if needed */
 }
 
 /* =========================
    MAN PAGE
 ========================= */
-.man { margin-top: 10px; padding-left: 14px; border-left: 2px solid rgba(200, 182, 138, 0.35); }
-.man h1 { background: linear-gradient(90deg, var(--red), var(--sand), var(--green));
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-          margin: 0; }
-.man h2 { margin-top: 14px; color: var(--green); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; }
+.man {
+  margin-top: 10px;
+  padding-left: 14px;
+  border-left: 2px solid rgba(200, 182, 138, 0.35);
+}
+
+.man h1 {
+  background: linear-gradient(90deg, var(--red), var(--sand), var(--green));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+}
+
+.man h2 {
+  margin-top: 14px;
+  color: var(--green);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
 
 /* =========================
    GRID CARDS
@@ -237,7 +353,7 @@ body::after {
 .card:hover {
   transform: translateY(-2px);
   border-color: rgba(0, 200, 83, 0.35);
-   color: var(--cyan);
+  color: var(--cyan);
 }
 
 /* Dark overlay on hover to improve contrast */
@@ -246,7 +362,8 @@ body::after {
   position: absolute;
   inset: 0;
   border-radius: var(--border-radius-medium);
-  background: rgba(0, 0, 0, 0.4); /* semi-transparent dark layer */
+  background: rgba(0, 0, 0, 0.4);
+  /* semi-transparent dark layer */
   opacity: 0;
   transition: opacity 0.2s ease;
   pointer-events: none;
@@ -258,7 +375,8 @@ body::after {
 
 /* Headings */
 .card h3 {
-  position: relative; /* above overlay */
+  position: relative;
+  /* above overlay */
   margin: 0 0 6px;
   font-size: 13px;
   text-transform: lowercase;
@@ -271,7 +389,8 @@ body::after {
 
 /* Fallback: solid color for accessibility if gradient fails */
 .card:hover h3 {
-  color: var(--text); /* ensures visibility above gradient overlay */
+  color: var(--text);
+  /* ensures visibility above gradient overlay */
 }
 
 
@@ -310,11 +429,33 @@ body::after {
 /* =========================
    TIMELINE
 ========================= */
-.timeline { margin-top: 10px; display: flex; flex-direction: column; gap: 16px; }
-.job { padding-left: 14px; border-left: 2px solid rgba(200, 182, 138, 0.25); }
-.title { color: var(--sand); margin: 0; }
-.meta { color: var(--dim); font-size: 13px; margin: 2px 0; }
-.desc { margin: 0; color: var(--text); }
+.timeline {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.job {
+  padding-left: 14px;
+  border-left: 2px solid rgba(200, 182, 138, 0.25);
+}
+
+.title {
+  color: var(--sand);
+  margin: 0;
+}
+
+.meta {
+  color: var(--dim);
+  font-size: 13px;
+  margin: 2px 0;
+}
+
+.desc {
+  margin: 0;
+  color: var(--text);
+}
 
 .highlights {
   margin: 6px 0 0 18px;
@@ -336,7 +477,9 @@ body::after {
 /* =========================
    CONTACT
 ========================= */
-.contact p { margin: 4px 0; }
+.contact p {
+  margin: 4px 0;
+}
 
 .contact svg {
   width: 18px;
@@ -347,9 +490,20 @@ body::after {
   filter: drop-shadow(0 0 2px var(--green));
 }
 
-.icon-location { fill: var(--green); filter: drop-shadow(0 0 3px var(--green)); }
-.icon-phone { fill: var(--red); filter: drop-shadow(0 0 3px var(--red)); }
-.icon-email { fill: var(--sand); filter: drop-shadow(0 0 3px var(--sand)); }
+.icon-location {
+  fill: var(--green);
+  filter: drop-shadow(0 0 3px var(--green));
+}
+
+.icon-phone {
+  fill: var(--red);
+  filter: drop-shadow(0 0 3px var(--red));
+}
+
+.icon-email {
+  fill: var(--sand);
+  filter: drop-shadow(0 0 3px var(--sand));
+}
 
 /* Hover effect for glow intensification */
 .contact p:hover svg {
@@ -359,10 +513,21 @@ body::after {
 /* =========================
    CURSOR
 ========================= */
-.cursor { margin-top: 30px; color: var(--dim); }
-.blink { animation: blink var(--blink-duration) infinite; color: var(--green); }
+.cursor {
+  margin-top: 30px;
+  color: var(--dim);
+}
 
-@keyframes blink { 50% { opacity: 0; } }
+.blink {
+  animation: blink var(--blink-duration) infinite;
+  color: var(--green);
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
 
 /* =========================
    TERMINAL FOOTER
@@ -403,13 +568,16 @@ body::after {
    RESPONSIVE
 ========================= */
 @media (max-width: 600px) {
-  .terminal { padding: 16px; }
+  .terminal {
+    padding: 16px;
+  }
 }
 
 /* =========================
    PRINT STYLES
 ========================= */
 @media print {
+
   /* =========================
      BODY AND TERMINAL
   ========================== */
@@ -450,7 +618,9 @@ body::after {
     padding: 0 !important;
   }
 
-  .logo-text, .sys-name, .sys-tag {
+  .logo-text,
+  .sys-name,
+  .sys-tag {
     color: #000 !important;
     text-shadow: none !important;
   }
@@ -462,7 +632,11 @@ body::after {
     display: none !important;
   }
 
-  .block, .out, .man, .timeline, .grid {
+  .block,
+  .out,
+  .man,
+  .timeline,
+  .grid {
     border: none !important;
     background: none !important;
     padding: 0 !important;
@@ -490,7 +664,8 @@ body::after {
     margin: 0 0 4px 0;
   }
 
-  .desc, .highlights {
+  .desc,
+  .highlights {
     font-size: 12px;
     color: #000 !important;
     margin: 0 0 6px 0;
@@ -517,7 +692,8 @@ body::after {
     box-shadow: none !important;
   }
 
-  .card h3, .card p {
+  .card h3,
+  .card p {
     color: #000 !important;
     text-shadow: none !important;
   }
@@ -539,7 +715,10 @@ body::after {
   /* =========================
      CURSOR AND ANIMATIONS
   ========================== */
-  .blink, .flicker, #version-line, #deploy-line {
+  .blink,
+  .flicker,
+  #version-line,
+  #deploy-line {
     animation: none !important;
   }
 

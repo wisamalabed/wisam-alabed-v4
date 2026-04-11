@@ -1,250 +1,255 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>wisam@terminal:~$</title>
   <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
   <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
-  <link rel="stylesheet" href="styles.css"/>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
-<main class="terminal" role="main" aria-label="Elite Terminal Resume">
-  
-  <header class="logo" aria-label="System Identity">
-  <img
-    src="https://avatars.githubusercontent.com/u/4520207?s=400"
-    alt="Wisam Al Abed avatar"
-  />
-  <div class="logo-text">
-    <span class="sys-name">WISAM OS</span>
-    <span class="sys-tag">terminal session v1.0</span>
-  </div>
-</header>
+  <main class="terminal" role="main" aria-label="Elite Terminal Resume">
 
-  <!-- BOOT SEQUENCE -->
-  <section class="boot">
-    <p><span class="sys">[system]</span> booting resume kernel...</p>
-    <p><span class="ok">[ OK ]</span> loading identity module</p>
-    <p><span class="ok">[ OK ]</span> mounting experience volume</p>
-    <p><span class="ok">[ OK ]</span> indexing skills database</p>
-<p><span class="ok">[ OK ]</span> reading build metadata...</p>
-<p id="version-line">[ OK ] version: loading...</p>
-<p id="deploy-line">[ OK ] last deploy: loading...</p>
-    <p><span class="ok">[ OK ]</span> initializing UI shell</p>
-    <p class="cursor-line">ready.</p>
-  </section>
+    <header class="logo" aria-label="System Identity">
+      <img src="https://avatars.githubusercontent.com/u/4520207?s=400" alt="Wisam Al Abed avatar" />
+      <div class="logo-text">
+        <span class="sys-name">WISAM OS</span>
+        <span class="sys-tag">terminal session v1.0</span>
+      </div>
+    </header>
 
-  <!-- WHOAMI -->
-  <section class="block">
-    <p class="prompt-line">
-      <span class="user">wisam@terminal</span>:<span class="path">~</span>$ whoami
-    </p>
-    <p class="out big">
-      Wisam Al Abed
-    </p>
-    <p class="out dim">
-      Full Stack Software Developer · 10+ years · Systems · APIs · Modern Web Apps
-    </p>
-  </section>
+    <!-- BOOT SEQUENCE -->
+    <section class="boot">
+      <p><span class="sys">[system]</span> booting resume kernel...</p>
+      <p><span class="ok">[ OK ]</span> loading identity module</p>
+      <p><span class="ok">[ OK ]</span> mounting experience volume</p>
+      <p><span class="ok">[ OK ]</span> indexing skills database</p>
+      <p><span class="ok">[ OK ]</span> reading build metadata...</p>
+      <p id="version-line">[ OK ] version: loading...</p>
+      <p id="deploy-line">[ OK ] last deploy: loading...</p>
+      <p><span class="ok">[ OK ]</span> initializing UI shell</p>
+      <p class="cursor-line">ready.</p>
+    </section>
 
-  <!-- DOWNLOAD RESUME COMMAND -->
-  <section class="block">
-    <p class="prompt-line">
-      <span class="user">wisam@terminal</span>:<span class="path">~</span>$ download resume
-    </p>
-
-    <p class="out" id="resume-line">
-      [ OK ] Resume ready for download:
-      <a href="https://wisamalabed.github.io/wisam-alabed-v4/resume-macchiato.pdf" target="_blank" class="github-link">📄 Download PDF</a>
-    </p>
-  </section>
-
-  <!-- MAN PAGE -->
-  <section class="block">
-    <p class="prompt-line">
-      <span class="user">wisam@terminal</span>:<span class="path">~</span>$ man wisam
-    </p>
-
-    <article class="man">
-      <h1>WISAM(1)</h1>
-      <p class="dim">Software Developer Manual Page</p>
-
-      <h2>NAME</h2>
-      <p>Wisam Al Abed — software developer, system builder, tinkerer</p>
-
-      <h2>SYNOPSIS</h2>
-      <p>wisam [--build systems] [--scale products] [--optimize performance]</p>
-
-      <h2>DESCRIPTION</h2>
-      <p>
-        Designs and builds distributed systems, modern web applications,
-        and developer experiences with a focus on clarity, performance,
-        and maintainability.
+    <!-- WHOAMI -->
+    <section class="block">
+      <p class="prompt-line">
+        <span class="user">wisam@terminal</span>:<span class="path">~</span>$ whoami
       </p>
-    </article>
-  </section>
+      <p class="out big">
+        Wisam Al Abed
+      </p>
+      <p class="out dim">
+        Full Stack Software Developer · 10+ years · Systems · APIs · Modern Web Apps
+      </p>
+    </section>
 
-  <!-- SKILLS -->
-  <section class="block">
-    <p class="prompt-line">
-      <span class="user">wisam@terminal</span>:<span class="path">~</span>$ ls skills/
-    </p>
+    <!-- MAN PAGE -->
+    <section class="block">
+      <p class="prompt-line">
+        <span class="user">wisam@terminal</span>:<span class="path">~</span>$ man wisam
+      </p>
 
-    <div class="grid">
-      <div class="card">
-        <h3>languages</h3>
-        <p>TypeScript · Python · SQL · GraphQL</p>
+      <article class="man">
+        <h1>WISAM(1)</h1>
+        <p class="dim">Software Developer Manual Page</p>
+
+        <h2>NAME</h2>
+        <p>Wisam Al Abed — software developer, system builder, tinkerer</p>
+
+        <h2>SYNOPSIS</h2>
+        <p>wisam [--build systems] [--scale products] [--optimize performance]</p>
+
+        <h2>DESCRIPTION</h2>
+        <p>
+          Designs and builds distributed systems, modern web applications,
+          and developer experiences with a focus on clarity, performance,
+          and maintainability.
+        </p>
+      </article>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="block">
+      <p class="prompt-line">
+        <span class="user">wisam@terminal</span>:<span class="path">~</span>$ ls skills/
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>languages</h3>
+          <p>TypeScript · Python · SQL · GraphQL</p>
+        </div>
+
+        <div class="card">
+          <h3>frameworks</h3>
+          <p>React · Next.js · Node.js · FastAPI</p>
+        </div>
+
+        <div class="card">
+          <h3>devops</h3>
+          <p>Docker · GitHub Actions · Vercel</p>
+        </div>
       </div>
-
-      <div class="card">
-        <h3>frameworks</h3>
-        <p>React · Next.js · Node.js · FastAPI</p>
-      </div>
-
-      <div class="card">
-        <h3>devops</h3>
-        <p>Docker · GitHub Actions · Vercel</p>
-      </div>
-    </div>
-  </section>
+    </section>
 
     <!-- PROJECTS SHOWCASE -->
-  <section class="block">
-    <p class="prompt-line">
-      <span class="user">wisam@terminal</span>:<span class="path">~</span>$ ls projects/
-    </p>
-    
-    <div class="grid">
-      <div class="card">
-        <h3>Disconnectome</h3>
-        <p>CustomTkinter · Python </p>
-        <p>Desktop application for analyzing brain disconnectivity patterns in neonatal brain imaging data</p>
-        <p><a href="https://github.com/sufkes/neonatal_disconnectome" target="_blank" class="github-link">→ GitHub Repository</a></p>
-      </div>
-      
-      <div class="card">
-        <h3>GEMINI-portal-CMS</h3>
-        <p>NextJS · KeystoneJS · Postgres</p>
-        <p>Full Stack CMS for managing doctor hospital reports</p>
-        <p><a href="https://github.com/GEMINI-Medicine/GEMINI-DSI-portal-template" target="_blank" class="github-link">→ GitHub Repository</a></p>
-      </div>
-      
-      <div class="card">
-        <h3>headless-cms-integration</h3>
-        <p>Next.js · Sanity.io · Shopify</p>
-        <p>Headless commerce platform migration & optimization</p>
-        <p><a href="https://github.com/wisamalabed/headless-cms-integration" target="_blank" class="github-link">→ GitHub Repository</a></p>
-      </div>
-      
-    </div>
-  </section>
-
-  <!-- WORK -->
-<section class="block">
-  <p class="prompt-line">
-    <span class="user">wisam@terminal</span>:<span class="path">~</span>$ cat work.log
-  </p>
-
-  <div class="timeline">
-
-    <article class="job">
-      <p class="title">University of Toronto DSI</p>
-      <p class="meta">2022 → Present · Senior Software Developer</p>
-      <p class="desc">Research systems + </p>
-      <ul class="highlights">
-        <li>Collaborate with researchers to transform ideas into real-world solutions</li>
-      </ul>
-    </article>
-
-    <article class="job">
-      <p class="title">Kotn</p>
-      <p class="meta">2020 → 2022 · Intermediate Developer</p>
-      <p class="desc">Headless e-commerce platform (Next.js + Shopify + CMS).</p>
-      <ul class="highlights">
-        <li>Migrated the e-commerce site to a headless NextJS site</li>
-        <li>Set up sanity.io as the CMS for managing content</li>
-        <li>Built a Redis cache layer as a microservice</li>
-        <li>Implemented bundle product pages, reviews, and size guides</li>
-      </ul>
-    </article>
-
-    <article class="job">
-      <p class="title">IBM MEA</p>
-      <p class="meta">2016 → 2018 · Analyst</p>
-      <p class="desc">Chatbots, blockchain prototypes, enterprise systems.</p>
-      <ul class="highlights">
-        <li>Built SMART Mufti chatbot for answering Islamic legal questions (Watson Assistant)</li>
-        <li>Developed responsive front-end for RTA enterprise chatbot</li>
-        <li>Assessed VAT impact for government compliance and led workshops</li>
-        <li>Built Blockchain Hyperledger Fabric demo capturing vehicle lifecycle</li>
-      </ul>
-    </article>
-
-    <article class="job">
-      <p class="title">XYpper Technologies</p>
-      <p class="meta">2015 → 2016 · Full Stack Developer</p>
-      <p class="desc">Website connecting shippers and truckers for efficient transportation.</p>
-      <ul class="highlights">
-        <li>Designed advanced search algorithm for shippers to find truckers</li>
-        <li>Automated ordering, billing, and invoicing workflows</li>
-        <li>Redesigned front-end UI/UX for better usability and responsiveness</li>
-        <li>Optimized back-end performance, reducing search times drastically</li>
-        <li>Implemented real-time notifications for orders and messages</li>
-        <li>Contributed to invoicing management system</li>
-      </ul>
-    </article>
-
-    <article class="job">
-      <p class="title">McGill University</p>
-      <p class="meta">2008 → 2014 · Software Researcher</p>
-      <p class="desc">Software engineering lab focused on research and teaching.</p>
-      <ul class="highlights">
-        <li>Focused on software reusability, modularity, and model-driven engineering</li>
-        <li>Published over 5 papers in prominent conferences and journals</li>
-        <li>Designed and built the TouchCORE model weaver in Java</li>
-        <li>Teaching assistant for multiple courses: Java, Bash, C, Python, Databases, MDE, Fault Tolerance</li>
-      </ul>
-    </article>
-
-  </div>
-</section>
-
-  <!-- CONTACT -->
-  <section class="block">
-    <p class="prompt-line">
-      <span class="user">wisam@terminal</span>:<span class="path">~</span>$ cat contact.info
-    </p>
-
-    <address class="contact">
-      <p>
-        <svg class="icon-location" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-          <path d="M12 2C8.13401 2 5 5.13401 5 9C5 13.25 12 22 12 22C12 22 19 13.25 19 9C19 5.13401 15.866 2 12 2ZM12 11.5C10.6193 11.5 9.5 10.3807 9.5 9C9.5 7.61929 10.6193 6.5 12 6.5C13.3807 6.5 14.5 7.61929 14.5 9C14.5 10.3807 13.3807 11.5 12 11.5Z"/>
-        </svg>
-        Toronto, Canada
+    <section class="block">
+      <p class="prompt-line">
+        <span class="user">wisam@terminal</span>:<span class="path">~</span>$ ls projects/
       </p>
-      <p>
-        <svg class="icon-phone" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-          <path d="M6.62 10.79C8.06 13.81 10.19 15.94 13.21 17.38L15.41 15.18C15.6 14.99 15.86 14.93 16.11 14.99C17.27 15.29 18.5 15.45 19.77 15.45C20.4 15.45 20.91 15.96 20.91 16.59V20.91C20.91 21.54 20.4 22.05 19.77 22.05C10.49 22.05 3 14.56 3 5.28C3 4.65 3.51 4.14 4.14 4.14H8.46C9.09 4.14 9.6 4.65 9.6 5.28C9.6 6.55 9.76 7.78 10.06 8.94C10.12 9.19 10.06 9.45 9.87 9.64L7.67 11.84Z"/>
-        </svg>
-        (416) 276-4074
-      </p>
-      <p>
-        <svg class="icon-email" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-          <path d="M20 4H4C2.897 4 2 4.897 2 6V18C2 19.103 2.897 20 4 20H20C21.103 20 22 19.103 22 18V6C22 4.897 21.103 4 20 4ZM20 8L12 13L4 8V6L12 11L20 6V8Z"/>
-        </svg>
-        wisam.alabed@tutamail.com
-      </p>
-    </address>
-  </section>
 
-  <!-- CURSOR -->
-  <section class="cursor">
-    <span class="user">wisam@terminal</span>:<span class="path">~</span>$ <span class="blink">█</span>
-  </section>
-  <footer class="terminal-footer" aria-label="License information">
-  <pre class="copyleft-banner">
+      <div class="grid">
+        <div class="card">
+          <h3>Disconnectome</h3>
+          <p>CustomTkinter · Python </p>
+          <p>Desktop application for analyzing brain disconnectivity patterns in neonatal brain imaging data</p>
+          <p><a href="https://github.com/sufkes/neonatal_disconnectome" target="_blank" class="github-link">→ GitHub
+              Repository</a></p>
+        </div>
+
+        <div class="card">
+          <h3>GEMINI-portal-CMS</h3>
+          <p>NextJS · KeystoneJS · Postgres</p>
+          <p>Full Stack CMS for managing doctor hospital reports</p>
+          <p><a href="https://github.com/GEMINI-Medicine/GEMINI-DSI-portal-template" target="_blank"
+              class="github-link">→ GitHub Repository</a></p>
+        </div>
+
+        <div class="card">
+          <h3>headless-cms-integration</h3>
+          <p>Next.js · Sanity.io · Shopify</p>
+          <p>Headless commerce platform migration & optimization</p>
+          <p><a href="https://github.com/wisamalabed/headless-cms-integration" target="_blank" class="github-link">→
+              GitHub Repository</a></p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- WORK -->
+    <section class="block">
+      <p class="prompt-line">
+        <span class="user">wisam@terminal</span>:<span class="path">~</span>$ cat work.log
+      </p>
+
+      <div class="timeline">
+
+        <article class="job">
+          <p class="title">University of Toronto DSI</p>
+          <p class="meta">2022 → Present · Senior Software Developer</p>
+          <p class="desc">Research systems + </p>
+          <ul class="highlights">
+            <li>Collaborate with researchers to transform ideas into real-world solutions</li>
+          </ul>
+        </article>
+
+        <article class="job">
+          <p class="title">Kotn</p>
+          <p class="meta">2020 → 2022 · Intermediate Developer</p>
+          <p class="desc">Headless e-commerce platform (Next.js + Shopify + CMS).</p>
+          <ul class="highlights">
+            <li>Migrated the e-commerce site to a headless NextJS site</li>
+            <li>Set up sanity.io as the CMS for managing content</li>
+            <li>Built a Redis cache layer as a microservice</li>
+            <li>Implemented bundle product pages, reviews, and size guides</li>
+          </ul>
+        </article>
+
+        <article class="job">
+          <p class="title">IBM MEA</p>
+          <p class="meta">2016 → 2018 · Analyst</p>
+          <p class="desc">Chatbots, blockchain prototypes, enterprise systems.</p>
+          <ul class="highlights">
+            <li>Built SMART Mufti chatbot for answering Islamic legal questions (Watson Assistant)</li>
+            <li>Developed responsive front-end for RTA enterprise chatbot</li>
+            <li>Assessed VAT impact for government compliance and led workshops</li>
+            <li>Built Blockchain Hyperledger Fabric demo capturing vehicle lifecycle</li>
+          </ul>
+        </article>
+
+        <article class="job">
+          <p class="title">XYpper Technologies</p>
+          <p class="meta">2015 → 2016 · Full Stack Developer</p>
+          <p class="desc">Website connecting shippers and truckers for efficient transportation.</p>
+          <ul class="highlights">
+            <li>Designed advanced search algorithm for shippers to find truckers</li>
+            <li>Automated ordering, billing, and invoicing workflows</li>
+            <li>Redesigned front-end UI/UX for better usability and responsiveness</li>
+            <li>Optimized back-end performance, reducing search times drastically</li>
+            <li>Implemented real-time notifications for orders and messages</li>
+            <li>Contributed to invoicing management system</li>
+          </ul>
+        </article>
+
+        <article class="job">
+          <p class="title">McGill University</p>
+          <p class="meta">2008 → 2014 · Software Researcher</p>
+          <p class="desc">Software engineering lab focused on research and teaching.</p>
+          <ul class="highlights">
+            <li>Focused on software reusability, modularity, and model-driven engineering</li>
+            <li>Published over 5 papers in prominent conferences and journals</li>
+            <li>Designed and built the TouchCORE model weaver in Java</li>
+            <li>Teaching assistant for multiple courses: Java, Bash, C, Python, Databases, MDE, Fault Tolerance</li>
+          </ul>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="block">
+      <p class="prompt-line">
+        <span class="user">wisam@terminal</span>:<span class="path">~</span>$ cat contact.info
+      </p>
+
+      <address class="contact">
+        <p>
+          <svg class="icon-location" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path
+              d="M12 2C8.13401 2 5 5.13401 5 9C5 13.25 12 22 12 22C12 22 19 13.25 19 9C19 5.13401 15.866 2 12 2ZM12 11.5C10.6193 11.5 9.5 10.3807 9.5 9C9.5 7.61929 10.6193 6.5 12 6.5C13.3807 6.5 14.5 7.61929 14.5 9C14.5 10.3807 13.3807 11.5 12 11.5Z" />
+          </svg>
+          Toronto, Canada
+        </p>
+        <p>
+          <svg class="icon-phone" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path
+              d="M6.62 10.79C8.06 13.81 10.19 15.94 13.21 17.38L15.41 15.18C15.6 14.99 15.86 14.93 16.11 14.99C17.27 15.29 18.5 15.45 19.77 15.45C20.4 15.45 20.91 15.96 20.91 16.59V20.91C20.91 21.54 20.4 22.05 19.77 22.05C10.49 22.05 3 14.56 3 5.28C3 4.65 3.51 4.14 4.14 4.14H8.46C9.09 4.14 9.6 4.65 9.6 5.28C9.6 6.55 9.76 7.78 10.06 8.94C10.12 9.19 10.06 9.45 9.87 9.64L7.67 11.84Z" />
+          </svg>
+          (416) 276-4074
+        </p>
+        <p>
+          <svg class="icon-email" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path
+              d="M20 4H4C2.897 4 2 4.897 2 6V18C2 19.103 2.897 20 4 20H20C21.103 20 22 19.103 22 18V6C22 4.897 21.103 4 20 4ZM20 8L12 13L4 8V6L12 11L20 6V8Z" />
+          </svg>
+          wisam.alabed@tutamail.com
+        </p>
+      </address>
+    </section>
+
+    <!-- DOWNLOAD RESUME COMMAND -->
+    <section class="block">
+      <p class="prompt-line">
+        <span class="user">wisam@terminal</span>:<span class="path">~</span>$ download resume
+      </p>
+
+      <p class="out" id="resume-line">
+        [ OK ] Resume ready for download:
+        <a href="https://wisamalabed.github.io/wisam-alabed-v4/resume-macchiato.pdf" target="_blank"
+          class="github-link">📄 Download PDF</a>
+      </p>
+    </section>
+
+    <!-- CURSOR -->
+    <section class="cursor">
+      <span class="user">wisam@terminal</span>:<span class="path">~</span>$ <span class="blink">█</span>
+    </section>
+    <footer class="terminal-footer" aria-label="License information">
+      <pre class="copyleft-banner">
 ############################################################
 #  WISAM AL ABED — TERMINAL RESUME                         #
 #  Copyright (C) 2026                                      #
@@ -252,8 +257,9 @@
 #  Type: Open Source Personal System                       #
 ############################################################
   </pre>
-</footer>
-</main>
+    </footer>
+  </main>
 
 </body>
+
 </html>
