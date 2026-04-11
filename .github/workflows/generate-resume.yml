@@ -44,17 +44,17 @@ jobs:
         run: mv resume.pdf resume-macchiato.pdf
 
 
-      - name: Generate PDF - Flat Theme
+      - name: Generate PDF - Executive Theme
         uses: Devleaps/jsonresume-generator@v1
         with:
           action: "render"
           file: "resume.json"
-          theme-name: "jsonresume-theme-flat"
+          theme-name: "jsonresume-theme-executive-slate"
           output-type: "pdf"
           theme-local: "false"
 
-      - name: Rename Flat PDF
-        run: mv resume.pdf resume-flat.pdf
+      - name: Rename Executive PDF
+        run: mv resume.pdf resume-executive-slate.pdf
 
       - name: Commit PDFs back to repo
         run: |
