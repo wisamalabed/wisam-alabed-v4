@@ -17,6 +17,9 @@ jobs:
         run: |
           curl -L -o resume.json https://gist.githubusercontent.com/wisamalabed/6c826f000b9d865a34c0ba6a4841cdb1/raw/
 
+      - name: Install sidebar theme
+        run: npm install jsonresume-theme-sidebar
+
       # Step 3: Generate PDFs using Devleaps JSON Resume Generator
       - name: Generate PDF Resume
         uses: Devleaps/jsonresume-generator@v1
@@ -29,7 +32,11 @@ jobs:
       
       - name: Rename Sidebar PDF
         run: mv resume.pdf resume-sidebar.pdf     
-        
+
+
+      - name: Install developer mono theme
+        run: npm install jsonresume-theme-developer-mono
+
       - name: Generate PDF - Developer Mono Theme
         uses: Devleaps/jsonresume-generator@v1
         with:
@@ -42,17 +49,21 @@ jobs:
       - name: Rename Developer Mono PDF
         run: mv resume.pdf resume-developer-mono.pdf
 
-      - name: Generate PDF - Asymmetric Timeline Theme
+
+      - name: Install developer flat theme
+        run: npm install jsonresume-theme-flat
+
+      - name: Generate PDF - Flat Theme
         uses: Devleaps/jsonresume-generator@v1
         with:
           action: "render"
           file: "resume.json"
-          theme-name: "jsonresume-theme-asymmetric-timeline"
+          theme-name: "jsonresume-theme-flat"
           output-type: "pdf"
           theme-local: "false"
 
-      - name: Rename Asymmetric Timeline PDF
-        run: mv resume.pdf resume-asym-timeline.pdf
+      - name: Rename Flat PDF
+        run: mv resume.pdf resume-flat.pdf
 
       - name: Commit PDFs back to repo
         run: |
