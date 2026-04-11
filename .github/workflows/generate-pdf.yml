@@ -19,14 +19,10 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Create fonts folder
-        run: mkdir -p fonts
-
-      - name: Download Open Sans fonts
+      - name: Unzip Open Sans fonts
         run: |
-          curl -L -o fonts/OpenSans-Regular.ttf https://github.com/google/fonts/raw/main/apache/opensans/OpenSans-Regular.ttf
-          curl -L -o fonts/OpenSans-Bold.ttf https://github.com/google/fonts/raw/main/apache/opensans/OpenSans-Bold.ttf
-          curl -L -o fonts/OpenSans-Italic.ttf https://github.com/google/fonts/raw/main/apache/opensans/OpenSans-Italic.ttf
+          mkdir -p fonts
+          unzip -o fonts/OpenSans.zip -d fonts
 
       - name: Generate PDF
         run: python generate_resume.py
