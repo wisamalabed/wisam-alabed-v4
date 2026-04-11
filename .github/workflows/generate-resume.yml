@@ -1,0 +1,33 @@
+name: Generate PDF Resume
+
+on:
+  workflow_dispatch:  # You can manually trigger it
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout repository
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      # Step 2: Download your JSON resume from Gist (optional)
+      - name: Download resume JSON
+        run: |
+          curl -L -o resume.json https://gist.githubusercontent.com/wisamalabed/6c826f000b9d865a34c0ba6a4841cdb1/raw/
+
+      # Step 3: Generate PDF using jsonresume-generator
+      - name: Generate PDF from JSON Resume
+        uses: Devleaps/jsonresume-generator@v1
+        with:
+          resume-path: resume.json      # Path to your JSON resume
+          theme: "macchiato"            # Theme name (Macchiato, Modern, Classic, etc.)
+          format: "pdf"                 # Output format
+
+      # Step 4: Upload the PDF as an artifact
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: resume-pdf
+          path: resume.pdf
