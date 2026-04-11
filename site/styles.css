@@ -193,6 +193,15 @@ body::after {
 .out { margin-top: 10px; padding-left: 14px; border-left: 2px solid rgba(0, 200, 83, 0.25); }
 
 /* =========================
+   DOWNLOAD BLOCK
+========================= */
+#resume-line {
+  opacity: 0;
+  animation: bootIn 0.4s forwards;
+  animation-delay: 0.3s; /* adjust timing if needed */
+}
+
+/* =========================
    MAN PAGE
 ========================= */
 .man { margin-top: 10px; padding-left: 14px; border-left: 2px solid rgba(200, 182, 138, 0.35); }
@@ -254,6 +263,7 @@ body::after {
   font-size: 13px;
   text-transform: lowercase;
   background: linear-gradient(90deg, var(--red), var(--sand), var(--green));
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   z-index: 1;
