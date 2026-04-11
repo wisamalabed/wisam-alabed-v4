@@ -12,21 +12,26 @@ pdf.add_page()
 pdf.set_auto_page_break(auto=True, margin=15)
 
 # Add TrueType Unicode font
-pdf.add_font("DejaVu", "", "fonts/DejaVuSans.ttf", uni=True)
-pdf.add_font("DejaVu", "B", "fonts/DejaVuSans.ttf", uni=True)
-pdf.add_font("DejaVu", "I", "fonts/DejaVuSans.ttf", uni=True)
+pdf.add_font("OpenSans", "", "fonts/OpenSans-Regular.ttf", uni=True)
+pdf.add_font("OpenSans", "B", "fonts/OpenSans-Bold.ttf", uni=True)
+pdf.add_font("OpenSans", "I", "fonts/OpenSans-Italic.ttf", uni=True)
+
+# Example usage
+
+
+pdf.set_font("OpenSans", "", 12)   # Regular for body text
 
 # ----- Basics -----
 basics = data.get("basics", {})
-pdf.set_font("DejaVu", "B", 20)
+pdf.set_font("OpenSans", "B", 20)  # Bold for name
 pdf.cell(0, 10, basics.get("name", ""), ln=1)
 
-pdf.set_font("DejaVu", "I", 14)
+pdf.set_font("OpenSans", "I", 14)  # Italic for label
 pdf.multi_cell(0, 8, basics.get("label", ""))
 pdf.ln(2)
 
 contact_info = f"{basics.get('email','')} | {basics.get('phone','')} | {basics.get('location', {}).get('city','')}, {basics.get('location', {}).get('countryCode','')}"
-pdf.set_font("DejaVu", "", 12)
+pdf.set_font("OpenSans", "", 12)   # Regular for body text
 pdf.multi_cell(0, 6, contact_info)
 pdf.ln(5)
 
@@ -35,9 +40,9 @@ pdf.multi_cell(0, 6, summary)
 pdf.ln(5)
 
 # ----- Education -----
-pdf.set_font("DejaVu", "B", 16)
+pdf.set_font("OpenSans", "B", 16)
 pdf.cell(0, 10, "Education", ln=1)
-pdf.set_font("DejaVu", "", 12)
+pdf.set_font("OpenSans", "", 12)   # Regular for body text
 for edu in data.get("education", []):
     institution = edu.get("institution", "")
     degree = edu.get("studyType", "")
@@ -48,9 +53,9 @@ for edu in data.get("education", []):
 pdf.ln(5)
 
 # ----- Skills -----
-pdf.set_font("DejaVu", "B", 16)
+pdf.set_font("OpenSans", "B", 16)
 pdf.cell(0, 10, "Skills", ln=1)
-pdf.set_font("DejaVu", "", 12)
+pdf.set_font("OpenSans", "", 12)   # Regular for body text
 for skill in data.get("skills", []):
     name = skill.get("name", "")
     keywords = ", ".join(skill.get("keywords", []))
@@ -58,19 +63,19 @@ for skill in data.get("skills", []):
 pdf.ln(5)
 
 # ----- Work Experience -----
-pdf.set_font("DejaVu", "B", 16)
+pdf.set_font("OpenSans", "B", 16)
 pdf.cell(0, 10, "Work Experience", ln=1)
-pdf.set_font("DejaVu", "", 12)
+pdf.set_font("OpenSans", "", 12)   # Regular for body text
 for work in data.get("work", []):
     position = work.get("position", "")
     company = work.get("name", "")
     location = work.get("location", "")
     start = work.get("startDate", "")
     end = work.get("endDate", "Present")
-    pdf.set_font("DejaVu", "B", 12)
+    pdf.set_font("OpenSans", "B", 12)
     pdf.multi_cell(0, 6, f"{position}, {company} ({start} - {end})")
     
-    pdf.set_font("DejaVu", "", 12)
+    pdf.set_font("OpenSans", "", 12)   # Regular for body text
     summary = work.get("summary", "")
     pdf.multi_cell(0, 6, summary)
     
