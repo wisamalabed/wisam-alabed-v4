@@ -12,9 +12,9 @@ pdf.add_page()
 pdf.set_auto_page_break(auto=True, margin=15)
 
 # Add TrueType Unicode font
-pdf.add_font("OpenSans", "", "fonts/OpenSans-Regular.ttf", uni=True)
-pdf.add_font("OpenSans", "B", "fonts/OpenSans-Bold.ttf", uni=True)
-pdf.add_font("OpenSans", "I", "fonts/OpenSans-Italic.ttf", uni=True)
+pdf.add_font("OpenSans", "", "fonts/OpenSans-Regular.ttf")
+pdf.add_font("OpenSans", "B", "fonts/OpenSans-Bold.ttf")
+pdf.add_font("OpenSans", "I", "fonts/OpenSans-Italic.ttf")
 
 # Example usage
 
