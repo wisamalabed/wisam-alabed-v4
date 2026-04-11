@@ -24,16 +24,12 @@ jobs:
         with:
           action: "render"
           file: "resume.json"
-          theme-name: "jsonresume-theme-stack"
+          theme-name: "jsonresume-theme-even"
           output-type: "pdf"
           theme-local: "false"
       
-      - name: Rename Stack PDF
-        run: mv resume.pdf resume-stack.pdf     
-
-
-      - name: Install developer mono theme
-        run: npm install jsonresume-theme-developer-mono
+      - name: Rename Even PDF
+        run: mv resume.pdf resume-even.pdf     
 
       - name: Generate PDF - Developer Mono Theme
         uses: Devleaps/jsonresume-generator@v1
@@ -47,9 +43,6 @@ jobs:
       - name: Rename Developer Mono PDF
         run: mv resume.pdf resume-developer-mono.pdf
 
-
-      - name: Install developer flat theme
-        run: npm install jsonresume-theme-flat
 
       - name: Generate PDF - Flat Theme
         uses: Devleaps/jsonresume-generator@v1
