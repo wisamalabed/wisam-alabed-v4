@@ -22,10 +22,11 @@ jobs:
       - name: Create fonts folder
         run: mkdir -p fonts
 
-      - name: Download Open Sans zip
+      - name: Download Open Sans fonts
         run: |
-          curl -L -o fonts/opensans.zip https://github.com/google/fonts/raw/main/apache/opensans/OpenSans%5Bwdth,wght%5D.ttf.zip
-          unzip fonts/opensans.zip -d fonts
+          curl -L -o fonts/OpenSans-Regular.ttf https://github.com/google/fonts/raw/main/apache/opensans/OpenSans-Regular.ttf
+          curl -L -o fonts/OpenSans-Bold.ttf https://github.com/google/fonts/raw/main/apache/opensans/OpenSans-Bold.ttf
+          curl -L -o fonts/OpenSans-Italic.ttf https://github.com/google/fonts/raw/main/apache/opensans/OpenSans-Italic.ttf
 
       - name: Generate PDF
         run: python generate_resume.py
