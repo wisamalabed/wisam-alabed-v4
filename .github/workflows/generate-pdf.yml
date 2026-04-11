@@ -22,7 +22,7 @@ jobs:
       - name: Unzip Open Sans fonts
         run: |
           mkdir -p fonts
-          unzip -o fonts/OpenSans.zip -d fonts
+          unzip -o fonts/Open_Sans.zip -d fonts
 
       - name: Generate PDF
         run: python generate_resume.py
