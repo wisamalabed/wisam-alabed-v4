@@ -1,33 +1,39 @@
-name: Generate PDF Resume
+name: Generate and Commit PDF Resume
 
 on:
-  workflow_dispatch:  # You can manually trigger it
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout repository
-      - name: Checkout repo
+      # Step 1: Checkout the repo
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Step 2: Download your JSON resume from Gist (optional)
+      # Step 2: Download JSON resume from Gist (optional)
       - name: Download resume JSON
         run: |
           curl -L -o resume.json https://gist.githubusercontent.com/wisamalabed/6c826f000b9d865a34c0ba6a4841cdb1/raw/
 
-      # Step 3: Generate PDF using jsonresume-generator
-      - name: Generate PDF from JSON Resume
+      # Step 3: Generate PDF using Devleaps JSON Resume Generator
+      - name: Generate PDF Resume
         uses: Devleaps/jsonresume-generator@v1
         with:
-          resume-path: resume.json      # Path to your JSON resume
-          theme: "macchiato"            # Theme name (Macchiato, Modern, Classic, etc.)
-          format: "pdf"                 # Output format
+          action: "render"
+          file: "resume.json"
+          theme-name: "jsonresume-theme-even"
+          output-type: "pdf"
+          theme-local: "false"
 
-      # Step 4: Upload the PDF as an artifact
-      - name: Upload PDF artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: resume-pdf
-          path: resume.pdf
+      # Step 4: Commit and push PDF back to the repository
+      - name: Commit and Push PDF
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git add resume.pdf
+          git commit -m "Update generated PDF resume [skip ci]" || echo "No changes to commit"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
