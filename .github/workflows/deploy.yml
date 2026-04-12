@@ -27,13 +27,45 @@ jobs:
           echo "CSS_SIZE=$CSS_SIZE" >> $GITHUB_ENV
           echo "TOTAL_SIZE=$TOTAL_SIZE" >> $GITHUB_ENV
 
-      # 3. Set version and deploy timestamp
-      - name: Set deploy metadata
+
+      # 3. Set semantic version and deploy timestamp
+      - name: Set semantic version
         run: |
           DEPLOY_TIME=$(date -u '+%Y-%m-%d %H:%M:%S UTC')
-          VERSION="v1.0.$GITHUB_RUN_NUMBER"
           echo "DEPLOY_TIME=$DEPLOY_TIME" >> $GITHUB_ENV
+
+          # Get the latest tag (default to v0.0.0 if none)
+          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+
+          # Determine next version based on commits since last tag
+          COMMITS=$(git log $LATEST_TAG..HEAD --pretty=%s)
+
+          MAJOR=$(echo $LATEST_TAG | cut -d. -f1 | tr -d 'v')
+          MINOR=$(echo $LATEST_TAG | cut -d. -f2)
+          PATCH=$(echo $LATEST_TAG | cut -d. -f3)
+
+          if echo "$COMMITS" | grep -q "BREAKING CHANGE"; then
+            MAJOR=$((MAJOR+1))
+            MINOR=0
+            PATCH=0
+          elif echo "$COMMITS" | grep -q "^feat:"; then
+            MINOR=$((MINOR+1))
+            PATCH=0
+          elif echo "$COMMITS" | grep -q "^fix:"; then
+            PATCH=$((PATCH+1))
+          else
+            PATCH=$((PATCH+1))
+          fi
+
+          VERSION="v$MAJOR.$MINOR.$PATCH"
           echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "Next semantic version: $VERSION"
+
+          # Optional: tag repository
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git tag $VERSION || true
+          git push origin $VERSION || true
 
       # 4. Inject metadata into index.html
       - name: Inject build metadata
