@@ -34,11 +34,17 @@ jobs:
           DEPLOY_TIME=$(date -u '+%Y-%m-%d %H:%M:%S UTC')
           echo "DEPLOY_TIME=$DEPLOY_TIME" >> $GITHUB_ENV
 
-          # Get the latest tag (default to v0.0.0 if none)
-          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          # Try to get latest tag
+          if git describe --tags --abbrev=0 >/dev/null 2>&1; then
+            LATEST_TAG=$(git describe --tags --abbrev=0)
+            COMMITS=$(git log $LATEST_TAG..HEAD --pretty=%s)
+          else
+            echo "No tags found, starting from scratch"
+            LATEST_TAG="v1.0.0"
+            COMMITS=$(git log --pretty=%s)
+          fi
 
-          # Determine next version based on commits since last tag
-          COMMITS=$(git log $LATEST_TAG..HEAD --pretty=%s)
+          echo "Latest tag: $LATEST_TAG"
 
           MAJOR=$(echo $LATEST_TAG | cut -d. -f1 | tr -d 'v')
           MINOR=$(echo $LATEST_TAG | cut -d. -f2)
@@ -59,9 +65,9 @@ jobs:
 
           VERSION="v$MAJOR.$MINOR.$PATCH"
           echo "VERSION=$VERSION" >> $GITHUB_ENV
-          echo "Next semantic version: $VERSION"
+          echo "Next version: $VERSION"
 
-          # Optional: tag repository
+          # Tag repo (safe)
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git tag $VERSION || true
