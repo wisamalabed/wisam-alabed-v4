@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -16,6 +16,8 @@ jobs:
       # 1. Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       # 2. Calculate page footprint
       - name: Calculate page footprint
@@ -70,8 +72,12 @@ jobs:
           # Tag repo (safe)
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git tag $VERSION || true
-          git push origin $VERSION || true
+          if ! git rev-parse "$VERSION" >/dev/null 2>&1; then
+            git tag $VERSION
+            git push origin $VERSION
+          else
+            echo "Tag $VERSION already exists"
+          fi
 
       # 4. Inject metadata into index.html
       - name: Inject build metadata
