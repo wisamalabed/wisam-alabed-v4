@@ -44,17 +44,17 @@ jobs:
         run: mv resume.pdf resume-macchiato.pdf
 
 
-      - name: Generate PDF - Elegant Theme
+      - name: Generate PDF - Bold Header Theme
         uses: Devleaps/jsonresume-generator@v1
         with:
           action: "render"
           file: "resume.json"
-          theme-name: "jsonresume-theme-elegant"
+          theme-name: "jsonresume-theme-bold-header-statement"
           output-type: "pdf"
           theme-local: "false"
 
-      - name: Rename Elegant PDF
-        run: mv resume.pdf resume-elegant.pdf
+      - name: Rename Bold Header PDF
+        run: mv resume.pdf resume-bold-header.pdf
 
       - name: Commit PDFs back to repo
         run: |
