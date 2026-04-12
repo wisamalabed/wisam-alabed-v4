@@ -44,23 +44,23 @@ jobs:
         run: mv resume.pdf resume-macchiato.pdf
 
 
-      - name: Generate PDF - Bold Header Theme
+      - name: Generate PDF - Flat Theme
         uses: Devleaps/jsonresume-generator@v1
         with:
           action: "render"
           file: "resume.json"
-          theme-name: "jsonresume-theme-bold-header-statement"
+          theme-name: "jsonresume-theme-flat"
           output-type: "pdf"
           theme-local: "false"
 
-      - name: Rename Bold Header PDF
-        run: mv resume.pdf resume-bold-header.pdf
+      - name: Rename Flat PDF
+        run: mv resume.pdf resume-flat.pdf
 
       - name: Commit PDFs back to repo
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add resume-*.pdf
+          git add site/resume-*.pdf
           git commit -m "Update generated resumes"
           git push
         env:
