@@ -5,6 +5,33 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>wisam@terminal:~$</title>
+  
+  <!-- Meta Description -->
+  <meta name="description" content="Wisam Al Abed - Full Stack Software Developer with 10+ years building modern web applications, distributed systems, and developer experiences in Toronto, Canada">
+  
+  <!-- Keywords -->
+  <meta name="keywords" content="full stack developer, software developer, web developer, Toronto, TypeScript, Python, React, Next.js, APIs, systems, full-stack, backend, frontend">
+  
+  <!-- Author -->
+  <meta name="author" content="Wisam Al Abed">
+  
+  <!-- Open Graph Tags (for social media sharing) -->
+  <meta property="og:title" content="Wisam Al Abed - Full Stack Software Developer">
+  <meta property="og:description" content="Experienced full stack developer building modern web applications and distributed systems in Toronto">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wisamalabed.github.io/wisam-alabed-v4/">
+  <meta property="og:image" content="https://avatars.githubusercontent.com/u/4520207?s=400">
+  <meta property="og:site_name" content="Wisam Al Abed Resume">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Wisam Al Abed - Full Stack Software Developer">
+  <meta name="twitter:description" content="Full Stack Software Developer | Toronto, Canada">
+  <meta name="twitter:image" content="https://avatars.githubusercontent.com/u/4520207?s=400">
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://wisamalabed.github.io/wisam-alabed-v4/">
+
   <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
   <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
   <link rel="stylesheet" href="styles.css" />
@@ -22,7 +49,7 @@
     </header>
 
     <!-- BOOT SEQUENCE -->
-    <section class="boot">
+    <section class="boot" aria-label="System Boot Sequence">
       <p><span class="sys">[system]</span> booting resume kernel...</p>
       <p><span class="ok">[ OK ]</span> loading identity module</p>
       <p><span class="ok">[ OK ]</span> mounting experience volume</p>
@@ -35,7 +62,7 @@
     </section>
 
     <!-- WHOAMI -->
-    <section class="block">
+    <section class="block" aria-label="About Me">
       <p class="prompt-line">
         <span class="user">wisam@terminal</span>:<span class="path">~</span>$ whoami
       </p>
@@ -48,7 +75,7 @@
     </section>
 
     <!-- MAN PAGE -->
-    <section class="block">
+    <section class="block" aria-label="Professional Overview">
       <p class="prompt-line">
         <span class="user">wisam@terminal</span>:<span class="path">~</span>$ man wisam
       </p>
@@ -73,7 +100,7 @@
     </section>
 
     <!-- SKILLS -->
-    <section class="block">
+    <section class="block" aria-label="Technical Skills">
       <p class="prompt-line">
         <span class="user">wisam@terminal</span>:<span class="path">~</span>$ ls skills/
       </p>
@@ -97,7 +124,7 @@
     </section>
 
     <!-- PROJECTS SHOWCASE -->
-    <section class="block">
+    <section class="block" aria-label="Featured Projects">
       <p class="prompt-line">
         <span class="user">wisam@terminal</span>:<span class="path">~</span>$ ls projects/
       </p>
@@ -131,7 +158,7 @@
     </section>
 
     <!-- WORK -->
-    <section class="block">
+    <section class="block" aria-label="Professional Experience">
       <p class="prompt-line">
         <span class="user">wisam@terminal</span>:<span class="path">~</span>$ cat work.log
       </p>
@@ -187,7 +214,7 @@
     </section>
 
     <!-- CONTACT -->
-    <section class="block">
+    <section class="block" aria-label="Contact Information">
       <p class="prompt-line">
         <span class="user">wisam@terminal</span>:<span class="path">~</span>$ cat contact.info
       </p>
@@ -218,7 +245,7 @@
     </section>
 
     <!-- DOWNLOAD RESUME COMMAND -->
-    <section class="block">
+    <section class="block" aria-label="Resume Download">
       <p class="prompt-line">
         <span class="user">wisam@terminal</span>:<span class="path">~</span>$ download resume
       </p>
@@ -234,6 +261,31 @@
     <section class="cursor">
       <span class="user">wisam@terminal</span>:<span class="path">~</span>$ <span class="blink">█</span>
     </section>
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Wisam Al Abed",
+      "jobTitle": "Full Stack Software Developer",
+      "description": "Experienced full stack developer with 10+ years building modern web applications and distributed systems",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Toronto",
+        "addressCountry": "Canada"
+      },
+      "email": "wisam.alabed@tutamail.com",
+      "telephone": "(416) 276-4074",
+      "url": "https://wisamalabed.github.io/wisam-alabed-v4/",
+      "knowsAbout": ["TypeScript", "Python", "React", "Next.js", "Node.js", "FastAPI", "Docker", "GitHub Actions"],
+      "alumniOf": ["McGill University"],
+      "worksFor": {
+        "@type": "Organization",
+        "name": "University of Toronto DSI"
+      },
+    }
+    </script>
     <footer class="terminal-footer" aria-label="License information">
       <pre class="copyleft-banner">
 ##########################################
